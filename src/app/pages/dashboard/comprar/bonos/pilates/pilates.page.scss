@@ -1,0 +1,27 @@
+* {
+    color: black;
+    background-color: white;
+}
+
+#columnas {
+    column-count: 2;
+    column-gap: 15%;
+}
+
+#comprar {
+    color: white;
+    background-color: #59137D;
+    font-weight: normal;
+}
+
+#mes {
+    font-size: large;
+}
+
+#dinero {
+    font-size: xx-large;
+}
+
+i {
+    float: right;
+}

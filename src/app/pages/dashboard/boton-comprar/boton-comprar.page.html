@@ -1,0 +1,90 @@
+<!---------------------------------------------------------------- MODAL (editar)------------------------------------------------------------->
+<!-------------------------------------------------------------------CABECERA ---------------------------------------------------------------->
+<ion-header class="mb-4">
+    <ion-toolbar class="p-3">
+        <div class="d-flex justify-content-between">
+            <ion-title class="text-white">
+                COMPRAR
+            </ion-title>
+            <i class="fas fa-times fa-2x text-white" (click)="dismiss()"></i>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<!-------------------------------------------------------------------FORMULARIO--------------------------------------------------------------->
+<ion-content>
+    <ion-card class="bg-white border-top">
+        <ion-card-header class="border-bottom">
+            <ion-card-title>
+                Ejemplo - 01/01 - 10:00
+            </ion-card-title>
+            <h1>100&euro;</h1>
+        </ion-card-header>
+    </ion-card>
+
+    <ion-radio-group class="mt-2">
+        <!------------------------------------------------------RADIO BUTTON TARJETA--------------------------------------------------------->
+        <div class="mx-3">
+            <ion-radio id="tarjeta" class="me-2" (click)="change($event)"></ion-radio>
+            <label for=""><i class="far fa-credit-card"></i> Tarjeta de credito</label>
+        </div>
+        <!---------------------------------------------------------DIV TARJETA--------------------------------------------------------->
+        <ion-card *ngIf="tarjeta" class="border-top">
+            <ion-card-header class="border-bottom">
+                <ion-card-title>
+                    Pagar con tarjeta
+                </ion-card-title>
+                <ion-card-subtitle>
+                    <div class="d-flex mt-2">
+                        <img src="../../../../assets/img/Visa.png" alt="" width="10%" height="10%">
+                        <img src="../../../../assets/img/MasterCard.png" alt="" width="10%" height="10%">
+                        <img src="../../../../assets/img/Maestro.png" alt="" width="10%" height="10%">
+                        <img src="../../../../assets/img/AmericanExpress.png" alt="" width="10%" height="10%">
+                    </div>
+                </ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content class="mt-2">
+                <form action="">
+                    <label for="">Nombre del titular</label>
+                    <input type="text" class="form-control form-control-solid mb-2" autocomplete="off">
+                    <label for="">Número de la tarjeta</label>
+                    <input type="text" class="form-control form-control-solid mb-2" autocomplete="off">
+                    <label for="">Fecha de caducidad</label>
+                    <div class="d-flex mb-2">
+                        <input type="text" class="form-control form-control-solid inputWidth" placeholder="Mes">
+                        <input type="text" class="form-control form-control-solid inputWidth" placeholder="Año">
+                    </div>
+                    <label for="">Cód. Seguridad:</label>
+                    <div class="d-flex mb-2">
+                        <input type="text" class="form-control inputWidth">
+                        <a href="" class="mt-2" (click)="codigoModal()">¿Qué es el código de seguridad?</a>
+                    </div>
+                    <ion-checkbox class="border me-2 mt-2"></ion-checkbox>
+                    <label for="" class="ml-3">Recordar esta tarjeta para su uso posterior</label>
+                </form>
+            </ion-card-content>
+        </ion-card>
+        <!------------------------------------------------------RADIO BUTTON PAYPAL--------------------------------------------------------->
+        <div class="mx-3">
+            <ion-radio id="paypal" class="me-2" (click)="change($event)"></ion-radio>
+            <label for=""><i class="fab fa-paypal"></i> Paypal</label>
+        </div>
+        <!---------------------------------------------------------DIV TARJETA--------------------------------------------------------->
+        <ion-card *ngIf="paypal" class="border-top">
+            <ion-card-header class="border-bottom">
+                <ion-card-title>
+                    Pagar con Paypal
+                </ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="mt-2">
+
+            </ion-card-content>
+        </ion-card>
+    </ion-radio-group>
+
+</ion-content>
+
+<!-------------------------------------------------------------------FOOTER-------------------------------------------------------------------->
+<ion-footer class="p-4">
+    <button type="button" class="btn" id="comprar">Comprar</button>
+</ion-footer>

@@ -1,0 +1,61 @@
+<ion-content>
+    <ion-card class="border-top">
+        <ion-card-header>
+            <!--------------------------------------------------TITULO CARD--------------------------------------->
+            <ion-card-title class="border-bottom">AEROSOLUNA <i class="fas fa-angle-double-left fa-lg" [routerLink]="['/dashboard/bono-regalo']"></i></ion-card-title>
+
+            <!--------------------------------------------------SUBTITULO CARD--------------------------------------->
+            <ion-card-subtitle>
+                <div class="border-bottom">
+                    <h5>¿Qu&eacute; es?</h5>
+                    <p>Es la evolución de las técnicas más populares como el pilates, el fitness y el yoga, proyectándolas a un nuevo plano. Con el columpio como elementro central, transformamos estas actividades y las hacemos más dinámicas.</p>
+                </div>
+                <p class="mt-2">Usalo cuando <span class="fw-normal">quieras</span>, para ti o para <span class="fw-normal">regalo</span> con <span class="fw-normal">1 año</span> de caducidad</p>
+            </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content id="columnas">
+            <!--------------------------------------------------COMPRAR BONOS--------------------------------------->
+            <!-----------------------------------------------------BONO 1------------------------------------------->
+            <ion-card class="text-center mx-0 mt-0 border-top">
+                <ion-card-header>
+                    <ion-card-subtitle id="mes">1 Mes</ion-card-subtitle>
+                    <ion-card-title class="fw-normal" id="dinero">55&euro;</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <button class="btn" id="comprar" (click)="comprarModal()">Comprar</button>
+                </ion-card-content>
+            </ion-card>
+            <!-----------------------------------------------------BONO 2------------------------------------------->
+            <ion-card class="text-center mx-0 mt-0 border-top">
+                <ion-card-header>
+                    <ion-card-subtitle id="mes">2 Mes</ion-card-subtitle>
+                    <ion-card-title class="fw-normal" id="dinero">110&euro;</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <button class="btn" id="comprar" (click)="comprarModal()">Comprar</button>
+                </ion-card-content>
+            </ion-card>
+            <!-----------------------------------------------------BONO 3------------------------------------------->
+            <ion-card class="text-center mx-0 mt-0 border-top">
+                <ion-card-header>
+                    <ion-card-subtitle id="mes">3 Mes</ion-card-subtitle>
+                    <ion-card-title class="fw-normal" id="dinero">160&euro;</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <button class="btn" id="comprar" (click)="comprarModal()">Comprar</button>
+                </ion-card-content>
+            </ion-card>
+            <!-----------------------------------------------------BONO 4------------------------------------------->
+            <ion-card class="text-center mx-0 mt-0 border-top">
+                <ion-card-header>
+                    <ion-card-subtitle id="mes">6 Mes</ion-card-subtitle>
+                    <ion-card-title class="fw-normal" id="dinero">323&euro;</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <button class="btn" id="comprar" (click)="comprarModal()">Comprar</button>
+                </ion-card-content>
+            </ion-card>
+
+        </ion-card-content>
+    </ion-card>
+</ion-content>

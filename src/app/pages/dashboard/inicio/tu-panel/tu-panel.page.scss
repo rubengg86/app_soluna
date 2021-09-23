@@ -1,0 +1,87 @@
+* {
+    color: black;
+    background-color: white;
+}
+
+p {
+    font-weight: lighter;
+    font-size: medium;
+}
+
+#verde {
+    margin-top: 5px;
+    margin-right: 5px;
+    height: 15px;
+    width: 30px;
+    background-color: green;
+}
+
+#rojo {
+    margin-top: 5px;
+    margin-right: 5px;
+    margin-left: 30px;
+    height: 15px;
+    width: 30px;
+    background-color: red;
+}
+
+h1 {
+    font-size: xxx-large;
+}
+
+.derecha {
+    float: right;
+}
+
+table {
+    border-collapse: separate;
+    font-size: medium;
+}
+
+td {
+    padding-top: 5px;
+    padding-left: 10px;
+    color: #7a7878;
+}
+
+a {
+    font-weight: normal;
+    text-decoration: none;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 5px;
+}
+
+
+/*-------------------------------------------------------TU CUOTA DE ESTE MES--------------------------------------------------------*/
+
+.cuota {
+    color: white;
+    background-color: #59137D;
+}
+
+#pagar {
+    float: right;
+    color: white;
+    background-color: #59137D;
+    border: white solid;
+}
+
+
+/*------------------------------------------------------------COMPRA RAPIDA DE TICKETS-------------------------------------------------*/
+
+#comprar {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 5px;
+    color: white;
+    background-color: #59137D;
+    font-weight: normal;
+}

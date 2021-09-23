@@ -1,0 +1,106 @@
+<!-----------------------------------------NAVEGADOR---------------------------------->
+<ion-header>
+    <ion-toolbar>
+        <!---------------------------------DIV IZQUIERDO: IMAGEN Y NOMBRE--------------->
+        <div class="px-3 pt-2 ">
+            <img src="../../../../../assets/img/avatar.jpg" alt=""><span class="text-white fw-normal">NOMBRE</span>
+        </div>
+        <!-------------------------------------------BOTON MENU------------------------->
+        <ion-buttons slot="end" id="menu">
+            <ion-menu-button><i class="fas fa-bars fa-lg text-white"></i></ion-menu-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<!---------------------------------------------------MENU DESPLEGABLE----------------------->
+<ion-menu side="start" content-id="menu">
+    <ion-content>
+        <div class="accordion accordion-flush container-fluid menu" id="accordionFlushExample">
+            <!------------------------------------------------------Menu inicio----------------------------------------------------------------->
+            <div class="accordion-itemmy-4 border-bottom">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseInicio" aria-expanded="false" aria-controls="flush-collapseOne">
+                      <i class="fas fa-home fa-lg me-2"></i>
+                      <span> Inicio</span>
+                  </button>
+                </h2>
+                <!------------------------------------------------------Menu desplegable inicio----------------------------------------------------------------->
+                <div id="CollapseInicio" class="accordion-collapse collapse row" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <button class="btn px-4 pt-3 ms-4 boton" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseInicio" aria-expanded="false" aria-controls="flush-collapseOne" [routerLink]="['/dashboard/tu-panel']">
+                      <i class="fas fa-user-circle fa-lg me-2"></i>
+                      <span> Tu panel</span>
+                  </button>
+                </div>
+            </div>
+
+            <!------------------------------------------------------Menu clases----------------------------------------------------------------->
+            <div class="accordion-item mb-4 border-bottom">
+                <h2 class="accordion-header " id="flush-headingOne">
+                    <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseClases" aria-expanded="false" aria-controls="flush-collapseOne">
+                      <i class="fas fa-calendar-alt fa-lg me-2"></i>
+                      <span> Clases</span>
+                  </button>
+                </h2>
+                <!------------------------------------------------------Menu desplegable clases----------------------------------------------------------------->
+                <div id="CollapseClases" class="accordion-collapse collapse row " aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <button class="btn px-4 pt-3 ms-4 boton" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseClases" aria-expanded="false" aria-controls="flush-collapseOne" [routerLink]="['/dashboard/tus-clases']">
+                      <i class="fas fa-calendar-alt fa-lg me-2"></i>
+                      <span> Tus clases</span>
+                  </button>
+                    <button class="btn px-4 pt-3 ms-4 boton" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseClases" aria-expanded="false" aria-controls="flush-collapseOne" [routerLink]="['/dashboard/chat']">
+                      <i class="fas fa-comments fa-lg me-2"></i>
+                      <span> Chat de grupo</span>
+                  </button>
+                </div>
+            </div>
+
+            <!------------------------------------------------------Menu comprar----------------------------------------------------------------->
+            <div class="accordion-item mb-4 border-bottom">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseComprar" aria-expanded="false" aria-controls="flush-collapseOne">
+                      <i class="fas fa-shopping-cart me-2"></i>
+                      <span> Comprar</span>
+                  </button>
+                </h2>
+                <!------------------------------------------------------Menu desplegable comprar----------------------------------------------------------------->
+                <div id="CollapseComprar" class="accordion-collapse collapse row" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <button class="btn px-4 pt-3 ms-4 boton" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseComprar" aria-expanded="false" aria-controls="flush-collapseOne" [routerLink]="['/dashboard/tickets']">
+                      <i class="fas fa-ticket-alt fa-lg me-2"></i>
+                      <span> Tickets & Spot clases</span>
+                  </button>
+                    <button class="btn px-4 pt-3 ms-4 boton" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseClases" aria-expanded="false" aria-controls="flush-collapseOne" [routerLink]="['/dashboard/bono-regalo']">
+                      <i class="fas fa-gift fa-lg me-2"></i>
+                      <span> Bono de regalo</span>
+                  </button>
+                </div>
+            </div>
+        </div>
+
+        <!-------------------------------------------------------------MENU PARTE PERFIL--------------------------------------->
+        <div class="container-fluid fixed-bottom mb-4 border-top">
+            <div class=" row">
+
+                <button class="btn my-2 boton" [routerLink]="['/dashboard/mi-cuenta']">
+                  <i class="fas fa-user-circle fa-lg me-2"></i>
+                  <span>Mi cuenta</span>
+              </button>
+
+                <button class="btn mb-2 boton" (click)="cambiarModal()">
+                  <i class="fas fa-unlock fa-lg me-2"></i>
+                  <span>Cambiar contraseña</span>
+              </button>
+
+                <button class="btn mb-2 boton" (click)="cerrarSesion()">
+                  <i class="fas fa-power-off fa-lg me-2"></i>
+                  <span>Cerrar sesión</span>
+              </button>
+
+            </div>
+        </div>
+    </ion-content>
+</ion-menu>
+
+<!----------------------------------CONTENIDO DE LA PAGINA---------------------------->
+<ion-content>
+    <ion-router-outlet></ion-router-outlet>
+</ion-content>

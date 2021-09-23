@@ -1,0 +1,36 @@
+<!---------------------------------------------------------------- MODAL (editar)------------------------------------------------------------->
+<!-------------------------------------------------------------------CABECERA ---------------------------------------------------------------->
+<ion-header class="mb-4">
+    <ion-toolbar class="p-3">
+        <div class="d-flex justify-content-between">
+            <ion-title class="text-white">
+                MODIFICA TUS DATOS
+            </ion-title>
+            <i class="fas fa-times fa-2x text-white" (click)="dismiss()"></i>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<!-------------------------------------------------------------------FORMULARIO--------------------------------------------------------------->
+<ion-content>
+    <form action="" class="px-4 py-1">
+        <span>+</span>
+        <div *ngIf="previsualizacion" class="d-block m-auto p-0 m-0" id="previsualizar" for="files">
+            <label for="files">
+                <img [src]="previsualizacion" alt="" class="p-0 m-0">
+            </label>
+        </div>
+        <label for="files" class="btn text-center col-12">Elegir una foto de perfil</label>
+        <input type="file" id="files" (change)="fileChangeEvent($event)">
+        <ion-input placeholder="Nombre" class="border-bottom mb-2"></ion-input>
+        <ion-input placeholder="Apellidos" class="border-bottom mb-2"></ion-input>
+        <ion-input placeholder="Email" class="border-bottom mb-2"></ion-input>
+        <ion-input placeholder="Telefono" class="border-bottom mb-2"></ion-input>
+        <ion-input placeholder="DNI" class="border-bottom mb-2"></ion-input>
+        <ion-input placeholder="Cuenta bancaria" class="border-bottom mb-2"></ion-input>
+    </form>
+</ion-content>
+<!-------------------------------------------------------------------FOOTER-------------------------------------------------------------------->
+<ion-footer class="p-3">
+    <button type="button" class="btn" id="guardar">Guardar</button>
+</ion-footer>

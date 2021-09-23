@@ -1,0 +1,218 @@
+<ion-content>
+    <!------------------------------------------------------------TU ASISTENCIA------------------------------------------------------------>
+    <ion-card class="my-2 py-2 px-0 border-top">
+        <ion-card-header>
+            <ion-card-title class="border-bottom">TU ASISTENCIA</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+            <p>Porcentaje de asistencias y faltas que has tenido en el &uacute;ltimo mes</p>
+            <br>
+            <div class="d-flex justify-content-center">
+                <div id="verde"></div>
+                <p>Asistencia</p>
+                <div id="rojo"></div>
+                <p>Falta</p>
+            </div>
+        </ion-card-content>
+    </ion-card>
+    <!---------------------------------------------------------------TUS DATOS------------------------------------------------------------->
+    <ion-card class="my-2 py-2 px-0 border-top">
+        <ion-card-header>
+            <ion-card-title class="border-bottom d-flex justify-content-between">
+                TUS DATOS
+                <button (click)="editarModal()">
+                    <i class="fas fa-edit"></i>
+                </button>
+            </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+            <!----------------------------------------TABLA---------------------------------------------------------------->
+            <img src="../../../../../assets/img/avatar.jpg" alt="" class="d-block m-auto">
+            <table class="col-12">
+                <tr>
+                    <th class="col-1 text-center border-bottom"><i class="far fa-user-circle"></i></th>
+                    <td class="col-11 border-bottom">Nombre y apellidos</td>
+                </tr>
+                <tr>
+                    <th class="col-1 text-center border-bottom"><i class="fas fa-map-marker-alt"></i></th>
+                    <td class="col-11 border-bottom">Avenida de Aureliano San Román 19, 33011 Oviedo, Asturias</td>
+                </tr>
+                <tr>
+                    <th class="col-1 text-center border-bottom"><i class="fas fa-mobile-alt"></i></th>
+                    <td class="col-11 border-bottom">123456789</td>
+                </tr>
+                <tr>
+                    <th class="col-1 text-center border-bottom"><i class="fas fa-envelope"></i></th>
+                    <td class="col-11 border-bottom">prueba@prueba.com</td>
+                </tr>
+                <tr>
+                    <th class="col-1 text-center border-bottom"><i class="far fa-id-badge"></i></th>
+                    <td class="col-11 border-bottom">123456768A</td>
+                </tr>
+            </table>
+        </ion-card-content>
+    </ion-card>
+
+    <!------------------------------------------------------TU CUOTA DE ESTE MES---------------------------------------------------------->
+    <ion-card class="my-2 py-2 px-0 cuota ">
+        <ion-card-header class="cuota">
+            <ion-card-title class="border-bottom fw-lighter cuota">TU CUOTA DE ESTE MES</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content class="cuota">
+            <h1 class="cuota">0.0&euro;</h1>
+
+            <div class="d-flex justify-content-between cuota">
+                <div class="cuota">
+                    <span class="cuota">Servicio extra</span><br>
+                    <span class="cuota">0&euro;</span>
+                </div>
+                <div style="background-color:#59137D">
+                    <button class="btn btn-lg" id="pagar">Pagar</button>
+                </div>
+            </div>
+        </ion-card-content>
+    </ion-card>
+
+    <!-----------------------------------------------------------ULTIMOS PAGOS---------------------------------------------------------->
+    <ion-card class="my-2 py-2 px-0 border-top">
+        <ion-card-header>
+            <ion-card-title class="border-bottom">&Uacute;LTIMOS PAGOS</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <div class="mb-3">
+                <!--------------------------------------------MOSTRAR REGISTROS------------------------------->
+                <p>Mostrar registros:
+                    <a class="active" role="button" aria-pressed="true">5</a>
+                    <a class="active" role="button" aria-pressed="true">10</a>
+                    <a class="active" role="button" aria-pressed="true">15</a>
+                </p>
+            </div>
+            <!--------------------------------------------TABLA------------------------------->
+            <table class="col-12">
+                <tr>
+                    <th class="col-4 border-bottom">Fecha</th>
+                    <td class="col-8 border-bottom">
+                        <input class="form-control" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" dateFormat="Y-m-d" altFormat="F j, Y" placeholder="dd-mm-yyyy" [options]="datePickerOptions" />
+                    </td>
+                </tr>
+                <tr>
+                    <th class="col-4 border-bottom">Importe</th>
+                    <td class="col-8 border-bottom">50&euro;</td>
+                </tr>
+                <tr>
+                    <th class="col-4 border-bottom">M&eacute;todo</th>
+                    <td class="col-8 border-bottom">Primero</td>
+                </tr>
+            </table>
+        </ion-card-content>
+    </ion-card>
+
+    <!--------------------------------------------------------------TICKETS------------------------------------------------------------->
+    <ion-card class="my-2 py-2 px-0 border-top">
+        <ion-card-header>
+            <ion-card-title class="border-bottom">TICKETS</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <div class="mb-3">
+                <!--------------------------------------------MOSTRAR REGISTROS------------------------------->
+                <p>Mostrar registros:
+                    <a class="active" role="button" aria-pressed="true">5</a>
+                    <a class="active" role="button" aria-pressed="true">10</a>
+                    <a class="active" role="button" aria-pressed="true">15</a>
+                </p>
+            </div>
+            <!--------------------------------------------TABLA------------------------------->
+            <table class="col-12">
+                <tr>
+                    <th class="col-4 border-bottom">Grupo</th>
+                    <td class="col-8 border-bottom">Grupo 1</td>
+                </tr>
+                <tr>
+                    <th class="col-4 border-bottom">Centro</th>
+                    <td class="col-8 border-bottom">Centro La Florida</td>
+                </tr>
+                <tr>
+                    <th class="col-4 border-bottom">Importe</th>
+                    <td class="col-8 border-bottom">50&euro;</td>
+                </tr>
+                <tr>
+                    <th class="col-4 border-bottom">Comprado</th>
+                    <td class="col-8 border-bottom">Comprado</td>
+                </tr>
+            </table>
+        </ion-card-content>
+    </ion-card>
+
+    <!------------------------------------------------------COMPRA RAPIDA DE TICKETS------------------------------------------------------------->
+    <ion-card class="my-2 py-2 px-0 border-top">
+        <ion-card-header>
+            <ion-card-title class="border-bottom">COMPRA RAPIDA DE TICKETS</ion-card-title>
+        </ion-card-header>
+
+        <!-------------------------------------------------TARJETA 1------------------------------------------------>
+        <ion-card class="mx-0 mt-0 border-top border-radius">
+            <ion-card-header>
+                <ion-card-subtitle>Martes, 01/06, 9:30</ion-card-subtitle>
+                <ion-card-title>La Florida, Pilates</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <button class="btn" id="comprar" (click)="comprarModal()">Comprar</button>
+            </ion-card-content>
+        </ion-card>
+        <!-------------------------------------------------TARJETA 2------------------------------------------------>
+        <ion-card class="mx-0 mt-0 border-top border-radius">
+            <ion-card-header>
+                <ion-card-subtitle>Martes, 01/06, 9:30</ion-card-subtitle>
+                <ion-card-title>La Florida, Pilates</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <button class="btn" id="comprar" (click)="comprarModal()">Comprar</button>
+            </ion-card-content>
+        </ion-card>
+        <!-------------------------------------------------TARJETA 3------------------------------------------------>
+        <ion-card class="mx-0 mt-0 border-top border-radius">
+            <ion-card-header>
+                <ion-card-subtitle>Martes, 01/06, 9:30</ion-card-subtitle>
+                <ion-card-title>La Florida, Pilates</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <button class="btn" id="comprar" (click)="comprarModal()">Comprar</button>
+            </ion-card-content>
+        </ion-card>
+        <!-------------------------------------------------TARJETA 4------------------------------------------------>
+        <ion-card class="mx-0 mt-0 border-top border-radius">
+            <ion-card-header>
+                <ion-card-subtitle>Martes, 01/06, 9:30</ion-card-subtitle>
+                <ion-card-title>La Florida, Pilates</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <button class="btn" id="comprar" (click)="comprarModal()">Comprar</button>
+            </ion-card-content>
+        </ion-card>
+
+        <!--------------------------------------------------------------------PAGINADOR------------------------------------------------------------------>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link">1</a></li>
+                <li class="page-item"><a class="page-link">2</a></li>
+                <li class="page-item"><a class="page-link">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </ion-card>
+
+</ion-content>

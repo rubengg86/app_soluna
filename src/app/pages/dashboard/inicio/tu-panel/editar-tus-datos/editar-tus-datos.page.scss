@@ -1,0 +1,42 @@
+@font-face {
+    font-family: HelveticaNeue;
+    src: url(../../../../../../assets/font/HelveticaNeue-Medium.ttf);
+}
+
+ion-input {
+    font-family: HelveticaNeue;
+}
+
+#previsualizar {
+    border: #59137D solid;
+    border-radius: 50%;
+    width: 85px;
+    height: 85px;
+}
+
+span {
+    color: #59137D;
+    font-weight: bold;
+    font-size: xx-large;
+    position: absolute;
+    margin-left: 51%;
+}
+
+img {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+}
+
+#files {
+    font-size: 0px;
+    width: 0px;
+    height: 0px;
+}
+
+#guardar {
+    background-color: #59137D;
+    color: white;
+    border: 0;
+    float: right;
+}

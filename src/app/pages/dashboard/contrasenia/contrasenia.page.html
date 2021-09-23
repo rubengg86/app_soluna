@@ -1,0 +1,24 @@
+<!---------------------------------------------------------------- MODAL (cambiar contraseña)------------------------------------------------------------->
+<!-------------------------------------------------------------------CABECERA ---------------------------------------------------------------->
+<ion-header class="mb-4">
+    <ion-toolbar class="p-3">
+        <div class="d-flex justify-content-between">
+            <ion-title class="text-white">
+                CONTRASEÑA NUEVA
+            </ion-title>
+            <i class="fas fa-times text-white fa-2x pt-1" (click)="dismiss()"></i>
+        </div>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <!-------------------------------------------------------------------FORMULARIO ---------------------------------------------------------------->
+    <form action="" class="p-4">
+        <ion-input placeholder="Contraseña antigua" class="border-bottom mb-3"></ion-input>
+        <ion-input placeholder="Contraseña nueva" class="border-bottom mb-3"></ion-input>
+        <ion-input placeholder="Confirma la nueva contraseña" class="border-bottom mb-3"></ion-input>
+    </form>
+    <!-------------------------------------------------------------------FOOTER-------------------------------------------------------------------->
+    <ion-footer class="p-4">
+        <button type="button" class="btn" id="guardar">Guardar</button>
+    </ion-footer>
+</ion-content>
