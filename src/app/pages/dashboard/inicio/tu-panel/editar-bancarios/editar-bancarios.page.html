@@ -1,0 +1,49 @@
+<!---------------------------------------------------------------- MODAL (editar)------------------------------------------------------------->
+<!-------------------------------------------------------------------CABECERA ---------------------------------------------------------------->
+<ion-header>
+    <ion-toolbar class="p-3" color="light">
+        <div class="d-flex justify-content-between">
+            <ion-title class="text-black">
+                MODIFICA TUS DATOS 
+            </ion-title>
+            <i class="fas fa-times fa-2x text-black" (click)="dismiss()"></i>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<!-------------------------------------------------------------------FORMULARIO--------------------------------------------------------------->
+<ion-content color="light">
+    <form action="" class="px-4 py-1">
+        <ion-list id="emisores">
+            <ion-radio-group value="mastercard">
+              <ion-list-header>
+                <ion-label>Emisor:</ion-label>
+              </ion-list-header>
+          
+              <ion-item color="light">
+                <ion-label><i class='fab fa-cc-mastercard' style="font-size:24px"></i> Mastercard</ion-label>
+                <ion-radio slot="start" value="mastercard"></ion-radio>
+              </ion-item>
+          
+              <ion-item color="light">
+                <ion-label><i class='fab fa-cc-paypal' style="font-size:24px"></i> Paypal</ion-label>
+                <ion-radio slot="start" value="paypal"></ion-radio>
+              </ion-item>
+          
+              <ion-item color="light">
+                <ion-label><i class='fab fa-cc-visa' style="font-size:24px"></i> Visa</ion-label>
+                <ion-radio slot="start" value="visa"></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+          <br>
+        <ion-input placeholder="Número de cuenta" type="text" class="border-bottom mb-2"></ion-input>
+        <ion-input placeholder="Nombre del titular" type="text" class="border-bottom mb-2"></ion-input>
+        <ion-input placeholder="Fecha de caducidad" type="number" maxlength="4" class="border-bottom mb-2"></ion-input>
+        <ion-input placeholder="Código de seguridad" type="number" maxlength="3" class="border-bottom mb-2"></ion-input>
+       </form>
+</ion-content>
+<!-------------------------------------------------------------------FOOTER-------------------------------------------------------------------->
+<ion-footer class="p-3" id="footer">
+    <button type="button" class="btn" id="guardar">Guardar</button>
+</ion-footer>

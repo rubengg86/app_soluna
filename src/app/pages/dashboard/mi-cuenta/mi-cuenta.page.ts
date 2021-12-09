@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { EditarBancariosPage } from '../inicio/tu-panel/editar-bancarios/editar-bancarios.page';
 import { EditarTusDatosPage } from '../inicio/tu-panel/editar-tus-datos/editar-tus-datos.page';
 import { FlatpickrDefaultsInterface } from 'angularx-flatpickr/flatpickr-defaults.service';
 import { ChartDataSets, ChartType } from 'chart.js';
@@ -10,9 +11,9 @@ import { Label } from 'ng2-charts';
   templateUrl: './mi-cuenta.page.html',
   styleUrls: ['./mi-cuenta.page.scss'],
 })
-export class MiCuentaPage{
+export class MiCuentaPage {
 
-  /*--------------------------------------------GRAFICO------------------------------------------- */
+  /*--------------------------------------------GRAFICO------------------------------------------- 
   public lineChartData: ChartDataSets[] = [
     { data: [0, 10, 20, 30, 45.5, 45.5, 30, 20, 10, 10, 10, 20], label: 'Intensidad'},
     { data: [0, 20, 30, 35, 40, 35, 35, 30, 30, 20, 20, 10], label: 'Volumen' }
@@ -43,7 +44,7 @@ export class MiCuentaPage{
   lineChartLegend = true;
   lineChartType: ChartType = 'line';
 
-  /*-------------------------------------------CALENDARIO------------------------------------------ */
+  /*-------------------------------------------CALENDARIO------------------------------------------ 
   public datePickerOptions: FlatpickrDefaultsInterface= {
     allowInput: true,
     enableTime: true,
@@ -63,13 +64,19 @@ longhand: ['Enero', 'Febreo', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agos
     // this:
     enable: [{ from: new Date(0, 1), to: new Date(new Date().getFullYear() + 200, 12) }]
   };
-
+*/
   constructor(public modalController: ModalController) { }
 
   /*-------------------------------------------------MODAL EDITAR--------------------------------------- */
   async editarModal() {
     const modal = await this.modalController.create({
       component: EditarTusDatosPage
+    });
+    return await modal.present();
+  }
+  async editarBancarios() {
+    const modal = await this.modalController.create({
+      component: EditarBancariosPage
     });
     return await modal.present();
   }

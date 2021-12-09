@@ -1,6 +1,5 @@
 * {
     color: black;
-    background-color: white;
 }
 
 #comprar {
@@ -11,4 +10,17 @@
     color: white;
     background-color: #59137D;
     font-weight: normal;
+    font-size:14px;
 }
+ion-chip:hover{
+   color: rgb( 89, 19, 125, 0.2);
+  
+}
+ion-chip{
+    background-color: rgb(218, 216, 216 , 0.5);
+}
+#botonDia ion-icon, #botonDia ion-label, a>i:hover{
+    background-color:transparent;
+    border:none;
+}
+

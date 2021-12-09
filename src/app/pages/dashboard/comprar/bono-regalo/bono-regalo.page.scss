@@ -1,12 +1,14 @@
 * {
     color: white;
-    background-color: white;
+    background-color: transparent;
     font-size: medium;
 }
 
+
 #columnas {
     column-count: 2;
-    padding: 0px
+    padding: 0px;
+    background-color: transparent
 }
 
 #pilates {

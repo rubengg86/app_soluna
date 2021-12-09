@@ -7,7 +7,6 @@ import { IonicModule } from '@ionic/angular';
 import { MiCuentaPageRoutingModule } from './mi-cuenta-routing.module';
 
 import { MiCuentaPage } from './mi-cuenta.page';
-import { ChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -16,8 +15,7 @@ import { ChartsModule } from 'ng2-charts';
     FormsModule,
     IonicModule,
     MiCuentaPageRoutingModule,
-    FlatpickrModule.forRoot(),
-    ChartsModule
+    FlatpickrModule.forRoot()
   ],
   declarations: [MiCuentaPage]
 })

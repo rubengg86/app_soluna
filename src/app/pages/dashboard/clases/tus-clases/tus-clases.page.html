@@ -1,6 +1,40 @@
-<!---------------------------------------------------SI NO HAY CLASES---------------------------------------------------->
-<ion-card *ngIf="!clases" class="my-2 py-2 px-0 border-top text-center">
+<ion-content color="light">
+
+    <!---------------------------------------------------SI NO HAY CLASES---------------------------------------------------->
+<ion-card *ngIf="!clases" class="my-2 py-2 px-0 border-top text-center" id="encabezado">
     <ion-card-header>
         <ion-card-title>AÚN NO TIENES CLASES PROGRAMADAS</ion-card-title>
     </ion-card-header>
+
 </ion-card>
+
+
+<!--------------------------------------------------------------------MENSUALMENTE-------------------------------------------------- -->
+
+<ion-card class="my-2 py-2 px-0 border-top">
+    <ion-card-header>
+
+        <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse"
+            data-bs-target="#CollapseMes" aria-expanded="false" aria-controls="flush-collapseOne"
+            style="background-color:transparent">
+            <ion-card-title class="border-bottom">Mensualmente</ion-card-title>
+        </button>
+    </ion-card-header>
+
+    <div id="CollapseMes" class="accordion-collapse collapse row">
+        <ion-card-content>
+
+            <ion-card-header class="d-flex justify-content-center ">
+                <div id="calendario" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true"
+                    dateFormat="Y-m-d" altFormat="F j, Y" [options]="datePickerOptions"></div>
+            </ion-card-header>
+
+            <ion-card-content class="my-2 px-4">
+                <ion-title class="border-bottom p-0">Clases</ion-title>
+                <p class="mt-2">No tienes clases este día</p>
+            </ion-card-content>
+        </ion-card-content>
+    </div>
+</ion-card>
+
+</ion-content>

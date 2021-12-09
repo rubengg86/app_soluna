@@ -1,5 +1,5 @@
-<ion-content>
-    <!------------------------------------------------------------TU ASISTENCIA------------------------------------------------------------>
+<ion-content color="light">
+    <!------------------------------------------------------------TU ASISTENCIA----------------------------------------------------------x
     <ion-card class="my-2 py-2 px-0 border-top">
         <ion-card-header>
             <ion-card-title class="border-bottom">TU ASISTENCIA</ion-card-title>
@@ -16,14 +16,16 @@
             </div>
         </ion-card-content>
     </ion-card>
+-->
     <!---------------------------------------------------------------TUS DATOS------------------------------------------------------------->
     <ion-card class="my-2 py-2 px-0 border-top">
         <ion-card-header>
             <ion-card-title class="border-bottom d-flex justify-content-between">
-                TUS DATOS
+                <!-- TUS DATOS-->
+                DATOS PERSONALES
                 <button (click)="editarModal()">
-                  <i class="fas fa-edit"></i>
-              </button>
+                    <i class="fas fa-edit"></i>
+                </button>
             </ion-card-title>
         </ion-card-header>
 
@@ -32,7 +34,7 @@
             <img src="../../../../../assets/img/avatar.jpg" alt="" class="d-block m-auto">
             <table class="col-12">
                 <tr>
-                    <th class="col-1 text-center border-bottom"><i class="far fa-user-circle"></i></th>
+                    <th class="col-1 text-center border-bottom"><i class='fas fa-user-circle'></i></th>
                     <td class="col-11 border-bottom">Nombre y apellidos</td>
                 </tr>
                 <tr>
@@ -55,18 +57,20 @@
         </ion-card-content>
     </ion-card>
 
-    <!------------------------------------------------------------------ULTIMA ACTIVIDAD------------------------------------------------>
+    <!------------------------------------------------------------------ULTIMA ACTIVIDAD---------------------------------------------- 
     <ion-card class="py-2 my-2 px-0 border-top">
         <ion-card-content>
             <div class="flex">
                 <div class="flex-item">
                     <div style="display: block;">
-                        <!--------------------------------------------------GRAFICO-------------------------------------------------->
+                       
+    <!--------------------------------------------------GRAFICO------------------------------------------------  
                         <canvas baseChart height="200" [datasets]="lineChartData" [options]="lineChartOptions" [labels]="lineChartLabels" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
                     </div>
                 </div>
             </div>
-            <!--------------------------------------------------TABLA-------------------------------------------------->
+          
+    <!--------------------------------------------------TABLA------------------------------------------------  
             <div>
                 <table>
                     <tr class="col-12 text-center">
@@ -78,9 +82,9 @@
             </div>
         </ion-card-content>
     </ion-card>
+    -->
 
-
-    <!--------------------------------------------------------------------CALENDARIO---------------------------------------------------->
+    <!--------------------------------------------------------------------CALENDARIO--------------------------------------------------
 
     <ion-card class="py-2 border-top">
         <ion-card-header class="d-flex justify-content-center ">
@@ -89,6 +93,44 @@
         <ion-card-content class="my-2 px-4">
             <ion-title class="border-bottom p-0">Clases</ion-title>
             <p class="mt-2">No tienes clases este día</p>
+        </ion-card-content>
+    </ion-card>
+    -->
+    <!---------------------------------------------------------------------MODIFICAR DATOS BANCARIOS------>
+    <ion-card class="my-2 py-2 px-0 border-top">
+        <ion-card-header>
+            <ion-card-title class="border-bottom d-flex justify-content-between">
+                DATOS BANCARIOS
+                <button (click)="editarBancarios()">
+                    <i class="fas fa-edit"></i>
+                </button>
+            </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+            <!----------------------------------------TABLA---------------------------------------------------------------->
+            <table class="col-12">
+                <tr>
+                    <th class="col-1 text-center border-bottom"><i class='fab fa-cc-mastercard'></i></th>
+                    <td class="col-11 border-bottom">Emisor</td>
+                </tr>
+                <tr>
+                    <th class="col-1 text-center border-bottom"><i class='fas fa-money-check-alt'></i></th>
+                    <td class="col-11 border-bottom">Número de cuenta</td>
+                </tr>
+                <tr>
+                    <th class="col-1 text-center border-bottom"><i class='fas fa-user-circle'></i></th>
+                    <td class="col-11 border-bottom">Nombre del titular</td>
+                </tr>
+                <tr>
+                    <th class="col-1 text-center border-bottom"><i class='far fa-calendar-alt'></i></th>
+                    <td class="col-11 border-bottom">Fecha de caducidad</td>
+                </tr>
+                <tr>
+                    <th class="col-1 text-center border-bottom"><i class='fas fa-credit-card'></i></th>
+                    <td class="col-11 border-bottom">Código se seguridad</td>
+                </tr>
+            </table>
         </ion-card-content>
     </ion-card>
 </ion-content>

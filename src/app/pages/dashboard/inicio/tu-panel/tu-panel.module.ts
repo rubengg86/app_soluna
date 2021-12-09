@@ -9,13 +9,16 @@ import { TuPanelPageRoutingModule } from './tu-panel-routing.module';
 
 import { TuPanelPage } from './tu-panel.page';
 
+import { ChartsModule } from 'ng2-charts';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     TuPanelPageRoutingModule,
-    FlatpickrModule.forRoot()
+    FlatpickrModule.forRoot(),
+    ChartsModule
   ],
   declarations: [TuPanelPage]
 })

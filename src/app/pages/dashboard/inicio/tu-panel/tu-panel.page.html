@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content color="light">
     <!------------------------------------------------------------TU ASISTENCIA------------------------------------------------------------>
     <ion-card class="my-2 py-2 px-0 border-top">
         <ion-card-header>
@@ -6,17 +6,38 @@
         </ion-card-header>
 
         <ion-card-content>
-            <p>Porcentaje de asistencias y faltas que has tenido en el &uacute;ltimo mes</p>
-            <br>
-            <div class="d-flex justify-content-center">
+            <p>Porcentaje de asistencias y faltas que has tenido en el &uacute;ltimo mes.</p>
+            <br>    
+
+            <div style="font-size:12px" class="d-flex justify-content-between text-center">            
+             
+             <div id="verde" style="border-radius:3px;margin-right:0;width:80px;
+                 height:28px; padding:6px;color:white">Asistencia</div>
+                <div id="rojo" style="border-radius:3px;margin-right:0;width:80px; 
+                height:28px; padding:6px;color:white">Falta</div>
+
+            </div>
+         <!--<div class="d-flex justify-content-center">
                 <div id="verde"></div>
                 <p>Asistencia</p>
                 <div id="rojo"></div>
                 <p>Falta</p>
             </div>
+            -->   
+            <br>
+            <div class="d-flex justify-content-center">
+                <div id="verde" style="border-radius:3px;"></div>
+                <p>85%</p>
+                <div id="rojo" style="border-radius:3px;"></div>
+                <p>15%</p>
+            </div>
         </ion-card-content>
+    
+   
     </ion-card>
-    <!---------------------------------------------------------------TUS DATOS------------------------------------------------------------->
+
+    
+    <!---------------------------------------------------------------TUS DATOS-----------------------------------------------------------
     <ion-card class="my-2 py-2 px-0 border-top">
         <ion-card-header>
             <ion-card-title class="border-bottom d-flex justify-content-between">
@@ -28,7 +49,8 @@
         </ion-card-header>
 
         <ion-card-content>
-            <!----------------------------------------TABLA---------------------------------------------------------------->
+            -->
+            <!----------------------------------------TABLA--------------------------------------------------------------
             <img src="../../../../../assets/img/avatar.jpg" alt="" class="d-block m-auto">
             <table class="col-12">
                 <tr>
@@ -54,7 +76,7 @@
             </table>
         </ion-card-content>
     </ion-card>
-
+    -->
     <!------------------------------------------------------TU CUOTA DE ESTE MES---------------------------------------------------------->
     <ion-card class="my-2 py-2 px-0 cuota ">
         <ion-card-header class="cuota">
@@ -76,21 +98,47 @@
         </ion-card-content>
     </ion-card>
 
-    <!-----------------------------------------------------------ULTIMOS PAGOS---------------------------------------------------------->
+
+
+    <!--
+    <div class="accordion-itemmy-4 border-bottom">     
+          <h2 class="accordion-header" id="flush-headingOne">
+              <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseInicio" aria-expanded="false" aria-controls="flush-collapseOne">
+                <i class="fas fa-home fa-lg me-2"></i>
+                <span> Inicio</span>
+            </button>
+          </h2>     
+          <div id="CollapseInicio" class="accordion-collapse collapse row" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+              <button class="btn px-4 pt-3 ms-4 boton" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseInicio" aria-expanded="false" aria-controls="flush-collapseOne" [routerLink]="['/dashboard/tu-panel']">
+                <i class="fas fa-user-circle fa-lg me-2"></i>
+                <span> Tu panel</span>
+            </button>
+          </div>       
+      </div>
+    -->
+    <!-----------------------------------------------------------ULTIMOS PAGOS-------------------------------------------------------- -->
     <ion-card class="my-2 py-2 px-0 border-top">
         <ion-card-header>
-            <ion-card-title class="border-bottom">&Uacute;LTIMOS PAGOS</ion-card-title>
+           
+            <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseInicio" aria-expanded="false" aria-controls="flush-collapseOne" style="background-color:transparent">
+                <ion-card-title class="border-bottom">&Uacute;LTIMOS PAGOS</ion-card-title>
+            </button>
         </ion-card-header>
         <ion-card-content>
+            <div  id="CollapseInicio" class="accordion-collapse collapse row">
+
+           
+                <!--
             <div class="mb-3">
-                <!--------------------------------------------MOSTRAR REGISTROS------------------------------->
+               -------------------------------------------MOSTRAR REGISTROS----------------------------- 
                 <p>Mostrar registros:
                     <a class="active" role="button" aria-pressed="true">5</a>
                     <a class="active" role="button" aria-pressed="true">10</a>
                     <a class="active" role="button" aria-pressed="true">15</a>
                 </p>
             </div>
-            <!--------------------------------------------TABLA------------------------------->
+           -->
+            <!--------------------------------------------TABLA----------------------------- -->
             <table class="col-12">
                 <tr>
                     <th class="col-4 border-bottom">Fecha</th>
@@ -98,34 +146,56 @@
                         <input class="form-control" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" dateFormat="Y-m-d" altFormat="F j, Y" placeholder="dd-mm-yyyy" [options]="datePickerOptions" />
                     </td>
                 </tr>
+                <!-- AÑADIDO-->
+                <tr>
+                    <th class="col-4 border-bottom">Centro</th>
+                    <td class="col-8 border-bottom">Centro La Florida</td>
+                </tr>
+                <!---->
                 <tr>
                     <th class="col-4 border-bottom">Importe</th>
                     <td class="col-8 border-bottom">50&euro;</td>
                 </tr>
-                <tr>
+              <!-- <tr>
                     <th class="col-4 border-bottom">M&eacute;todo</th>
                     <td class="col-8 border-bottom">Primero</td>
                 </tr>
+                --> 
             </table>
+            <div class="flex">                
+            <br>
+                <div class="flex-item">
+                     <div style="display: block;">                       
+    <!--------------------------------------------------GRAFICO------------------------------------------------  -->
+                        <canvas baseChart height="200" [datasets]="lineChartData" [options]="lineChartOptions" [labels]="lineChartLabels" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
         </ion-card-content>
     </ion-card>
 
-    <!--------------------------------------------------------------TICKETS------------------------------------------------------------->
+    <!--------------------------------------------------------------TICKETS---------------------------------------------------------
+    <div  id="CollapseInicio" class="accordion-collapse collapse row">
     <ion-card class="my-2 py-2 px-0 border-top">
         <ion-card-header>
             <ion-card-title class="border-bottom">TICKETS</ion-card-title>
         </ion-card-header>
         <ion-card-content>
+            ---->
+             <!---
             <div class="mb-3">
-                <!--------------------------------------------MOSTRAR REGISTROS------------------------------->
+               -----------------------------------------MOSTRAR REGISTROS----------------------------
                 <p>Mostrar registros:
                     <a class="active" role="button" aria-pressed="true">5</a>
                     <a class="active" role="button" aria-pressed="true">10</a>
                     <a class="active" role="button" aria-pressed="true">15</a>
                 </p>
             </div>
-            <!--------------------------------------------TABLA------------------------------->
+           ------------------------------------------TABLA-----------------------------
             <table class="col-12">
+              
                 <tr>
                     <th class="col-4 border-bottom">Grupo</th>
                     <td class="col-8 border-bottom">Grupo 1</td>
@@ -142,16 +212,35 @@
                     <th class="col-4 border-bottom">Comprado</th>
                     <td class="col-8 border-bottom">Comprado</td>
                 </tr>
+           
             </table>
         </ion-card-content>
     </ion-card>
-
+</div>
+ -->
     <!------------------------------------------------------COMPRA RAPIDA DE TICKETS------------------------------------------------------------->
-    <ion-card class="my-2 py-2 px-0 border-top">
+    <ion-card class="my-2 py-2 px-0 border-top"  id="contenidoTickets">
         <ion-card-header>
-            <ion-card-title class="border-bottom">COMPRA RAPIDA DE TICKETS</ion-card-title>
+            <ion-card-title class="border-bottom">COMPRA RÁPIDA DE TICKETS</ion-card-title>
         </ion-card-header>
-
+        <ion-toolbar  id="columnas"  >
+            <select class="form-select mb-2"style="width30%" >
+                <option selected disabled>Centro</option>
+                <option value="1">La Florida</option>
+                <option value="2">Aviles</option>
+            </select>
+            <select class="form-select mb-2">
+                <option selected disabled>Actividades</option>
+                <option value="pilates">Pilates</option>
+                <option value="yoga">Yoga</option>
+                <option value="aerosoluna">Aerosoluna</option>
+                <option value="yoga-infantil">Yoga Infantil</option>
+                <option value="readapt-fisica">Readapt. Física</option>
+                <option value="gimnasia-hipopresiva">Gimn. Hipopresiva</option>
+                <option value="entrenam-persona">Entrenam. Personal</option>
+                <option value="pilates-embarazadas">Pilates Embarazadas</option>
+            </select>
+          </ion-toolbar>
         <!-------------------------------------------------TARJETA 1------------------------------------------------>
         <ion-card class="mx-0 mt-0 border-top border-radius">
             <ion-card-header>
@@ -182,7 +271,7 @@
                 <button class="btn" id="comprar" (click)="comprarModal()">Comprar</button>
             </ion-card-content>
         </ion-card>
-        <!-------------------------------------------------TARJETA 4------------------------------------------------>
+        <!-------------------------------------------------TARJETA 4----------------------------------------------
         <ion-card class="mx-0 mt-0 border-top border-radius">
             <ion-card-header>
                 <ion-card-subtitle>Martes, 01/06, 9:30</ion-card-subtitle>
@@ -192,7 +281,7 @@
                 <button class="btn" id="comprar" (click)="comprarModal()">Comprar</button>
             </ion-card-content>
         </ion-card>
-
+        -->
         <!--------------------------------------------------------------------PAGINADOR------------------------------------------------------------------>
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
