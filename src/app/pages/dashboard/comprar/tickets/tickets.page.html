@@ -35,15 +35,15 @@
         <div class="text-center">
             <ion-chip id="botonDia">
                 <ion-icon name="chevron-back-outline"></ion-icon>
-                <ion-label color="dark" class="page-link">Ayer </ion-label>
+                <ion-label color="dark" class="page-link"><span style="padding-right:3px">Ayer</span> {{dia - 1}}/{{mes}}</ion-label>
             </ion-chip>
                 
             <ion-chip id="botonDia">
-                <ion-label color="dark" class="page-link">Hoy</ion-label>
+                <ion-label color="dark" class="page-link"><span style="padding-right:3px">Hoy</span> {{dia}}/{{mes}}</ion-label>
             </ion-chip>
                 
             <ion-chip id="botonDia">
-                <ion-label color="dark" class="page-link">Mañana</ion-label>
+                <ion-label color="dark" class="page-link"><span style="padding-right:3px">Mañana</span>  {{dia + 1}}/{{mes}}</ion-label>
                 <ion-icon name="chevron-forward-outline"></ion-icon>
             </ion-chip>
         </div>

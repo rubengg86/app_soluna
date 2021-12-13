@@ -14,8 +14,9 @@ export class BotonComprarPage implements OnInit {
 
   constructor(public modalController: ModalController) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
+
+  
   change(event){
     const radio=event.target.id;
     if(radio==='tarjeta'){

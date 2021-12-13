@@ -9,6 +9,15 @@ import { BotonComprarPage } from '../../boton-comprar/boton-comprar.page';
   styleUrls: ['./tickets.page.scss'],
 })
 export class TicketsPage implements OnInit {
+
+
+/*-------- Día y mes Actual ---------*/
+  dia: number = new Date().getDate();
+  mes: number = new Date().getMonth();
+  
+
+
+  
   ticket=true;
 
   /*--------------------------------CALENDARIO FLATPICKR---------------------------- */
@@ -24,6 +33,7 @@ export class TicketsPage implements OnInit {
   constructor(public modalController: ModalController) { }
 
   ngOnInit() {
+     
   }
 
   /*--------------------------------MODAL BOTONES COMPRAR ---------------------------- */
@@ -33,5 +43,9 @@ export class TicketsPage implements OnInit {
     });
     return await modal.present();
   }
+
+
+
+
 
 }

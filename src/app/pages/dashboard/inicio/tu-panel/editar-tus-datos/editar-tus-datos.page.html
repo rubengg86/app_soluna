@@ -15,7 +15,8 @@
 <!-------------------------------------------------------------------FORMULARIO--------------------------------------------------------------->
 <ion-content color="light">
     <br>
-    <form action="" class="px-4 py-1">
+    <form action="" class="px-4 py-1" id="formUpdate">
+        <br> 
         <span>+</span>
         <div *ngIf="previsualizacion" class="d-block m-auto p-0 m-0" id="previsualizar" for="files">
             <label for="files">
@@ -25,7 +26,8 @@
         <label for="files" class="btn text-center col-12">Elegir una foto de perfil</label>
         <input type="file" id="files" (change)="fileChangeEvent($event)">
       
-        <div style="backgroung-color:white">
+        <div>
+            <br>
         <ion-input placeholder="Nombre" class="border-bottom mb-2"></ion-input>
         <ion-input placeholder="Apellidos" class="border-bottom mb-2"></ion-input>
         <ion-input placeholder="Email" class="border-bottom mb-2"></ion-input>
@@ -33,6 +35,7 @@
         <ion-input placeholder="DNI" class="border-bottom mb-2"></ion-input>
     <!--    <ion-input placeholder="Cuenta bancaria" class="border-bottom mb-2"></ion-input>
    -->
+   <br>
     </div>
     </form>
 </ion-content>

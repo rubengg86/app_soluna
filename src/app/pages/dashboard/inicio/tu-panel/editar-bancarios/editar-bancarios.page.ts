@@ -1,6 +1,8 @@
 import { ModalController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+
+import { CodigoComponent2 } from './codigo/codigo.component';
+
 @Component({
   selector: 'app-editar-bancarios',
   templateUrl: './editar-bancarios.page.html',
@@ -9,48 +11,38 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class EditarBancariosPage implements OnInit {
 
-  public previsualizacion= '../../../../../../assets/img/avatar.jpg';
+  tarjeta=false;
+  paypal=false;
 
-  constructor(private modalController: ModalController,
-    public sanitizer: DomSanitizer) { }
 
-  ngOnInit() {
+  constructor(private modalController: ModalController ) { }
+
+  ngOnInit() { }
+
+
+  change(event){
+    const radio=event.target.id;
+    if(radio==='tarjeta'){
+      this.tarjeta=true;
+      this.paypal=false;
+    }else if (radio==='paypal'){
+      this.tarjeta=false;
+      this.paypal=true;
+    }
   }
 
-  /*----------------------------------METODOS PARA LA FOTO DE PERFIL------------------------- */
-  fileChangeEvent(fileInput: any) {
-      const archivo= fileInput.target.files[0];
-      this.extraerBase64(archivo).then((imagen: any) =>{
-        this.previsualizacion = imagen.base;
-      });
-    }
-
-    extraerBase64 = async ($event: any) => new Promise((resolve, reject) => {
-      try {
-        const unsafeImg = window.URL.createObjectURL($event);
-        const image = this.sanitizer.bypassSecurityTrustUrl(unsafeImg);
-        const reader = new FileReader();
-        reader.readAsDataURL($event);
-        reader.onload = () => {
-          resolve({
-            base: reader.result
-          });
-        };
-        reader.onerror = error => {
-          resolve({
-            base: null
-          });
-        };
-      } catch (e) {
-        return null;
-      }
-    });
-
-    /*----------------------------------CERRAR MODAL------------------------- */
   dismiss() {
     this.modalController.dismiss({
       dismissed: true
     });
   }
+  
+  async codigoModal() {
+    const modal = await this.modalController.create({
+      component: CodigoComponent2
+    });
+    return await modal.present();
+  };
+  
 
 }

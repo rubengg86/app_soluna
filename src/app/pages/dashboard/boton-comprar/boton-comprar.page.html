@@ -61,7 +61,7 @@
                         <a href="" class="mt-2" (click)="codigoModal()">¿Qué es el código de seguridad?</a>
                     </div>
                     <ion-checkbox class="border me-2 mt-2"></ion-checkbox>
-                    <label for="" class="ml-3">Recordar esta tarjeta para su uso posterior</label>
+                    <label for="" class="ml-3"><small>Recordar esta tarjeta para su uso posterior</small></label>
                 </form>
             </ion-card-content>
         </ion-card>
@@ -78,7 +78,21 @@
                 </ion-card-title>
             </ion-card-header>
             <ion-card-content class="mt-2">
-
+                <form action="">
+                    <label for="">Nombre del titular</label>
+                    <input type="text" class="form-control form-control-solid mb-2" autocomplete="off">
+                    <label for="">Correo electrónico</label>
+                    <input type="text" class="form-control form-control-solid mb-2" autocomplete="off">
+                    <label for="">Domicilio</label>
+                    <input type="text" class="form-control form-control-solid mb-2" autocomplete="off">
+                    <label for="">Número de teléfono</label>
+                    <input type="number" class="form-control form-control-solid mb-2" autocomplete="off">
+                    <label for="">Fecha de nacimiento</label>
+                    <input type="date" class="form-control form-control-solid mb-2" autocomplete="off">
+                   
+                    <ion-checkbox class="border me-2 mt-2"></ion-checkbox>
+                    <label for="" class="ml-3"><small>Recordar esta tarjeta para su uso posterior</small></label>
+                </form>
             </ion-card-content>
         </ion-card>
     </ion-radio-group>

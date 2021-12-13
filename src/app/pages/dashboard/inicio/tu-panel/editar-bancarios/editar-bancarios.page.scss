@@ -23,9 +23,8 @@ span {
 }
 
 img {
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
+    height: 21.7px;
+    width: 32.55px;
 }
 
 #files {
@@ -42,4 +41,37 @@ img {
 }
 #footer, #emisores{
     background-color: #F1F1F1
+}
+ion-card-title,
+h1,
+ion-card-content {
+    color: black;
+}
+
+#comprar {
+    background-color: #59137D;
+    color: white;
+    border: 0;
+    float: right;
+}
+
+.inputWidth {
+    width: 60px;
+    margin-right: 20px;
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: small;
+    color: #75249e;
+}
+
+#contenidoComprar{
+    padding:50px;
+}
+
+#contenidoFooter{
+   background-color: #F1F1F1;
+    border-top: white 1px solid;
 }

@@ -9,6 +9,8 @@ import { DashboardPageRoutingModule } from './dashboard-routing.module';
 
 import { DashboardPage } from './dashboard.page';
 import { TuPanelPageModule } from './inicio/tu-panel/tu-panel.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   imports: [
@@ -17,7 +19,8 @@ import { TuPanelPageModule } from './inicio/tu-panel/tu-panel.module';
     IonicModule,
     DashboardPageRoutingModule,
     FlatpickrModule.forRoot(),
-    TuPanelPageModule
+    TuPanelPageModule,
+    NgbModule
   ],
   declarations: [DashboardPage]
 })

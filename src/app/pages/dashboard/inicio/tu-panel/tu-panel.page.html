@@ -125,8 +125,26 @@
             </button>
         </ion-card-header>
         <ion-card-content>
-            <div  id="CollapseInicio" class="accordion-collapse collapse row">
-
+            <div  id="CollapseInicio" class="accordion-collapse collapse col">
+               
+             <ion-item id="fecha"> 
+                     <ion-label >Comprueba según mes</ion-label>
+                     <ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" min="2021" ></ion-datetime>
+             </ion-item>
+             
+            <div class="wrapper">
+                <input type="radio" [(ngModel)]="pagos" name="select" [value]="1"[checked]="options" id="option-1" checked>
+                 <label for="option-1" class="option option-1">
+                    <div class="dot"></div>
+                     <span>Gráfico</span>
+                </label>
+            
+                <input type="radio" [(ngModel)]="pagos" name="select" [value]="0" [checked]="!options" id="option-2">
+                 <label for="option-2" class="option option-2">
+                    <div class="dot"></div>
+                     <span>Listado</span>
+                </label>
+            </div>
            
                 <!--
             <div class="mb-3">
@@ -138,7 +156,7 @@
                 </p>
             </div>
            -->
-            <!--------------------------------------------TABLA----------------------------- -->
+            <!--------------------------------------------TABLA----------------------------- 
             <table class="col-12">
                 <tr>
                     <th class="col-4 border-bottom">Fecha</th>
@@ -146,12 +164,12 @@
                         <input class="form-control" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" dateFormat="Y-m-d" altFormat="F j, Y" placeholder="dd-mm-yyyy" [options]="datePickerOptions" />
                     </td>
                 </tr>
-                <!-- AÑADIDO-->
+                <!-- AÑADIDO-
                 <tr>
                     <th class="col-4 border-bottom">Centro</th>
                     <td class="col-8 border-bottom">Centro La Florida</td>
                 </tr>
-                <!---->
+                <!---
                 <tr>
                     <th class="col-4 border-bottom">Importe</th>
                     <td class="col-8 border-bottom">50&euro;</td>
@@ -160,16 +178,31 @@
                     <th class="col-4 border-bottom">M&eacute;todo</th>
                     <td class="col-8 border-bottom">Primero</td>
                 </tr>
-                --> 
             </table>
-            <div class="flex">                
-            <br>
+        -->
+            <div class="flex" id="grafico" *ngIf="pagos ==1">                
+                <br>
                 <div class="flex-item">
                      <div style="display: block;">                       
     <!--------------------------------------------------GRAFICO------------------------------------------------  -->
                         <canvas baseChart height="200" [datasets]="lineChartData" [options]="lineChartOptions" [labels]="lineChartLabels" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
                     </div>
                 </div>
+            </div>
+
+            <div id="listado" *ngIf="pagos ==0">      
+                <ion-list>
+                    <ion-item>
+                      <ion-label>Ticket Yoga</ion-label>
+                      <ion-label>5€</ion-label>
+                      <small>12-12-2021</small>
+                    </ion-item>
+                    <ion-item>
+                      <ion-label>Bono Pilates</ion-label>
+                      <ion-label>105€</ion-label>
+                      <small>12-12-2021</small>
+                    </ion-item>
+                </ion-list>
             </div>
             
         </div>
@@ -224,12 +257,12 @@
             <ion-card-title class="border-bottom">COMPRA RÁPIDA DE TICKETS</ion-card-title>
         </ion-card-header>
         <ion-toolbar  id="columnas"  >
-            <select class="form-select mb-2"style="width30%" >
-                <option selected disabled>Centro</option>
+            <select class="form-select mb-2" id="centros">
+                <option selected disabled>Centros</option>
                 <option value="1">La Florida</option>
                 <option value="2">Aviles</option>
             </select>
-            <select class="form-select mb-2">
+            <select class="form-select mb-2"id="actividades" >
                 <option selected disabled>Actividades</option>
                 <option value="pilates">Pilates</option>
                 <option value="yoga">Yoga</option>
@@ -294,6 +327,7 @@
                 <li class="page-item"><a class="page-link">1</a></li>
                 <li class="page-item"><a class="page-link">2</a></li>
                 <li class="page-item"><a class="page-link">3</a></li>
+                
                 <li class="page-item">
                     <a class="page-link" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
