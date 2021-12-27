@@ -13,30 +13,31 @@ export class AppComponent implements OnInit{
 
   constructor(private router: Router, private servicio: ServicioService) { }
 
-  getMantenimiento(){
-    this.servicio.getMantenimiento().subscribe(
-      result => {
-        this.mantenimientos = result[0].mantenimiento;
-        //si mantenimiento tiene el valor de 1 en la BD va a la ruta /mantenimiento
-        if(this.mantenimientos===1){
-          this.router.navigate(['/mantenimiento']);
-        }else{
-          const currentUser=localStorage.getItem('currentUser');
+  // getMantenimiento(){
+  //   this.servicio.getMantenimiento().subscribe(
+  //     result => {
+  //       this.mantenimientos = result[0].mantenimiento;
+  //       //si mantenimiento tiene el valor de 1 en la BD va a la ruta /mantenimiento
+  //       if(this.mantenimientos===1){
+  //         this.router.navigate(['/mantenimiento']);
+  //       }else{
+  //         const currentUser=localStorage.getItem('currentUser');
 
-          //si currentUser existe y no esta vacio puede navegar, sino no pasara de inicio
-          if(currentUser!=null && currentUser!==''){
+  //         //si currentUser existe y no esta vacio puede navegar, sino no pasara de inicio
+  //         if(currentUser!=null && currentUser!==''){
 
-          }else{
-            this.router.navigate(['/login']);
-          }
-        }
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
+  //         }else{
+  //           this.router.navigate(['/login']);
+  //         }
+  //       }
+  //     },
+  //     error => {
+  //       console.log(error);
+  //     }
+  //   );
+  // }
+
   ngOnInit() {
-    this.getMantenimiento();
+    // this.getMantenimiento();
   }
 }

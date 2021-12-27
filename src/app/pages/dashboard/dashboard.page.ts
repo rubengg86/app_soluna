@@ -21,7 +21,6 @@ export class DashboardPage{
   cerrarSesion(){
     localStorage.removeItem('currentUser');
     this.router.navigate(['/login']);
-
   }
 
 }

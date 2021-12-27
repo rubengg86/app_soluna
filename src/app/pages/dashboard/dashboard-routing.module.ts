@@ -8,6 +8,7 @@ const routes: Routes = [
     path: '',
     component: DashboardPage,
     children:[
+      { path: '', redirectTo: 'tu-panel', pathMatch: 'full' },
       {
         path: 'tu-panel',
         loadChildren: () => import('./inicio/tu-panel/tu-panel.module').then( m => m.TuPanelPageModule)

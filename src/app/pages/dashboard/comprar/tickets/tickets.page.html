@@ -29,27 +29,27 @@
 -->
 
     <!-----------------------------------------------------SI HAY TICKETS------------------------------------------------------>
-    <ion-card *ngIf="ticket" class=" px-0 border-top" >
-       
-       <!------------------------------------------------BOTONES: AYER - HOY - MAÑANA-->
+    <ion-card *ngIf="ticket" class=" px-0 border-top">
+
+        <!------------------------------------------------BOTONES: AYER - HOY - MAÑANA-->
         <div class="text-center">
             <ion-chip id="botonDia">
                 <ion-icon name="chevron-back-outline"></ion-icon>
                 <ion-label color="dark" class="page-link"><span style="padding-right:3px">Ayer</span> {{dia - 1}}/{{mes}}</ion-label>
             </ion-chip>
-                
+
             <ion-chip id="botonDia">
                 <ion-label color="dark" class="page-link"><span style="padding-right:3px">Hoy</span> {{dia}}/{{mes}}</ion-label>
             </ion-chip>
-                
+
             <ion-chip id="botonDia">
-                <ion-label color="dark" class="page-link"><span style="padding-right:3px">Mañana</span>  {{dia + 1}}/{{mes}}</ion-label>
+                <ion-label color="dark" class="page-link"><span style="padding-right:3px">Mañana</span> {{dia + 1}}/{{mes}}</ion-label>
                 <ion-icon name="chevron-forward-outline"></ion-icon>
             </ion-chip>
         </div>
-          
+
         <!-------------------------------------------------TARJETA 1------------------------------------------------>
-        <ion-card class="mx-0 mt-0 border-top border-radius">
+        <ion-card class="mx-0 mt-0 border-top border-radius" *ngFor="let centro of centros">
             <ion-card-header>
                 <ion-card-subtitle>Martes, 01/06, 9:30</ion-card-subtitle>
                 <ion-card-title>La Florida, Pilates</ion-card-title>
@@ -59,7 +59,7 @@
             </ion-card-content>
         </ion-card>
         <!-------------------------------------------------TARJETA 2------------------------------------------------>
-        <ion-card class="mx-0 mt-0 border-top border-radius">
+        <!-- <ion-card class="mx-0 mt-0 border-top border-radius">
             <ion-card-header>
                 <ion-card-subtitle>Martes, 01/06, 9:30</ion-card-subtitle>
                 <ion-card-title>La Florida, Pilates</ion-card-title>
@@ -67,9 +67,9 @@
             <ion-card-content>
                 <button class="btn" id="comprar" (click)="comprarModal()">COMPRAR</button>
             </ion-card-content>
-        </ion-card>
+        </ion-card> -->
         <!--------------------------------------------------------------------PAGINADOR------------------------------------------------------------------>
-        <nav aria-label="Page navigation example" >
+        <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center" id="listadoPie">
                 <li class="page-item disabled">
                     <a class="page-link" aria-label="Previous">

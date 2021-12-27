@@ -7,23 +7,23 @@
 
         <ion-card-content>
             <p>Porcentaje de asistencias y faltas que has tenido en el &uacute;ltimo mes.</p>
-            <br>    
+            <br>
 
-            <div style="font-size:12px" class="d-flex justify-content-between text-center">            
-             
-             <div id="verde" style="border-radius:3px;margin-right:0;width:80px;
+            <div style="font-size:12px" class="d-flex justify-content-between text-center">
+
+                <div id="verde" style="border-radius:3px;margin-right:0;width:80px;
                  height:28px; padding:6px;color:white">Asistencia</div>
                 <div id="rojo" style="border-radius:3px;margin-right:0;width:80px; 
                 height:28px; padding:6px;color:white">Falta</div>
 
             </div>
-         <!--<div class="d-flex justify-content-center">
+            <!--<div class="d-flex justify-content-center">
                 <div id="verde"></div>
                 <p>Asistencia</p>
                 <div id="rojo"></div>
                 <p>Falta</p>
             </div>
-            -->   
+            -->
             <br>
             <div class="d-flex justify-content-center">
                 <div id="verde" style="border-radius:3px;"></div>
@@ -32,11 +32,11 @@
                 <p>15%</p>
             </div>
         </ion-card-content>
-    
-   
+
+
     </ion-card>
 
-    
+
     <!---------------------------------------------------------------TUS DATOS-----------------------------------------------------------
     <ion-card class="my-2 py-2 px-0 border-top">
         <ion-card-header>
@@ -50,7 +50,7 @@
 
         <ion-card-content>
             -->
-            <!----------------------------------------TABLA--------------------------------------------------------------
+    <!----------------------------------------TABLA--------------------------------------------------------------
             <img src="../../../../../assets/img/avatar.jpg" alt="" class="d-block m-auto">
             <table class="col-12">
                 <tr>
@@ -119,33 +119,33 @@
     <!-----------------------------------------------------------ULTIMOS PAGOS-------------------------------------------------------- -->
     <ion-card class="my-2 py-2 px-0 border-top">
         <ion-card-header>
-           
+
             <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseInicio" aria-expanded="false" aria-controls="flush-collapseOne" style="background-color:transparent">
                 <ion-card-title class="border-bottom">&Uacute;LTIMOS PAGOS</ion-card-title>
             </button>
         </ion-card-header>
         <ion-card-content>
-            <div  id="CollapseInicio" class="accordion-collapse collapse col">
-               
-             <ion-item id="fecha"> 
-                     <ion-label >Comprueba según mes</ion-label>
-                     <ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" min="2021" ></ion-datetime>
-             </ion-item>
-             
-            <div class="wrapper">
-                <input type="radio" [(ngModel)]="pagos" name="select" [value]="1"[checked]="options" id="option-1" checked>
-                 <label for="option-1" class="option option-1">
+            <div id="CollapseInicio" class="accordion-collapse collapse col">
+
+                <ion-item id="fecha">
+                    <ion-label>Comprueba según mes</ion-label>
+                    <ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" min="2021"></ion-datetime>
+                </ion-item>
+
+                <div class="wrapper">
+                    <input type="radio" [(ngModel)]="pagos" name="select" [value]="1" [checked]="options" id="option-1" checked>
+                    <label for="option-1" class="option option-1">
                     <div class="dot"></div>
                      <span>Gráfico</span>
                 </label>
-            
-                <input type="radio" [(ngModel)]="pagos" name="select" [value]="0" [checked]="!options" id="option-2">
-                 <label for="option-2" class="option option-2">
+
+                    <input type="radio" [(ngModel)]="pagos" name="select" [value]="0" [checked]="!options" id="option-2">
+                    <label for="option-2" class="option option-2">
                     <div class="dot"></div>
                      <span>Listado</span>
                 </label>
-            </div>
-           
+                </div>
+
                 <!--
             <div class="mb-3">
                -------------------------------------------MOSTRAR REGISTROS----------------------------- 
@@ -156,7 +156,7 @@
                 </p>
             </div>
            -->
-            <!--------------------------------------------TABLA----------------------------- 
+                <!--------------------------------------------TABLA----------------------------- 
             <table class="col-12">
                 <tr>
                     <th class="col-4 border-bottom">Fecha</th>
@@ -180,32 +180,32 @@
                 </tr>
             </table>
         -->
-            <div class="flex" id="grafico" *ngIf="pagos ==1">                
-                <br>
-                <div class="flex-item">
-                     <div style="display: block;">                       
-    <!--------------------------------------------------GRAFICO------------------------------------------------  -->
-                        <canvas baseChart height="200" [datasets]="lineChartData" [options]="lineChartOptions" [labels]="lineChartLabels" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
+                <div class="flex" id="grafico" *ngIf="pagos ==1">
+                    <br>
+                    <div class="flex-item">
+                        <div style="display: block;">
+                            <!--------------------------------------------------GRAFICO------------------------------------------------  -->
+                            <canvas baseChart height="200" [datasets]="lineChartData" [options]="lineChartOptions" [labels]="lineChartLabels" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div id="listado" *ngIf="pagos ==0">      
-                <ion-list>
-                    <ion-item>
-                      <ion-label>Ticket Yoga</ion-label>
-                      <ion-label>5€</ion-label>
-                      <small>12-12-2021</small>
-                    </ion-item>
-                    <ion-item>
-                      <ion-label>Bono Pilates</ion-label>
-                      <ion-label>105€</ion-label>
-                      <small>12-12-2021</small>
-                    </ion-item>
-                </ion-list>
+                <div id="listado" *ngIf="pagos ==0">
+                    <ion-list>
+                        <ion-item>
+                            <ion-label>Ticket Yoga</ion-label>
+                            <ion-label>5€</ion-label>
+                            <small>12-12-2021</small>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>Bono Pilates</ion-label>
+                            <ion-label>105€</ion-label>
+                            <small>12-12-2021</small>
+                        </ion-item>
+                    </ion-list>
+                </div>
+
             </div>
-            
-        </div>
         </ion-card-content>
     </ion-card>
 
@@ -217,7 +217,7 @@
         </ion-card-header>
         <ion-card-content>
             ---->
-             <!---
+    <!---
             <div class="mb-3">
                -----------------------------------------MOSTRAR REGISTROS----------------------------
                 <p>Mostrar registros:
@@ -252,17 +252,17 @@
 </div>
  -->
     <!------------------------------------------------------COMPRA RAPIDA DE TICKETS------------------------------------------------------------->
-    <ion-card class="my-2 py-2 px-0 border-top"  id="contenidoTickets">
+    <ion-card class="my-2 py-2 px-0 border-top" id="contenidoTickets">
         <ion-card-header>
             <ion-card-title class="border-bottom">COMPRA RÁPIDA DE TICKETS</ion-card-title>
         </ion-card-header>
-        <ion-toolbar  id="columnas"  >
+        <ion-toolbar id="columnas">
             <select class="form-select mb-2" id="centros">
                 <option selected disabled>Centros</option>
                 <option value="1">La Florida</option>
                 <option value="2">Aviles</option>
             </select>
-            <select class="form-select mb-2"id="actividades" >
+            <select class="form-select mb-2" id="actividades">
                 <option selected disabled>Actividades</option>
                 <option value="pilates">Pilates</option>
                 <option value="yoga">Yoga</option>
@@ -273,7 +273,7 @@
                 <option value="entrenam-persona">Entrenam. Personal</option>
                 <option value="pilates-embarazadas">Pilates Embarazadas</option>
             </select>
-          </ion-toolbar>
+        </ion-toolbar>
         <!-------------------------------------------------TARJETA 1------------------------------------------------>
         <ion-card class="mx-0 mt-0 border-top border-radius">
             <ion-card-header>
@@ -327,7 +327,7 @@
                 <li class="page-item"><a class="page-link">1</a></li>
                 <li class="page-item"><a class="page-link">2</a></li>
                 <li class="page-item"><a class="page-link">3</a></li>
-                
+
                 <li class="page-item">
                     <a class="page-link" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
