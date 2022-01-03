@@ -32,15 +32,15 @@ export class ServicioService {
 
   logueado() {
 
-    let currentUser
+    let currentUserSoluna
 
-    if (localStorage.getItem('currentUser')) {
-      currentUser = localStorage.getItem('currentUser');
+    if (localStorage.getItem('currentUserSoluna')) {
+      currentUserSoluna = localStorage.getItem('currentUserSoluna');
     } else {
-      currentUser = '';
+      currentUserSoluna = '';
     }
 
-    if ( !currentUser ) {
+    if ( !currentUserSoluna ) {
       return false;
     }
 
@@ -51,9 +51,30 @@ export class ServicioService {
     if ( expira > Number(new Date()) ) {
       return true;
     } else {
-      localStorage.removeItem('currentUser');
+      localStorage.removeItem('currentUserSoluna');
       return false;
     }
+  }
+
+  getCustomerById(customer_id) {
+    return this.http.get(this.url+`/get_customer/${customer_id}`);
+  }
+
+  getAsssistanceById(customer_id) {
+    return this.http.get(this.url+`/get_customer_assistance_percent/${customer_id}`);
+  }
+
+  getLastPayments(customer_id) {
+    return this.http.get(this.url+`/ca_last_payments/${customer_id}`);
+  }
+
+  getBillUser(customer_id, center_id) {
+    return this.http.get(this.url+`/ca_bill_user/${customer_id}/${center_id}`);
+  }
+
+  getMonthAssistance(customer_id) {
+    return this.http.get(this.url+`/get_customer_assistance_month/${customer_id}`);
+
   }
 
   getCenters(): Observable<any>{

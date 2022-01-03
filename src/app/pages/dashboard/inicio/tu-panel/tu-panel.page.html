@@ -25,11 +25,13 @@
             </div>
             -->
             <br>
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center" *ngIf="asistencia">
                 <div id="verde" style="border-radius:3px;"></div>
-                <p>85%</p>
+                <p>{{asistencia.yes_percent}}%</p>
+                <!-- <p>85%</p> -->
                 <div id="rojo" style="border-radius:3px;"></div>
-                <p>15%</p>
+                <p>{{asistencia.no_percent}}%</p>
+                <!-- <p>15%</p> -->
             </div>
         </ion-card-content>
 
@@ -83,13 +85,15 @@
             <ion-card-title class="border-bottom fw-lighter cuota">TU CUOTA DE ESTE MES</ion-card-title>
         </ion-card-header>
 
-        <ion-card-content class="cuota">
-            <h1 class="cuota">0.0&euro;</h1>
+        <ion-card-content class="cuota" *ngIf="cuota">
+            <h1 class="cuota">{{cuota.total}}&euro;</h1>
+            <!-- <h1 class="cuota">0.0&euro;</h1> -->
 
             <div class="d-flex justify-content-between cuota">
                 <div class="cuota">
                     <span class="cuota">Servicio extra</span><br>
-                    <span class="cuota">0&euro;</span>
+                    <span class="cuota">{{cuota.extra_payments.total}}&euro;</span>
+                    <!-- <span class="cuota">0&euro;</span> -->
                 </div>
                 <div style="background-color:#59137D">
                     <button class="btn btn-lg" id="pagar">Pagar</button>
@@ -129,7 +133,7 @@
 
                 <ion-item id="fecha">
                     <ion-label>Comprueba según mes</ion-label>
-                    <ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" min="2021"></ion-datetime>
+                    <ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" min="2017" #popoverDatetime (ionChange)="fechaFiltro = popoverDatetime.value.slice(0,7); comprobarFecha()"></ion-datetime>
                 </ion-item>
 
                 <div class="wrapper">
@@ -192,7 +196,11 @@
 
                 <div id="listado" *ngIf="pagos ==0">
                     <ion-list>
-                        <ion-item>
+                        <ion-item *ngFor="let pagoCliente of pagosFiltrados">
+                            <ion-label>{{pagoCliente.gross_amount}}€</ion-label>
+                            <small>{{pagoCliente.date.slice(0,10)}}</small>
+                        </ion-item>
+                        <!-- <ion-item>
                             <ion-label>Ticket Yoga</ion-label>
                             <ion-label>5€</ion-label>
                             <small>12-12-2021</small>
@@ -201,7 +209,7 @@
                             <ion-label>Bono Pilates</ion-label>
                             <ion-label>105€</ion-label>
                             <small>12-12-2021</small>
-                        </ion-item>
+                        </ion-item> -->
                     </ion-list>
                 </div>
 
@@ -256,13 +264,13 @@
         <ion-card-header>
             <ion-card-title class="border-bottom">COMPRA RÁPIDA DE TICKETS</ion-card-title>
         </ion-card-header>
-        <ion-toolbar id="columnas">
+        <ion-toolbar id="columnas" color="light">
             <select class="form-select mb-2" id="centros">
                 <option selected disabled>Centros</option>
                 <option value="1">La Florida</option>
                 <option value="2">Aviles</option>
             </select>
-            <select class="form-select mb-2" id="actividades">
+            <select class="form-select mb-2" id="actividades" color="light">
                 <option selected disabled>Actividades</option>
                 <option value="pilates">Pilates</option>
                 <option value="yoga">Yoga</option>

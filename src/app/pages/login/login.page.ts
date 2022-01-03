@@ -35,9 +35,7 @@ export class LoginPage{
     this.servicio.getUsers(login, password).subscribe( (res: any) => {
 
       if (res){
-        // console.log(res);
-
-        localStorage.setItem('currentUser', res);
+        localStorage.setItem('currentUserSoluna', res.customer_id);
     
         let hoy = new Date();
         hoy.setSeconds(3600);
@@ -66,7 +64,7 @@ export class LoginPage{
   //         for(const usuario of this.usuarios){
   //           //si el usuario y contraseña son iguales a lo que escribo, guarda el token en el localStorage
   //           if(usuario.user===nombreF && usuario.pass===passF){
-  //             localStorage.setItem('currentUser', usuario.token);
+  //             localStorage.setItem('currentUserSoluna', usuario.token);
   //             entrada=true;
   //           }
   //         }

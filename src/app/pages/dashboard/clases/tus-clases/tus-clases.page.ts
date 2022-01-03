@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FlatpickrDefaultsInterface } from 'angularx-flatpickr/flatpickr-defaults.service';
+import { ServicioService } from '../../../../services/servicio.service';
 
 @Component({
   selector: 'app-tus-clases',
@@ -33,10 +34,24 @@ longhand: ['Enero', 'Febreo', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agost
     enable: [{ from: new Date(0, 1), to: new Date(new Date().getFullYear() + 200, 12) }]
   };
 
+  public customer_id = localStorage.getItem('currentUserSoluna');
+  public clasesMes;
 
-  constructor() { }
+  constructor(private _service: ServicioService) { }
+
+  getAsistenciaMensual () {
+    this._service.getMonthAssistance(this.customer_id).subscribe( res => {
+
+      this.clasesMes = res;
+      console.log(this.clasesMes);
+
+    }, error =>{
+      console.log(error);
+    })
+  }
 
   ngOnInit() {
+    this.getAsistenciaMensual();
   }
 
 }

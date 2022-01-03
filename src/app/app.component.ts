@@ -21,10 +21,10 @@ export class AppComponent implements OnInit{
   //       if(this.mantenimientos===1){
   //         this.router.navigate(['/mantenimiento']);
   //       }else{
-  //         const currentUser=localStorage.getItem('currentUser');
+  //         const currentUserSoluna=localStorage.getItem('currentUserSoluna');
 
-  //         //si currentUser existe y no esta vacio puede navegar, sino no pasara de inicio
-  //         if(currentUser!=null && currentUser!==''){
+  //         //si currentUserSoluna existe y no esta vacio puede navegar, sino no pasara de inicio
+  //         if(currentUserSoluna!=null && currentUserSoluna!==''){
 
   //         }else{
   //           this.router.navigate(['/login']);

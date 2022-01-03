@@ -19,7 +19,7 @@ export class DashboardPage{
   }
 
   cerrarSesion(){
-    localStorage.removeItem('currentUser');
+    localStorage.removeItem('currentUserSoluna');
     this.router.navigate(['/login']);
   }
 

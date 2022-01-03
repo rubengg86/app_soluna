@@ -86,38 +86,37 @@ img {
     font-weight: normal;
 }
 
-
-#contenidoTickets nav ul, #contenidoTickets nav ul li{
+#contenidoTickets nav ul,
+#contenidoTickets nav ul li {
     background-color: transparent
 }
 
-
-
-
 #columnas {
     padding: 0px;
-    width:100%;
-    margin:0;
-}
-#centros{
-    float:left;
-    width:40%
-}
-#actividades{
-    float:right;
-    width:59%
+    width: 100%;
+    margin: 0;
 }
 
+#centros {
+    float: left;
+    width: 40%
+}
 
-#fecha ion-label{
+#actividades {
+    float: right;
+    width: 59%
+}
+
+#fecha ion-label {
     background-color: #59137D;
-    font-weight:700;
-    font-size:13px;
-    color:white; 
-    text-align:center;
-    padding:10px; 
-    border-radius:6px
+    font-weight: 700;
+    font-size: 13px;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 6px
 }
-#fecha ion-datetime{
-    background-color:transparent
+
+#fecha ion-datetime {
+    background-color: transparent
 }

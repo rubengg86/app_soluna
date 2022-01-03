@@ -6,6 +6,7 @@ import { EditarTusDatosPage } from './editar-tus-datos/editar-tus-datos.page';
 import { ChartDataSets, ChartType } from 'chart.js';
 import { Label } from 'ng2-charts';
 import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
+import { ServicioService } from '../../../../services/servicio.service';
 
 @Component({
   selector: 'app-tu-panel',
@@ -15,14 +16,21 @@ import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 
 
 
-export class TuPanelPage{
+export class TuPanelPage implements OnInit{
 
 /*-------- Mes y año Actual ---------*/
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth();
   
+  public customer_id = localStorage.getItem('currentUserSoluna');
+  public asistencia;
+  public cliente;
+  public pagosCliente;
+  public fechaFiltro;
+  public pagosFiltrados:any = [];
+  public cuota;
 
-  constructor(public modalController: ModalController, private calendar: NgbCalendar) {}
+  constructor(public modalController: ModalController, private calendar: NgbCalendar, private _service: ServicioService) {}
 
 
  /*--------------------------------------------GRAFICO------------------------------------------- */
@@ -108,8 +116,70 @@ lineChartType: ChartType = 'line';
         this.model = this.calendar.getToday();
       }
 
+/*------------------- OBTENER CLIENTE -------------------*/
+  getCliente() {
 
+    this._service.getCustomerById(this.customer_id).subscribe( res => {
+    // this._service.getCustomerById(5211).subscribe( res => {
+      this.cliente = res[0];
+      console.log(res[0]);
+      this.getAsistencia();
+      this.getPagos();
+      this.getCuota();
+    }, error =>{
+      console.log(error);
+    })
+  }
 
+  getAsistencia() {
+
+    this._service.getAsssistanceById(this.customer_id).subscribe( res => {
+    // this._service.getAsssistanceById(5211).subscribe( res => {
+      this.asistencia = res;
+    }, error =>{
+      console.log(error);
+    })
+  }
+
+  getPagos() {
+    this._service.getLastPayments(this.customer_id).subscribe( res => {
+    // this._service.getLastPayments(5211).subscribe( res => {
+      console.log(res);
+      this.pagosCliente = res;
+      this.pagosFiltrados = res;
+    }, error =>{
+      console.log(error);
+    })
+  }
+
+  getCuota() {
+    this._service.getBillUser(this.customer_id, this.cliente.center_id).subscribe ( res => {
+    // this._service.getBillUser(5211, 1).subscribe ( res => {
+      console.log(res);
+      this.cuota = res;
+    }, error =>{
+      console.log(error);
+    })
+  }
+
+/*------------------- FILTRO CLIENTE -------------------*/
+  comprobarFecha() {
+    console.log(this.fechaFiltro);
+
+    this.pagosFiltrados = [];
+    let contadorFiltroPagos = 0;
+    for (let i = 0; i < this.pagosCliente.length; i++) {
+
+      if (this.fechaFiltro === this.pagosCliente[i].date.slice(0,7)) {
+        this.pagosFiltrados[contadorFiltroPagos] = this.pagosCliente[i]
+        contadorFiltroPagos++;
+      }
+    }
+  }
+
+  ngOnInit(): void {
+      this.getCliente();
+  }
 
 
 }
