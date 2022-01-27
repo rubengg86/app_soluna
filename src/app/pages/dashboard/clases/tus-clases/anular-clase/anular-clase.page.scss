@@ -1,0 +1,35 @@
+ion-card-title,
+h1,
+ion-card-content {
+    color: black;
+}
+
+#comprar {
+    background-color: #59137D;
+    color: white;
+    border: 0;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.inputWidth {
+    width: 60px;
+    margin-right: 20px;
+}
+
+a {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: small;
+    color: #75249e;
+}
+
+#contenidoComprar {
+    padding: 50px;
+}
+
+#contenidoFooter {
+    background-color: #F1F1F1;
+    border-top: white 1px solid;
+}

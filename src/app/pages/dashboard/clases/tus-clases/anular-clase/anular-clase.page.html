@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-toolbar class="p-3" color="light">
+        <div class="d-flex justify-content-between border-bottom">
+            <ion-title class="text-black">
+                ANULAR CLASE
+            </ion-title>
+            <i class="fas fa-times fa-2x text-black" (click)="dismiss()"></i>
+            <br>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content color="light" id="contenidoComprar">
+    <ion-card class="bg-white border-top col-12">
+        <ion-card-header class="border-bottom">
+            <ion-card-title>
+                ¿Seguro que quiere anular la clase seleccionada?
+            </ion-card-title>
+            <h1>{{fechaFormato}}</h1>
+
+            <ion-card-content>
+                <button type="button" class="btn" id="comprar" (click)="cancelarClase()">Confirmar</button>
+                <button type="button" class="btn" id="comprar" (click)="dismiss()">Atrás</button>
+
+
+            </ion-card-content>
+
+            <!-- <button type="button" class="btn" id="comprar">Cambiar</button>
+          <h1>{{huecos[fecha][0].start_time}}</h1> -->
+        </ion-card-header>
+    </ion-card>
+
+</ion-content>

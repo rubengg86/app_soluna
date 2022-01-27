@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { BotonComprarPage } from '../../../boton-comprar/boton-comprar.page';
+import { ServicioService } from '../../../../../services/servicio.service';
 
 @Component({
   selector: 'app-pilates-embarazadas',
@@ -9,9 +10,58 @@ import { BotonComprarPage } from '../../../boton-comprar/boton-comprar.page';
 })
 export class PilatesEmbarazadasPage implements OnInit {
 
-  constructor(public modalController: ModalController) { }
+  public customer_id = localStorage.getItem('currentUserSoluna');
+  public cliente;
+  public actividadesRegalo;
+  public embaRegalo;
+  public precio1mes;
+  public precio2mes;
+  public precio3mes;
+  public precio6mes;
+
+  constructor(public modalController: ModalController, private _service:ServicioService) { }
 
   ngOnInit() {
+    this.getCliente();
+  }
+
+  getCliente() {
+
+    // this._service.getCustomerById(this.customer_id).subscribe( res => {
+    this._service.getCustomerById(5211).subscribe( res => {
+      this.cliente = res[0];
+      // console.log(res[0]);
+
+      this.getActividadesRegalo();
+    }, error =>{
+      console.log(error);
+    })
+  }
+
+  getActividadesRegalo() {
+    this._service.getBondActivities(this.cliente.center_id).subscribe( res => {
+      this.actividadesRegalo = res;
+      console.log(res);
+      this.filtroActividadesRegalo();
+    }, error =>{
+      console.log(error);
+    })
+  }
+
+  filtroActividadesRegalo() {
+
+    this.actividadesRegalo.forEach(element => {
+      if(element.activity_code === "PEMB_2H"){
+        this.embaRegalo = element;
+        // console.log(this.embaRegalo);
+      }
+    });
+
+    this.precio1mes = this.embaRegalo.amount;
+    this.precio2mes = +(this.embaRegalo.amount)*2;
+    this.precio3mes = +(this.embaRegalo.amount)*3;
+    this.precio6mes = +(this.embaRegalo.amount)*6;
+
   }
 
   async comprarModal() {

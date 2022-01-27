@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { EditarBancariosPage } from '../inicio/tu-panel/editar-bancarios/editar-bancarios.page';
 import { EditarTusDatosPage } from '../inicio/tu-panel/editar-tus-datos/editar-tus-datos.page';
 import { FlatpickrDefaultsInterface } from 'angularx-flatpickr/flatpickr-defaults.service';
 import { ChartDataSets, ChartType } from 'chart.js';
 import { Label } from 'ng2-charts';
+import { ServicioService } from '../../../services/servicio.service';
 
 @Component({
   selector: 'app-mi-cuenta',
   templateUrl: './mi-cuenta.page.html',
   styleUrls: ['./mi-cuenta.page.scss'],
 })
-export class MiCuentaPage {
+export class MiCuentaPage implements OnInit {
 
   /*--------------------------------------------GRAFICO------------------------------------------- 
   public lineChartData: ChartDataSets[] = [
@@ -65,12 +66,34 @@ longhand: ['Enero', 'Febreo', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agos
     enable: [{ from: new Date(0, 1), to: new Date(new Date().getFullYear() + 200, 12) }]
   };
 */
-  constructor(public modalController: ModalController) { }
+  
+  public customer_id = localStorage.getItem('currentUserSoluna');
+  public cliente;
+
+  constructor(public modalController: ModalController, private _service: ServicioService) { }
+
+  ngOnInit(): void {
+    this.getCliente();
+  }
+
+  getCliente() {
+
+    this._service.getCustomerById(this.customer_id).subscribe( res => {
+    // this._service.getCustomerById(5225).subscribe( res => {
+      this.cliente = res[0];
+      // console.log(res[0]);
+    }, error =>{
+      console.log(error);
+    })
+  }
 
   /*-------------------------------------------------MODAL EDITAR--------------------------------------- */
   async editarModal() {
     const modal = await this.modalController.create({
       component: EditarTusDatosPage
+    });
+    modal.onDidDismiss().then((data) => {
+      this.getCliente();
     });
     return await modal.present();
   }
@@ -80,5 +103,4 @@ longhand: ['Enero', 'Febreo', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agos
     });
     return await modal.present();
   }
-
 }

@@ -30,6 +30,9 @@ export class TuPanelPage implements OnInit{
   public pagosFiltrados:any = [];
   public cuota;
 
+  public pagos;
+  public options;
+
   constructor(public modalController: ModalController, private calendar: NgbCalendar, private _service: ServicioService) {}
 
 
@@ -122,7 +125,7 @@ lineChartType: ChartType = 'line';
     this._service.getCustomerById(this.customer_id).subscribe( res => {
     // this._service.getCustomerById(5211).subscribe( res => {
       this.cliente = res[0];
-      console.log(res[0]);
+      // console.log(res[0]);
       this.getAsistencia();
       this.getPagos();
       this.getCuota();
@@ -144,7 +147,7 @@ lineChartType: ChartType = 'line';
   getPagos() {
     this._service.getLastPayments(this.customer_id).subscribe( res => {
     // this._service.getLastPayments(5211).subscribe( res => {
-      console.log(res);
+      // console.log(res);
       this.pagosCliente = res;
       this.pagosFiltrados = res;
     }, error =>{
@@ -155,7 +158,7 @@ lineChartType: ChartType = 'line';
   getCuota() {
     this._service.getBillUser(this.customer_id, this.cliente.center_id).subscribe ( res => {
     // this._service.getBillUser(5211, 1).subscribe ( res => {
-      console.log(res);
+      // console.log(res);
       this.cuota = res;
     }, error =>{
       console.log(error);
@@ -164,7 +167,7 @@ lineChartType: ChartType = 'line';
 
 /*------------------- FILTRO CLIENTE -------------------*/
   comprobarFecha() {
-    console.log(this.fechaFiltro);
+    // console.log(this.fechaFiltro);
 
     this.pagosFiltrados = [];
     let contadorFiltroPagos = 0;

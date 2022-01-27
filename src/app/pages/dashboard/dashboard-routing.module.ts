@@ -74,7 +74,15 @@ const routes: Routes = [
   {
     path: 'boton-comprar',
     loadChildren: () => import('./boton-comprar/boton-comprar.module').then( m => m.BotonComprarPageModule)
+  },  {
+    path: 'taichi',
+    loadChildren: () => import('./comprar/bonos/taichi/taichi.module').then( m => m.TaichiPageModule)
+  },
+  {
+    path: 'aerosoluna-yoga',
+    loadChildren: () => import('./comprar/bonos/aerosoluna-yoga/aerosoluna-yoga.module').then( m => m.AerosolunaYogaPageModule)
   }
+
 ];
 
 @NgModule({

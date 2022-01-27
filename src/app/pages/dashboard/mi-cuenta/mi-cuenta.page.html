@@ -29,29 +29,32 @@
             </ion-card-title>
         </ion-card-header>
 
-        <ion-card-content>
+        <ion-card-content *ngIf="cliente">
             <!----------------------------------------TABLA---------------------------------------------------------------->
-            <img src="../../../../../assets/img/avatar.jpg" alt="" class="d-block m-auto">
+            <img *ngIf="!cliente.photo" src="../../../../../assets/img/avatar.jpg" alt="" class="d-block m-auto">
+            <img *ngIf="cliente.photo" [src]='"https://belife.io/cust_photo/" + cliente.photo' alt="" class="d-block m-auto">
             <table class="col-12">
                 <tr>
                     <th class="col-1 text-center border-bottom"><i class='fas fa-user-circle'></i></th>
-                    <td class="col-11 border-bottom">Nombre y apellidos</td>
+                    <td class="col-11 border-bottom">{{cliente.name}} {{cliente.surname}}</td>
+                    <!-- <td class="col-11 border-bottom">Nombre y apellidos</td> -->
                 </tr>
                 <tr>
                     <th class="col-1 text-center border-bottom"><i class="fas fa-map-marker-alt"></i></th>
-                    <td class="col-11 border-bottom">Avenida de Aureliano San Román 19, 33011 Oviedo, Asturias</td>
+                    <td class="col-11 border-bottom">{{cliente.address_new}} {{cliente.address_more}}</td>
+                    <!-- <td class="col-11 border-bottom">Avenida de Aureliano San Román 19, 33011 Oviedo, Asturias</td> -->
                 </tr>
                 <tr>
                     <th class="col-1 text-center border-bottom"><i class="fas fa-mobile-alt"></i></th>
-                    <td class="col-11 border-bottom">123456789</td>
+                    <td class="col-11 border-bottom">{{cliente.phone}}</td>
                 </tr>
                 <tr>
                     <th class="col-1 text-center border-bottom"><i class="fas fa-envelope"></i></th>
-                    <td class="col-11 border-bottom">prueba@prueba.com</td>
+                    <td class="col-11 border-bottom">{{cliente.email}}</td>
                 </tr>
                 <tr>
                     <th class="col-1 text-center border-bottom"><i class="far fa-id-badge"></i></th>
-                    <td class="col-11 border-bottom">123456768A</td>
+                    <td class="col-11 border-bottom">{{cliente.id_card}}</td>
                 </tr>
             </table>
         </ion-card-content>
@@ -97,7 +100,7 @@
     </ion-card>
     -->
     <!---------------------------------------------------------------------MODIFICAR DATOS BANCARIOS------>
-    <ion-card class="my-2 py-2 px-0 border-top">
+    <!-- <ion-card class="my-2 py-2 px-0 border-top">
         <ion-card-header>
             <ion-card-title class="border-bottom d-flex justify-content-between">
                 DATOS BANCARIOS
@@ -108,7 +111,7 @@
         </ion-card-header>
 
         <ion-card-content>
-            <!----------------------------------------TABLA---------------------------------------------------------------->
+
             <table class="col-12">
                 <tr>
                     <th class="col-1 text-center border-bottom"><i class='fab fa-cc-mastercard'></i></th>
@@ -132,5 +135,5 @@
                 </tr>
             </table>
         </ion-card-content>
-    </ion-card>
+    </ion-card> -->
 </ion-content>

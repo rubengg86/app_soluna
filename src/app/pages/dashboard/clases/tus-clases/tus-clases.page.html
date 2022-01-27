@@ -3,46 +3,48 @@
     <!---------------------------------------------------SI NO HAY CLASES---------------------------------------------------->
     <ion-card *ngIf="!clases" class="my-2 py-2 px-0 border-top text-center" id="encabezado">
         <ion-card-header>
-            <ion-card-title>AÚN NO TIENES CLASES PROGRAMADAS</ion-card-title>
+            <!-- <ion-card-title>AÚN NO TIENES CLASES PROGRAMADAS</ion-card-title> -->
+            <ion-card-title class="border-bottom mb-2">ACTIVIDADES</ion-card-title>
+            <div *ngIf="actividades">
+                <ion-item *ngFor="let actividad of actividades" style="--background: #59137D;">
+                    <ion-label>
+                        <h2>{{actividad.activity_name}}</h2>
+                        <h2>{{actividad.center_name}}</h2>
+                        <h3>{{actividad.group_name}}</h3>
+                    </ion-label>
+                </ion-item>
+            </div>
+
         </ion-card-header>
 
     </ion-card>
 
 
-    <!--------------------------------------------------------------------MENSUALMENTE-------------------------------------------------- -->
-
     <ion-card class="my-2 py-2 px-0 border-top">
         <ion-card-header>
-
-            <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseMes" aria-expanded="false" aria-controls="flush-collapseOne" style="background-color:transparent">
-            <ion-card-title class="border-bottom">Mensualmente</ion-card-title>
-        </button>
+            <ion-card-title class="border-bottom">Tickets</ion-card-title>
         </ion-card-header>
+        <ion-card-content>
 
-        <div id="CollapseMes" class="accordion-collapse collapse row">
-            <ion-card-content>
-
-                <ion-card-header class="d-flex justify-content-center ">
-                    <div id="calendario" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" dateFormat="Y-m-d" altFormat="F j, Y" [options]="datePickerOptions"></div>
-                </ion-card-header>
-
-                <ion-card-content class="my-2 px-4">
-                    <!-- <ion-title class="border-bottom p-0">Clases</ion-title> -->
-                    <!-- <p class="mt-2">No tienes clases este día</p> -->
-                    <ion-list>
-                        <ion-title class="border-bottom">Clases</ion-title>
+            <ion-card-content class="my-2 px-4">
+                <div *ngIf="!tickets">
+                    <p class="mt-2">No tienes tickets comprados</p>
+                    <br>
+                </div>
+                <div *ngIf="tickets">
+                    <ion-list *ngFor="let ticket of tickets; let i = index">
                         <ion-item>
-                            <ion-label slot="start">
-                                <h2>YOGA</h2>
-                            </ion-label>
                             <ion-label>
-                                <h3>12:00-13:00</h3>
-                                <h4>31 Diciembre</h4>
+                                <h3>{{fechaClaseTicket[i]}}</h3>
+                                <h2>{{ticket.activity_name}}</h2>
+                                <h3>{{ticket.group_name}}</h3>
+                                <h4>{{ticket.center_name}}</h4>
                             </ion-label>
                         </ion-item>
                     </ion-list>
-                    <br>
-                    <!-- <ion-list>
+                </div>
+
+                <!-- <ion-list>
                         <ion-title class="border-bottom">SUGERENCIAS</ion-title>
                         <ion-item>
                             <ion-avatar slot="start">
@@ -55,9 +57,85 @@
                             </ion-label>
                         </ion-item>
                     </ion-list> -->
-                </ion-card-content>
             </ion-card-content>
-        </div>
+        </ion-card-content>
+        <!-- </div> -->
+    </ion-card>
+
+    <!--------------------------------------------------------------------MENSUALMENTE-------------------------------------------------- -->
+
+    <ion-card class="my-2 py-2 px-0 border-top">
+        <ion-card-header>
+
+            <!-- <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseMes" aria-expanded="false" aria-controls="flush-collapseOne" style="background-color:transparent"> -->
+            <ion-card-title class="border-bottom">Clases Por Día</ion-card-title>
+            <!-- </button> -->
+        </ion-card-header>
+
+        <!-- <div id="CollapseMes" class="accordion-collapse collapse row"> -->
+        <ion-card-content>
+
+            <ion-card-header class="d-flex justify-content-center">
+                <div [(ngModel)]="fechaElegida" id="calendario" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" dateFormat="Y-m-d" altFormat="F j, Y" [options]="datePickerOptions"></div>
+            </ion-card-header>
+
+            <!-- <button (click)="getFecha()">fecha</button> -->
+
+            <ion-card-content class="my-2 px-4" *ngIf="fechaElegida">
+                <div *ngIf="!fechaIgual && !fechaIgualTickets">
+                    <ion-title class="border-bottom p-0">Clases</ion-title>
+                    <p class="mt-2">No tienes clases este día</p>
+                    <br>
+                </div>
+                <div *ngIf="fechaIgual">
+                    <ion-list *ngFor="let actividad of actividadDia">
+                        <ion-item>
+                            <ion-label slot="start">
+                                <h2>{{actividad.actividad}}</h2>
+                                <h3>{{actividad.hora_inicio}}</h3>
+                                <h4>{{actividad.centro}}</h4>
+                                <h4>{{actividad.profesor}}</h4>
+                                <!-- <h2>{{actividad.activity_name}}</h2>
+                                <h3>{{actividad.start_time}}</h3>
+                                <h4>{{actividad.center_name}}</h4> -->
+                            </ion-label>
+                            <ion-label *ngIf="!actividad.cambiada">
+                                <button class="btn" id="cambiar" (click)="getHuecos(actividad.id_actividad, actividad.id_grupo, actividad.hora_inicio)">CAMBIAR</button>
+                                <button class="btn" id="cancelar" (click)="abrirModalCancelar(actividad.id_grupo, actividad.hora_inicio)">CANCELAR</button>
+                            </ion-label>
+                        </ion-item>
+                    </ion-list>
+                </div>
+                <div *ngIf="fechaIgualTickets">
+                    <ion-list *ngFor="let ticket of ticketDia">
+                        <ion-item>
+                            <ion-label slot="start">
+                                <h2>{{ticket.activity_name}}</h2>
+                            </ion-label>
+                            <ion-label>
+                                <h3>{{ticket.start_time}}</h3>
+                                <h4>{{ticket.center_name}}</h4>
+                            </ion-label>
+                        </ion-item>
+                    </ion-list>
+                </div>
+
+                <!-- <ion-list>
+                        <ion-title class="border-bottom">SUGERENCIAS</ion-title>
+                        <ion-item>
+                            <ion-avatar slot="start">
+                                <img src="../../../../../assets/img/pilates-maquina.jpg" />
+                            </ion-avatar>
+                            <ion-label>
+                                <h2>YOGA</h2>
+                                <h3>12:00-13:00</h3>
+                                <h4>31 Diciembre</h4>
+                            </ion-label>
+                        </ion-item>
+                    </ion-list> -->
+            </ion-card-content>
+        </ion-card-content>
+        <!-- </div> -->
     </ion-card>
 
 </ion-content>

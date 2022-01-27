@@ -3,7 +3,53 @@
     background-color: white;
 }
 
-#encabezado, #encabezado ion-card-header,#encabezado ion-card-title{
-    color:white;
-background-color: #59137D;
+#encabezado,
+#encabezado ion-card-header,
+#encabezado ion-card-title {
+    color: white;
+    background-color: #59137D;
+}
+
+ion-card-header {
+    ion-label {
+        background-color: #59137D;
+        h2 {
+            background-color: #59137D;
+            color: white;
+        }
+        h3 {
+            background-color: #59137D;
+            color: white;
+        }
+    }
+}
+
+#cambiar {
+    // position: absolute;
+    position: relative;
+    padding-right: 12px;
+    padding-left: 12px;
+    right: 0;
+    bottom: 0;
+    margin: 5px;
+    color: white;
+    background-color: #59137D;
+    font-weight: normal;
+    font-size: 14px;
+    float: right;
+}
+
+#cancelar {
+    // position: absolute;
+    position: relative;
+    padding-left: 6px;
+    padding-right: 6px;
+    right: 0;
+    bottom: 0;
+    margin: 5px;
+    color: white;
+    background-color: #59137D;
+    font-weight: normal;
+    font-size: 14px;
+    float: right;
 }

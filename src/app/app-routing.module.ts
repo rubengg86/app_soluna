@@ -21,7 +21,11 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: () => import('./pages/dashboard/dashboard.module').then( m => m.DashboardPageModule),
     canActivateChild: [AuthGuard]
+  },  {
+    path: 'recuperar-contrasenia',
+    loadChildren: () => import('./pages/recuperar-contrasenia/recuperar-contrasenia.module').then( m => m.RecuperarContraseniaPageModule)
   }
+
 ];
 
 @NgModule({

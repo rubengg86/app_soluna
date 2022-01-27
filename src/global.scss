@@ -40,5 +40,10 @@
     font-family: Poppins;
 }
 
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+// Para la alerta de confirmación de camnbio de clase
+.confirmarCambiar {
+    button.confirmarCambiarBoton {
+        color: #75249e !important;
+    }
+}

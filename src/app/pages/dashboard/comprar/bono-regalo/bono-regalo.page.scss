@@ -4,9 +4,8 @@
     font-size: medium;
 }
 
-ion-card{
-  
-}
+ion-card {}
+
 #columnas {
     column-count: 2;
     padding: 0px;
@@ -14,7 +13,7 @@ ion-card{
 }
 
 #pilates {
-      height:115.2px;
+    height: 115.2px;
     background-image: url(../../../../../assets/img/pilates-maquina.jpg);
     text-align: center;
     background-position: center center;
@@ -34,7 +33,7 @@ ion-card{
 }
 
 #aerosoluna {
-    height:115.2px;
+    height: 115.2px;
     background-image: url(../../../../../assets/img/aerosoluna.jpg);
     text-align: center;
     background-position: center center;
@@ -54,7 +53,7 @@ ion-card{
 }
 
 #entrenamiento {
-    height:115.2px;
+    height: 115.2px;
     background-image: url(../../../../../assets/img/entrenamiento-personal.jpg);
     text-align: center;
     background-position: center center;
@@ -74,7 +73,7 @@ ion-card{
 }
 
 #readapt {
-    height:115.2px;
+    height: 115.2px;
     background-image: url(../../../../../assets/img/readaptacion-fisica.jpg);
     text-align: center;
     background-position: center center;
@@ -94,7 +93,7 @@ ion-card{
 }
 
 #embarazada {
-    height:115.2px;
+    height: 115.2px;
     background-image: url(../../../../../assets/img/pilates-embarazadas.jpg);
     text-align: center;
     background-position: center center;
@@ -114,7 +113,7 @@ ion-card{
 }
 
 #yoga {
-    height:115.2px;
+    height: 115.2px;
     background-image: url(../../../../../assets/img/yoga.jpg);
     text-align: center;
     background-position: center center;
@@ -134,7 +133,7 @@ ion-card{
 }
 
 #infantil {
-    height:115.2px;
+    height: 115.2px;
     background-image: url(../../../../../assets/img/yoga-infantil.jpg);
     text-align: center;
     background-position: center center;
@@ -154,7 +153,7 @@ ion-card{
 }
 
 #hipopresivo {
-    height:115.2px;
+    height: 115.2px;
     background-image: url(../../../../../assets/img/hipopresivo.jpg);
     text-align: center;
     background-position: center center;
@@ -171,4 +170,24 @@ ion-card{
     left: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.5);
+}
+
+#taichi {
+    height: 115.2px;
+    background-image: url(../../../../../assets/img/taichi.jpg);
+    text-align: center;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+#aerosolunaYoga {
+    height: 115.2px;
+    background-image: url(../../../../../assets/img/aerosoluna1.webp);
+    text-align: center;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
 }

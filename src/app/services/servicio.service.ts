@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
 import {Observable} from 'rxjs';
 import { GLOBAL } from './global';
 
@@ -9,21 +10,42 @@ import { GLOBAL } from './global';
 export class ServicioService {
 
   public url: string;
+  public isLoading = false;
 
-  constructor(public http: HttpClient) {
+  public headers = new HttpHeaders()
+    .set('http_apikey', 'kvuUazUVNWEqrCK5XYYzma6VLQTv4AJg')
+    .set('http_managerurl', 'soluna');
+
+
+  constructor(public http: HttpClient,
+    private loadingController: LoadingController) {
     this.url=GLOBAL.url;
   }
 
-  // getMantenimiento(): Observable<any>{
-  //   return this.http.get(this.url+'/mantenimiento');
-  // }
+  async presentLoading() {
+    this.isLoading = true;
+    return await this.loadingController.create({
+      spinner: "crescent",
+      duration: 10000,
+       translucent: true,
+       cssClass: 'loadingDialog'
+    }).then(a => {
+      a.present().then(() => {
+        if (!this.isLoading) {
+          a.dismiss();
+        }
+      });
+    });
+  }
 
-  // getUsuarios(): Observable<any>{
-  //   return this.http.get(this.url+'/usuario');
-  // }
+  async dismissLoading() {
+    this.isLoading = false;
+    return await this.loadingController.dismiss();
+  }
 
   getUsers(login, password): Observable<any>{
-    return this.http.get(this.url+`/ca_login/${login}/${password}`);
+    // return this.http.get(this.url+`/ca_login/${login}/${password}`);
+    return this.http.get(this.url+`/ca_login/${login}/${password}`, {headers: this.headers});
   }
 
   logOut() {
@@ -56,28 +78,100 @@ export class ServicioService {
     }
   }
 
+  recoverPassword(login) {
+    return this.http.get(this.url+`/ca_recover_password/${login}`, {headers: this.headers});
+  }
+
   getCustomerById(customer_id) {
-    return this.http.get(this.url+`/get_customer/${customer_id}`);
+    // return this.http.get(this.url+`/get_customer/${customer_id}`);
+    return this.http.get(this.url+`/get_customer/${customer_id}`, {headers: this.headers});
+  }
+
+  updateCustomerData(data) {
+    return this.http.post(this.url+'/ca_update_customer_data/', data, {headers: this.headers});
+  }
+
+  changeUserPassword(data) {
+    return this.http.post(this.url+'/ca_change_user_pwd', data, {headers: this.headers});
   }
 
   getAsssistanceById(customer_id) {
-    return this.http.get(this.url+`/get_customer_assistance_percent/${customer_id}`);
+    return this.http.get(this.url+`/get_customer_assistance_percent/${customer_id}`, {headers: this.headers});
   }
 
   getLastPayments(customer_id) {
-    return this.http.get(this.url+`/ca_last_payments/${customer_id}`);
+    return this.http.get(this.url+`/ca_last_payments/${customer_id}`, {headers: this.headers});
   }
 
   getBillUser(customer_id, center_id) {
-    return this.http.get(this.url+`/ca_bill_user/${customer_id}/${center_id}`);
+    return this.http.get(this.url+`/ca_bill_user/${customer_id}/${center_id}`, {headers: this.headers});
   }
 
   getMonthAssistance(customer_id) {
-    return this.http.get(this.url+`/get_customer_assistance_month/${customer_id}`);
+    return this.http.get(this.url+`/get_customer_assistance_month/${customer_id}`, {headers: this.headers});
+  }
 
+  getCustomerActivity(customer_id) {
+    return this.http.get(this.url+`/ca_get_customer_activities/${customer_id}`, {headers: this.headers});
+  }
+
+  getCustomerAssistances(customer_id) {
+    return this.http.get(this.url+`/ca_get_customer_assistances/${customer_id}`, {headers: this.headers});
+  }
+
+  getCustomerUnassistances(group_id, customer_id, day_time) {
+    return this.http.get(this.url+`/ca_check_customer_unassistance/${group_id}/${customer_id}/${day_time}`, {headers: this.headers});
+  }
+
+  getIsHoliday(date, center_id) {
+    return this.http.get(this.url+`/ca_is_holiday/${date}/${center_id}`, {headers: this.headers});
+  }
+
+  getFreeHours(date, activity_id, center_id){
+    return this.http.get(this.url+`/ca_get_free_hours/${date}/${activity_id}/${center_id}`, {headers: this.headers});
+  }
+
+  recordUnassistNew(date_time, customer_id){
+    return this.http.get(this.url+`/ca_record_unassist_new/${date_time}/${customer_id}`, {headers: this.headers});
+  }
+
+  recordAssistNew(date_time, customer_id){
+    return this.http.get(this.url+`/ca_record_assist_new/${date_time}/${customer_id}`, {headers: this.headers});
+  }
+
+  saveNotification(data){
+    return this.http.post(this.url+'/save_ca_notification/', data, {headers: this.headers});
+  }
+
+  getPurchasedTickets(customer_id) {
+    return this.http.get(this.url+`/tickets_get_customer_purchased/${customer_id}`, {headers: this.headers});
+  }
+
+  getTicketsAvailable(center_id) {
+    return this.http.get(this.url+`/tickets_get_prices_multiactivity_multidate/${center_id}`, {headers: this.headers});
+  }
+
+  getTicketsAvailableOnDate(date, center_id) {
+    return this.http.get(this.url+`/tickets_get_prices_multiactivity/${date}/${center_id}`, {headers: this.headers});
+  }
+
+  getTicketCreatePreReserve(date, activity_id, center_id, group_id, amount, ticket_type) {
+    return this.http.get(this.url+`/tickets_create_pre_reserve/${date}/${activity_id}/${center_id}/${group_id}/${amount}/${ticket_type}`, {headers: this.headers});
+  }
+
+  getTicketDeletePreReserve(reserve_id) {
+    return this.http.get(this.url+`/tickets_delete_pre_reserve/${reserve_id}`, {headers: this.headers});
+  }
+
+  getTicketPaymentCreate(customer_id, tpv_order, amount, ticket_id) {
+    return this.http.get(this.url+`/tickets_create_payment/${customer_id}/${tpv_order}/${amount}/${ticket_id}`, {headers: this.headers});
+  }
+
+  getBondActivities(center_id): Observable<any>{
+    return this.http.get(this.url+`/bonds_get_activities/${center_id}`, {headers: this.headers});
   }
 
   getCenters(): Observable<any>{
-    return this.http.get(this.url+'/get_centers/');
+    return this.http.get(this.url+'/get_centers/', {headers: this.headers});
   }
 }

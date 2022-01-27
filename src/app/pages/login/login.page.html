@@ -5,6 +5,8 @@
                 <img src="../../../assets/img/logo_blanco.png" alt="" width="70%" class="d-block m-auto">
                 <h4 class="text-center my-3">Iniciar sesi&oacute;n con tu cuenta</h4>
 
+                <div *ngIf="incorrecto"><small style="color: red;">Usuario o contraseña incorrectos</small></div>
+
                 <div class="container-fluid">
                     <div class="row align-items-center border-bottom">
                         <i class="col-2 fas fa-user-circle fa-lg border-0 color"></i>
@@ -23,8 +25,8 @@
                     <ion-checkbox checked="false" class="cheack col-1 check"></ion-checkbox>
                     <label for="" class="col-10">Recuérdame</label>
                 </div>
-                <a href="" class="row mb-2">¿Has olvidado tu contraseña?</a>
-                <a href="" class="row">Regístrate</a>
+                <a (click)="recuperarContrasenia()" class="row mb-2">¿Has olvidado tu contraseña?</a>
+                <!-- <a href="" class="row">Regístrate</a> -->
 
             </div>
             <footer>

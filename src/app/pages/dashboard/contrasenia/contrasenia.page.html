@@ -1,6 +1,6 @@
 <!---------------------------------------------------------------- MODAL (cambiar contraseña)------------------------------------------------------------->
 <!-------------------------------------------------------------------CABECERA ---------------------------------------------------------------->
-<ion-header id="header" >
+<ion-header id="header" color="light">
     <ion-toolbar class="p-3" color="light">
         <div class="d-flex justify-content-between">
             <ion-title class="text-black">
@@ -10,17 +10,19 @@
         </div>
     </ion-toolbar>
 </ion-header>
+
+
 <ion-content id="contenido" color="light">
     <br>
     <!-------------------------------------------------------------------FORMULARIO ---------------------------------------------------------------->
-    <form action="" class="p-4">
-        <ion-input placeholder="Contraseña antigua" class="border-bottom mb-3"></ion-input>
-        <ion-input placeholder="Contraseña nueva" class="border-bottom mb-3"></ion-input>
-        <ion-input placeholder="Confirma la nueva contraseña" class="border-bottom mb-3"></ion-input>
+    <form action="" [formGroup]="data" class="p-4">
+        <ion-input formControlName="old_password" placeholder="Contraseña antigua" class="border-bottom mb-3"></ion-input>
+        <ion-input formControlName="new_password" placeholder="Contraseña nueva" class="border-bottom mb-3"></ion-input>
+        <ion-input formControlName="confirm_new_password" placeholder="Confirma la nueva contraseña" class="border-bottom mb-3"></ion-input>
     </form>
     <!-------------------------------------------------------------------FOOTER-------------------------------------------------------------------->
- 
+
 </ion-content>
-    <ion-footer class="p-4" id="footer">
-        <button type="button" class="btn" id="guardar">Guardar</button>
-    </ion-footer>
+<ion-footer class="p-4" id="footer">
+    <button (click)="cambiarContrasenia()" type="button" class="btn" id="guardar">Guardar</button>
+</ion-footer>

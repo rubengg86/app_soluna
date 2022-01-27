@@ -1,7 +1,7 @@
 <!---------------------------------------------------------------- MODAL (editar)------------------------------------------------------------->
 <!-------------------------------------------------------------------CABECERA ---------------------------------------------------------------->
 <ion-header>
-    <ion-toolbar class="p-3"  color="light">
+    <ion-toolbar class="p-3" color="light">
         <div class="d-flex justify-content-between">
             <ion-title class="text-black">
                 MODIFICA TUS DATOS
@@ -15,31 +15,31 @@
 <!-------------------------------------------------------------------FORMULARIO--------------------------------------------------------------->
 <ion-content color="light">
     <br>
-    <form action="" class="px-4 py-1" id="formUpdate">
-        <br> 
-        <span>+</span>
+    <form action="" [formGroup]="datos" class="px-4 py-1" id="formUpdate">
+        <br>
+        <!-- <span>+</span> -->
         <div *ngIf="previsualizacion" class="d-block m-auto p-0 m-0" id="previsualizar" for="files">
             <label for="files">
                 <img [src]="previsualizacion" alt="" class="p-0 m-0">
             </label>
         </div>
-        <label for="files" class="btn text-center col-12">Elegir una foto de perfil</label>
-        <input type="file" id="files" (change)="fileChangeEvent($event)">
-      
+        <!-- <label for="files" class="btn text-center col-12">Elegir una foto de perfil</label> -->
+        <!-- <input type="file" id="files" (change)="fileChangeEvent($event)"> -->
+
         <div>
             <br>
-        <ion-input placeholder="Nombre" class="border-bottom mb-2"></ion-input>
-        <ion-input placeholder="Apellidos" class="border-bottom mb-2"></ion-input>
-        <ion-input placeholder="Email" class="border-bottom mb-2"></ion-input>
-        <ion-input placeholder="Teléfono" class="border-bottom mb-2"></ion-input>
-        <ion-input placeholder="DNI" class="border-bottom mb-2"></ion-input>
-    <!--    <ion-input placeholder="Cuenta bancaria" class="border-bottom mb-2"></ion-input>
-   -->
-   <br>
-    </div>
+            <ion-input placeholder="Nombre" formControlName='name' class="border-bottom mb-2"></ion-input>
+            <ion-input placeholder="Apellidos" formControlName='surname' class="border-bottom mb-2"></ion-input>
+            <ion-input placeholder="Email" formControlName='email' class="border-bottom mb-2"></ion-input>
+            <ion-input placeholder="Teléfono" formControlName='phone' class="border-bottom mb-2"></ion-input>
+            <ion-input placeholder="DNI" formControlName='id_card' class="border-bottom mb-2"></ion-input>
+            <ion-input placeholder="Cuenta bancaria" formControlName='bank_account' class="border-bottom mb-2"></ion-input>
+
+            <br>
+        </div>
     </form>
 </ion-content>
 <!-------------------------------------------------------------------FOOTER-------------------------------------------------------------------->
 <ion-footer class="p-3" id="footer">
-    <button type="button" class="btn" id="guardar">Guardar</button>
+    <button type="button" class="btn" id="guardar" (click)="guardar()">Guardar</button>
 </ion-footer>

@@ -6,13 +6,14 @@
         </ion-card-header>
         <ion-card-content>
             <!---------------------------------------------ESCOGER CENTRO------------------------------------>
-            <select class="form-select mb-2">
-                <option selected>Centro</option>
-                <option value="1">La Florida</option>
-                <option value="2">Aviles</option>
+            <select class="form-select mb-2" (change)="buscarTicketsAComprar()" [(ngModel)]="idCentro">
+                <!-- <option value=null selected>Centro</option> -->
+                <option [value]="centro.id" *ngFor="let centro of centros">{{centro.center_name}}</option>
+                <!-- <option value="1">La Florida</option>
+                <option value="2">Aviles</option> -->
             </select>
             <!--------------------------------------CALENDARIO PARA ESCOGER DIA---------------------------------->
-            <input class="form-control" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" dateFormat="Y-m-d" altFormat="F j, Y" placeholder="Fecha" [options]="datePickerOptions" />
+            <input (change)="buscarTicketsAComprar()" [(ngModel)]="fechaElegida" class="form-control" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" dateFormat="Y-m-d" altFormat="F j, Y" placeholder="Fecha" [options]="datePickerOptions" />
         </ion-card-content>
     </ion-card>
 
@@ -29,33 +30,39 @@
 -->
 
     <!-----------------------------------------------------SI HAY TICKETS------------------------------------------------------>
-    <ion-card *ngIf="ticket" class=" px-0 border-top">
+
+    <div class="row text-center animated fadeIn mb-5 mt-5" *ngIf="loading">
+        <i class="fas fa-sync fa-spin fa-5x"></i>
+    </div>
+
+    <ion-card *ngIf="tickets" class=" px-0 border-top" color="light">
 
         <!------------------------------------------------BOTONES: AYER - HOY - MAÑANA-->
-        <div class="text-center">
+        <!-- <div class="text-center">
             <ion-chip id="botonDia">
                 <ion-icon name="chevron-back-outline"></ion-icon>
-                <ion-label color="dark" class="page-link"><span style="padding-right:3px">Ayer</span> {{dia - 1}}/{{mes}}</ion-label>
+                <ion-label color="dark" class="page-link"><span style="padding-right:3px">Ayer</span> {{dia - 1}}/{{mes+1}}</ion-label>
             </ion-chip>
 
             <ion-chip id="botonDia">
-                <ion-label color="dark" class="page-link"><span style="padding-right:3px">Hoy</span> {{dia}}/{{mes}}</ion-label>
+                <ion-label color="dark" class="page-link"><span style="padding-right:3px">Hoy</span> {{dia}}/{{mes+1}}</ion-label>
             </ion-chip>
 
             <ion-chip id="botonDia">
-                <ion-label color="dark" class="page-link"><span style="padding-right:3px">Mañana</span> {{dia + 1}}/{{mes}}</ion-label>
+                <ion-label color="dark" class="page-link"><span style="padding-right:3px">Mañana</span> {{dia + 1}}/{{mes+1}}</ion-label>
                 <ion-icon name="chevron-forward-outline"></ion-icon>
             </ion-chip>
-        </div>
+        </div> -->
 
         <!-------------------------------------------------TARJETA 1------------------------------------------------>
-        <ion-card class="mx-0 mt-0 border-top border-radius" *ngFor="let centro of centros">
+        <ion-card class="mx-0 mt-0 border-top border-radius" *ngFor="let ticket of tickets">
             <ion-card-header>
-                <ion-card-subtitle>Martes, 01/06, 9:30</ion-card-subtitle>
-                <ion-card-title>La Florida, Pilates</ion-card-title>
+                <ion-card-subtitle>{{diaSemana}}, {{fechaString}}, {{ticket.start_time}}</ion-card-subtitle>
+                <ion-card-title>{{ticket.activity_name}}</ion-card-title>
+                <ion-card-subtitle>{{ticket.price}}&euro;</ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>
-                <button class="btn" id="comprar" (click)="comprarModal()">COMPRAR</button>
+                <button class="btn" id="comprar" (click)="comprarModal(ticket.activity_id, ticket.center_id, ticket.id, ticket.price, ticket.ticket_type)">COMPRAR</button>
             </ion-card-content>
         </ion-card>
         <!-------------------------------------------------TARJETA 2------------------------------------------------>
@@ -69,7 +76,7 @@
             </ion-card-content>
         </ion-card> -->
         <!--------------------------------------------------------------------PAGINADOR------------------------------------------------------------------>
-        <nav aria-label="Page navigation example">
+        <!-- <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center" id="listadoPie">
                 <li class="page-item disabled">
                     <a class="page-link" aria-label="Previous">
@@ -87,6 +94,14 @@
                     </a>
                 </li>
             </ul>
-        </nav>
+        </nav> -->
+    </ion-card>
+    <ion-card *ngIf="tickets == null && !loading" class=" px-0 border-top" color="light">
+        <ion-card class="mx-0 mt-0 border-top border-radius">
+            <ion-card-header>
+                <ion-card-title>No hay clases disponibles</ion-card-title>
+                <ion-card-subtitle>Seleccione otra fecha u otro centro</ion-card-subtitle>
+            </ion-card-header>
+        </ion-card>
     </ion-card>
 </ion-content>

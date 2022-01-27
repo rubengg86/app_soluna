@@ -1,0 +1,77 @@
+// @font-face {
+//     font-family: HelveticaNeue;
+//     src: url(../../../assets/font/HelveticaNeue-Medium.ttf);
+// }
+// ion-input {
+//     font-family: HelveticaNeue;
+// }
+// #guardar {
+//     background-color: #59137D;
+//     color: white;
+//     border: 0;
+//     float: right;
+// }
+// // * {
+// //     background-color: #F1F1F1
+// // }
+// // #header {
+// //     background-color: #F1F1F1;
+// // }
+// #contenido {
+//     margin-top: 30px;
+// }
+// ion-input {
+//     color: black;
+//     // background-color: white;
+// }
+// form {
+//     background-color: white;
+//     margin: 6%;
+//     box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px, rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
+// }
+* {
+    background-color: #363636;
+    --background: #363636;
+    color: white;
+}
+
+@font-face {
+    font-family: HelveticaNeue;
+    src: url(../../../assets/font/HelveticaNeue-Medium.ttf);
+}
+
+ion-input {
+    font-family: HelveticaNeue;
+}
+
+.color {
+    color: #59137D;
+}
+
+button {
+    background-color: #59137D;
+    color: white;
+    border: 0;
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+.check {
+    margin: 0;
+    padding: 0;
+    width: 20px;
+}
+
+footer {
+    font-size: small;
+    text-align: center;
+    color: gray;
+}
+
+ion-checkbox {
+    width: 20px;
+    height: 20px;
+}
