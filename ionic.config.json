@@ -1,5 +1,7 @@
 {
   "name": "solunaPilates",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
