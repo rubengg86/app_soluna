@@ -25,7 +25,7 @@ export class RecuperarContraseniaPage implements OnInit {
 
       this._service.recoverPassword(this.data.get('login').value).subscribe( async (res:any) => {
 
-        console.log(res);
+        // console.log(res);
 
         if (res.Result === 'KO') {
 

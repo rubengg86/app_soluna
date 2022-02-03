@@ -179,7 +179,9 @@ export class TusClasesPage implements OnInit {
       this.asistencias = res;
       // console.log(this.asistencias);
 
-      this.getProximasClases();
+      if (this.actividades) {
+        this.getProximasClases();
+      }
 
     })
   }
@@ -402,7 +404,7 @@ export class TusClasesPage implements OnInit {
     }
 
     // setTimeout(() => console.log(this.sinAsistir), 600);
-    setTimeout(() => console.log(this.clasesTotales), 600);
+    // setTimeout(() => console.log(this.clasesTotales), 600);
 
   } //Fin de la función getProximasClases
 
@@ -511,7 +513,7 @@ export class TusClasesPage implements OnInit {
 
     // console.log(this.fechaElegida);
     let fecha = (this.fechaElegida)/1000 | 0;
-    console.log(fecha);
+    // console.log(fecha);
 
     this._service.getFreeHours(fecha, this.cliente.center_id, activity_id).subscribe( res => {
       this.huecos = res;
@@ -573,7 +575,7 @@ export class TusClasesPage implements OnInit {
 
     // console.log(this.clasesTotales[9].tiempo*1000);
     // console.log((+this.clasesTotales[9].tiempo*1000) == +this.fechaElegida.getTime())
-    console.log(this.actividadDia);
+    // console.log(this.actividadDia);
 
     // console.log(this.diaACambiar);
     // console.log(this.fechaIgual);

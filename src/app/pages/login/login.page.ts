@@ -21,8 +21,8 @@ export class LoginPage{
   // pass local: 987654321
 
   forma= new FormGroup ({
-      nombre:new FormControl('antonio.florentino@narancobrands.com', [Validators.required]),
-      pass:new FormControl('46473', [Validators.required])
+      nombre:new FormControl('', [Validators.required]),
+      pass:new FormControl('', [Validators.required])
   });
 
   constructor(private servicio: ServicioService,

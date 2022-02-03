@@ -14,6 +14,13 @@
                     </ion-label>
                 </ion-item>
             </div>
+            <div *ngIf="!actividades">
+                <ion-item style="--background: #59137D;">
+                    <ion-label>
+                        <h2>No tienes actividades</h2>
+                    </ion-label>
+                </ion-item>
+            </div>
 
         </ion-card-header>
 

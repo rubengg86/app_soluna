@@ -71,11 +71,11 @@ export class AnularClasePage implements OnInit {
   cancelarClase() {
 
     let date_id_antigua = this.grupo_antiguo + '_' + this.fecha_antigua;
-    console.log(date_id_antigua);
+    // console.log(date_id_antigua);
 
     // this._service.recordUnassistNew(date_id_antigua, 5211).subscribe( res => {
       this._service.recordUnassistNew(date_id_antigua, this.customer_id).subscribe(res => {
-      console.log(res);
+      // console.log(res);
       this.notificacion();
     }, error =>{
       console.log(error);

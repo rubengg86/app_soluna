@@ -66,7 +66,7 @@ export class ContraseniaPage implements OnInit {
       updated.append('new_password', this.data.get('new_password').value);
 
       this._service.changeUserPassword(updated).subscribe(async (res:any) => {
-        console.log(res.Result);
+        // console.log(res.Result);
         if (res.Result === 'KO') {
 
           const alert2 = await this.alertController.create({
