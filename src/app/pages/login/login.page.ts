@@ -5,6 +5,7 @@ import { Usuario } from 'src/app/models/usuario';
 import { ServicioService } from 'src/app/services/servicio.service';
 import { ModalController } from '@ionic/angular';
 import { RecuperarContraseniaPage } from '../recuperar-contrasenia/recuperar-contrasenia.page';
+import { RegistroPage } from '../registro/registro.page';
 
 
 @Component({
@@ -61,6 +62,13 @@ export class LoginPage{
   async recuperarContrasenia() {
     const modal = await this.modalController.create({
       component: RecuperarContraseniaPage
+    });
+    return await modal.present();
+  }
+
+  async registrarse() {
+    const modal = await this.modalController.create({
+      component: RegistroPage
     });
     return await modal.present();
   }

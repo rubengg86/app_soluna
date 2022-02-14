@@ -1,19 +1,21 @@
 <!---------------------------------------------------------------- MODAL (editar)------------------------------------------------------------->
 <!-------------------------------------------------------------------CABECERA ---------------------------------------------------------------->
-<ion-header >
-    <ion-toolbar class="p-3" color="light">
+<ion-header>
+    <ion-toolbar class="p-3" style="--background: #363636;">
+        <!-- <ion-toolbar class="p-3" color="light"> -->
         <div class="d-flex justify-content-between border-bottom">
-            <ion-title class="text-black">
+            <ion-title class="text-white">
                 MODIFICA LOS DATOS
             </ion-title>
-            <i class="fas fa-times fa-2x text-black" (click)="dismiss()"></i>
+            <i class="fas fa-times fa-2x text-white" (click)="dismiss()"></i>
             <br>
         </div>
     </ion-toolbar>
 </ion-header>
 
 <!-------------------------------------------------------------------FORMULARIO--------------------------------------------------------------->
-<ion-content color="light" id="contenidoComprar" >
+<ion-content style="--background: #363636;" id="contenidoComprar">
+    <!-- <ion-content color="light" id="contenidoComprar"> -->
 
     <ion-radio-group class="mt-2">
         <!------------------------------------------------------RADIO BUTTON TARJETA--------------------------------------------------------->
@@ -82,7 +84,7 @@
                     <input type="number" class="form-control form-control-solid mb-2" autocomplete="off">
                     <label for="">Fecha de nacimiento</label>
                     <input type="date" class="form-control form-control-solid mb-2" autocomplete="off">
-                   
+
                     <ion-checkbox class="border me-2 mt-2"></ion-checkbox>
                     <label for="" class="ml-3"><small>Recordar esta tarjeta para su uso posterior</small></label>
                 </form>
@@ -92,6 +94,6 @@
 
 </ion-content>
 <!-------------------------------------------------------------------FOOTER-------------------------------------------------------------------->
-<ion-footer class="p-4" id="contenidoFooter" >
+<ion-footer class="p-4" id="contenidoFooter">
     <button type="button" class="btn" id="comprar">Comprar</button>
 </ion-footer>

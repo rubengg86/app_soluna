@@ -78,6 +78,10 @@ export class ServicioService {
     }
   }
 
+  registerUser(customer_id){
+    return this.http.get(this.url+`/ca_create_user/${customer_id}`, {headers: this.headers});
+  }
+
   recoverPassword(login) {
     return this.http.get(this.url+`/ca_recover_password/${login}`, {headers: this.headers});
   }
@@ -85,6 +89,10 @@ export class ServicioService {
   getCustomerById(customer_id) {
     // return this.http.get(this.url+`/get_customer/${customer_id}`);
     return this.http.get(this.url+`/get_customer/${customer_id}`, {headers: this.headers});
+  }
+
+  getCheckCustomer(document) {
+    return this.http.get(this.url + `/ca_check_customer/${document}`, {headers: this.headers});
   }
 
   updateCustomerData(data) {

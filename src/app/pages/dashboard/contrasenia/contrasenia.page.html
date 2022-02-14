@@ -1,18 +1,21 @@
 <!---------------------------------------------------------------- MODAL (cambiar contraseña)------------------------------------------------------------->
 <!-------------------------------------------------------------------CABECERA ---------------------------------------------------------------->
-<ion-header id="header" color="light">
-    <ion-toolbar class="p-3" color="light">
+<ion-header id="header" style="--background: #363636;">
+    <!-- <ion-header id="header" color="light"> -->
+    <ion-toolbar class="p-3" style="--background: #363636;">
+        <!-- <ion-toolbar class="p-3" color="light"> -->
         <div class="d-flex justify-content-between">
-            <ion-title class="text-black">
+            <ion-title class="text-white">
                 CONTRASEÑA NUEVA
             </ion-title>
-            <i class="fas fa-times text-black fa-2x pt-1" (click)="dismiss()"></i>
+            <i class="fas fa-times text-white fa-2x pt-1" (click)="dismiss()"></i>
         </div>
     </ion-toolbar>
 </ion-header>
 
 
-<ion-content id="contenido" color="light">
+<ion-content id="contenido" style="--background: #363636;">
+    <!-- <ion-content id="contenido" color="light"> -->
     <br>
     <!-------------------------------------------------------------------FORMULARIO ---------------------------------------------------------------->
     <form action="" [formGroup]="data" class="p-4">

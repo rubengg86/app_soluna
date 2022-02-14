@@ -33,6 +33,7 @@ export class CambiarClasePage implements OnInit {
     // console.log(this.huecos);
 
     let fecha_antigua_string = new Date(+this.fecha_antigua * 1000);
+    fecha_antigua_string.setHours(3);
     this.getDiaSemana(fecha_antigua_string);
 
     this.fechaAntiguaFormato = this.diaSemana + ' ' + fecha_antigua_string.toISOString().slice(8,10) + '/' + fecha_antigua_string.toISOString().slice(5,7);
@@ -134,7 +135,7 @@ export class CambiarClasePage implements OnInit {
       // this._service.recordAssistNew(date_id_nueva, 5211).subscribe( res => {
       this._service.recordAssistNew(date_id_nueva, this.customer_id).subscribe( res => {
         // this.dismiss();
-        this.notificacion(start_time, fechaNueva);
+        this.notificacionCambiar(start_time, fechaNueva);
       }, error =>{
       console.log(error);
       })
@@ -143,11 +144,66 @@ export class CambiarClasePage implements OnInit {
     });
   }
 
-  notificacion(start_time, fechaNueva) {
+  notificacionCambiar(start_time, fechaNueva) {
 
     let updated = new FormData()
     updated.append('customer_id', this.customer_id);
     updated.append('text', `Has cambiado una clase. Tu nueva clase es: <b>${fechaNueva} - ${start_time}</b>`);
+    updated.append('type', "CLASS_CHANGE");
+
+    this._service.saveNotification(updated).subscribe( res => {
+      this.dismiss();
+    });
+  }
+
+  async confirmarCancelar(){
+    
+    const alert = await this.alertCtrl.create({
+      cssClass: 'confirmarCambiar',
+      header: '¿Seguro que quiere anular la clase?',
+      subHeader: 'No se podrá recuperar',
+
+      buttons: [
+        {
+          cssClass: 'confirmarCambiarBoton',
+          text: 'Atrás',
+          role: 'cancel', //esto hace que también pase al hacer click fuera
+        },
+        {
+          cssClass: 'confirmarCambiarBoton',
+          text: 'Anular',
+          handler: () => {
+
+            this.cancelarClase();
+
+          } 
+        }
+      ]
+    });
+
+    alert.present();
+  }
+
+  cancelarClase() {
+
+    let date_id_antigua = this.grupo_antiguo + '_' + this.fecha_antigua;
+    // console.log(date_id_antigua);
+
+    // this._service.recordUnassistNew(date_id_antigua, 5211).subscribe( res => {
+    this._service.recordUnassistNew(date_id_antigua, this.customer_id).subscribe(res => {
+      // console.log(res);
+      this.notificacionCancelar();
+    }, error =>{
+      console.log(error);
+    });
+
+  }
+
+  notificacionCancelar() {
+
+    let updated = new FormData()
+    updated.append('customer_id', this.customer_id);
+    updated.append('text', `Has anulado una clase del <b>${this.fechaAntiguaFormato}</b>`);
     updated.append('type', "CLASS_CHANGE");
 
     this._service.saveNotification(updated).subscribe( res => {

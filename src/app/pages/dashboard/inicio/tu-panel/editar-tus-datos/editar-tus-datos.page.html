@@ -1,19 +1,21 @@
 <!---------------------------------------------------------------- MODAL (editar)------------------------------------------------------------->
 <!-------------------------------------------------------------------CABECERA ---------------------------------------------------------------->
 <ion-header>
-    <ion-toolbar class="p-3" color="light">
+    <ion-toolbar class="p-3" style="--background: #363636;">
+        <!-- <ion-toolbar class="p-3" color="light"> -->
         <div class="d-flex justify-content-between">
-            <ion-title class="text-black">
+            <ion-title class="text-white">
                 MODIFICA TUS DATOS
             </ion-title>
-            <i class="fas fa-times fa-2x text-black" (click)="dismiss()"></i>
+            <i class="fas fa-times fa-2x text-white" (click)="dismiss()"></i>
         </div>
         <br>
     </ion-toolbar>
 </ion-header>
 
 <!-------------------------------------------------------------------FORMULARIO--------------------------------------------------------------->
-<ion-content color="light">
+<ion-content style="--background: #363636;">
+    <!-- <ion-content color="light"> -->
     <br>
     <form action="" [formGroup]="datos" class="px-4 py-1" id="formUpdate">
         <br>

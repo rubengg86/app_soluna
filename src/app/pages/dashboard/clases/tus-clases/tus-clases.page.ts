@@ -43,6 +43,9 @@ export class TusClasesPage implements OnInit {
   };
 
   public customer_id = localStorage.getItem('currentUserSoluna');
+  // public customer_id = 3274;
+  // public customer_id = 2534;
+  // public customer_id = 5211;
   public cliente;
   public clasesMes: Array<ClasesMes>;
   public clasesMesSiguiente: Array<ClasesMes>;
@@ -71,12 +74,6 @@ export class TusClasesPage implements OnInit {
     this.getCliente();
     this.getActividadesCliente();
     this.getTicketsCliente();
-
-
-    // let a = new Date();
-    // console.log(a);
-    // let b = new Date(1644966000*1000);
-    // console.log(b);
 
   }
 
@@ -147,11 +144,10 @@ export class TusClasesPage implements OnInit {
   }
 
   getCliente() {
-    // this._service.getCustomerById(5211).subscribe( res => {
+    // this._service.getCustomerById(3274).subscribe( res => {
     this._service.getCustomerById(this.customer_id).subscribe( res => {
 
       this.cliente = res[0];
-      // console.log(this.cliente);
 
     }, error =>{
       console.log(error);
@@ -159,7 +155,7 @@ export class TusClasesPage implements OnInit {
   }
 
   getActividadesCliente () {
-    // this._service.getCustomerActivity(5211).subscribe( res => {
+    // this._service.getCustomerActivity(3274).subscribe( res => {
     this._service.getCustomerActivity(this.customer_id).subscribe( res => {
 
       this.actividades = res;
@@ -173,7 +169,7 @@ export class TusClasesPage implements OnInit {
   }
 
   getAsistencias() {
-    // this._service.getCustomerAssistances(2987).subscribe( res => {
+    // this._service.getCustomerAssistances(3274).subscribe( res => {
     this._service.getCustomerAssistances(this.customer_id).subscribe( res => {
 
       this.asistencias = res;
@@ -507,15 +503,19 @@ export class TusClasesPage implements OnInit {
     }
   }
 
-  getHuecos(activity_id, group_id, start_time) {
+  getHuecos(activity_id, group_id, start_time, center_id) {
+
+    // console.log(activity_id);
+    // console.log(center_id);
+    // console.log(group_id);
+    // console.log(start_time);
 
     this._service.presentLoading();
 
-    // console.log(this.fechaElegida);
     let fecha = (this.fechaElegida)/1000 | 0;
     // console.log(fecha);
 
-    this._service.getFreeHours(fecha, this.cliente.center_id, activity_id).subscribe( res => {
+    this._service.getFreeHours(fecha, activity_id, center_id).subscribe( res => {
       this.huecos = res;
       this.fechaAntigua = fecha;
       this.grupoAntiguo = group_id;
@@ -529,6 +529,8 @@ export class TusClasesPage implements OnInit {
 
   async abrirModalCambio() {
 
+    // console.log(this.huecos);
+
     const modal = await this.modalController.create({
       component: CambiarClasePage,
       componentProps: { 
@@ -538,7 +540,11 @@ export class TusClasesPage implements OnInit {
         inicio_antiguo: this.inicioAntiguo
       }
     });
-
+    modal.onDidDismiss().then((data) => {
+      this.getCliente();
+      this.getActividadesCliente();
+      this.getTicketsCliente();
+    });
     return await modal.present();
 
   }
@@ -559,6 +565,11 @@ export class TusClasesPage implements OnInit {
         grupo_antiguo: this.grupoAntiguo,
         inicio_antiguo: this.inicioAntiguo
       }
+    });
+    modal.onDidDismiss().then((data) => {
+      this.getCliente();
+      this.getActividadesCliente();
+      this.getTicketsCliente();
     });
 
     return await modal.present();

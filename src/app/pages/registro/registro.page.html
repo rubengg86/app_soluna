@@ -1,0 +1,28 @@
+<!---------------------------------------------------------------- MODAL (cambiar contraseña)------------------------------------------------------------->
+<!-------------------------------------------------------------------CABECERA ---------------------------------------------------------------->
+<ion-header>
+    <ion-toolbar class="p-3">
+        <div class="d-flex justify-content-between">
+            <ion-title>
+                REGISTRO
+            </ion-title>
+            <i class="fas fa-times text-black fa-2x pt-1" (click)="dismiss()"></i>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+    <h5 class="text-center my-3 ml-5 mr-5">Si ya eres cliente de Soluna, <strong>Registrate</strong></h5>
+
+    <br>
+    <!-------------------------------------------------------------------FORMULARIO ---------------------------------------------------------------->
+    <form action="" [formGroup]="data" class="p-4">
+        <ion-input formControlName="dni" placeholder="Introduce tu DNI" class="border-bottom mb-3"></ion-input>
+    </form>
+</ion-content>
+
+<!-------------------------------------------------------------------FOOTER-------------------------------------------------------------------->
+<ion-footer class="p-4">
+    <button (click)="registrar()" type="submit" class="btn">Registrarse</button>
+</ion-footer>

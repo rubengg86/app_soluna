@@ -76,14 +76,14 @@ export class AnularClasePage implements OnInit {
     // this._service.recordUnassistNew(date_id_antigua, 5211).subscribe( res => {
       this._service.recordUnassistNew(date_id_antigua, this.customer_id).subscribe(res => {
       // console.log(res);
-      this.notificacion();
+      this.notificacionCancelar();
     }, error =>{
       console.log(error);
     });
 
   }
 
-  notificacion() {
+  notificacionCancelar() {
 
     let updated = new FormData()
     updated.append('customer_id', this.customer_id);
