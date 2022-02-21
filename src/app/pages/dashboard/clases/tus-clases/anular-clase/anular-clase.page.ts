@@ -54,11 +54,11 @@ export class AnularClasePage implements OnInit {
         break
       }
       case 'FRI': {
-        this.diaSemana = 'Sábado';
+        this.diaSemana = 'Viernes';
         break
       }
       case 'SAT': {
-        this.diaSemana = 'Domingo';
+        this.diaSemana = 'Sánado';
         break
       }
       case 'SUN': {

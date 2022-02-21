@@ -79,11 +79,11 @@ export class CambiarClasePage implements OnInit {
         break
       }
       case 'FRI': {
-        this.diaSemana = 'Sábado';
+        this.diaSemana = 'Viernes';
         break
       }
       case 'SAT': {
-        this.diaSemana = 'Domingo';
+        this.diaSemana = 'Sábado';
         break
       }
       case 'SUN': {

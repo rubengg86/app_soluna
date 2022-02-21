@@ -46,6 +46,7 @@ export class TusClasesPage implements OnInit {
   // public customer_id = 3274;
   // public customer_id = 2534;
   // public customer_id = 5211;
+  // public customer_id = 4841;
   public cliente;
   public clasesMes: Array<ClasesMes>;
   public clasesMesSiguiente: Array<ClasesMes>;
@@ -148,6 +149,7 @@ export class TusClasesPage implements OnInit {
     this._service.getCustomerById(this.customer_id).subscribe( res => {
 
       this.cliente = res[0];
+      // console.log(this.cliente);
 
     }, error =>{
       console.log(error);
