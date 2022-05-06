@@ -18,6 +18,9 @@ export class LoginPage{
   public incorrecto = false;
   public usuarios: Array<Usuario>=[];
 
+  public parametro;
+  public signature;
+
   // user local: hola@solunapilates.es
   // pass local: 987654321
 
@@ -28,7 +31,8 @@ export class LoginPage{
 
   constructor(private servicio: ServicioService,
               private router: Router,
-              private modalController: ModalController){  }
+              private modalController: ModalController){
+              }
   /* --------------------------------------------------Recojo los datos de la BD---------------------------------------------------- */
 
   getUsuariosSoluna(){
@@ -78,5 +82,16 @@ export class LoginPage{
     // this.getUsuarios();
     this.getUsuariosSoluna();
   }
+
+  // pruebaPago() {
+
+  //   this.servicio.pruebaPagoRedsys().subscribe((res:any) => {
+  //     console.log(res);
+  //     this.parametro = res.Parameters;
+  //     this.signature = res.Signature;
+  //     (<HTMLFormElement>document.getElementById('id_formulario')).submit();
+  //   })
+  //   // (<HTMLFormElement>document.getElementById('id_formulario')).submit();
+  // }
 
 }

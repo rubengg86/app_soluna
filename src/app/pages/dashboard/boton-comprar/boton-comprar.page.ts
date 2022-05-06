@@ -63,5 +63,9 @@ export class BotonComprarPage implements OnInit {
     // console.log(ticket_id);
   }
 
+  pruebaPago() {
+    (<HTMLFormElement>document.getElementById('id_formulario')).submit();
+  }
+
 
 }

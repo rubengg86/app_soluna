@@ -182,4 +182,9 @@ export class ServicioService {
   getCenters(): Observable<any>{
     return this.http.get(this.url+'/get_centers/', {headers: this.headers});
   }
+
+  // pruebaPagoRedsys() {
+  //   // return this.http.get(this.url+'/tpv_payment', {headers: this.headers});
+  //   return this.http.get(this.url+'/tpv_payment');
+  // }
 }

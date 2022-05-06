@@ -104,7 +104,6 @@ export class TicketsPage implements OnInit {
    
       this._service.getTicketsAvailableOnDate(fecha, this.idCentro).subscribe( res => {
       this.tickets = res;
-      // console.log(this.tickets);
    
       // Para mostrar la fecha en el html hay que poner una hora que no sean las 00:00
       // porque entonces pone el día anterior
