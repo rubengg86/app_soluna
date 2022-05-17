@@ -83,15 +83,4 @@ export class LoginPage{
     this.getUsuariosSoluna();
   }
 
-  // pruebaPago() {
-
-  //   this.servicio.pruebaPagoRedsys().subscribe((res:any) => {
-  //     console.log(res);
-  //     this.parametro = res.Parameters;
-  //     this.signature = res.Signature;
-  //     (<HTMLFormElement>document.getElementById('id_formulario')).submit();
-  //   })
-  //   // (<HTMLFormElement>document.getElementById('id_formulario')).submit();
-  // }
-
 }

@@ -47,6 +47,7 @@ export class TusClasesPage implements OnInit {
   // public customer_id = 2534;
   // public customer_id = 5211;
   // public customer_id = 4841;
+  // public customer_id = 4892;
   public cliente;
   public clasesMes: Array<ClasesMes>;
   public clasesMesSiguiente: Array<ClasesMes>;
@@ -68,6 +69,7 @@ export class TusClasesPage implements OnInit {
   public tickets;
   public fechaElegida;
   public fechaClaseTicket;
+  public colapsar = false;
 
   constructor(private _service: ServicioService, public modalController: ModalController) { }
 
@@ -145,7 +147,6 @@ export class TusClasesPage implements OnInit {
   }
 
   getCliente() {
-    // this._service.getCustomerById(3274).subscribe( res => {
     this._service.getCustomerById(this.customer_id).subscribe( res => {
 
       this.cliente = res[0];
@@ -157,7 +158,6 @@ export class TusClasesPage implements OnInit {
   }
 
   getActividadesCliente () {
-    // this._service.getCustomerActivity(3274).subscribe( res => {
     this._service.getCustomerActivity(this.customer_id).subscribe( res => {
 
       this.actividades = res;
@@ -171,7 +171,6 @@ export class TusClasesPage implements OnInit {
   }
 
   getAsistencias() {
-    // this._service.getCustomerAssistances(3274).subscribe( res => {
     this._service.getCustomerAssistances(this.customer_id).subscribe( res => {
 
       this.asistencias = res;
@@ -191,12 +190,12 @@ export class TusClasesPage implements OnInit {
 
     let mesActual = new Date();
     let mesSiguiente = new Date(new Date().getFullYear(), new Date().getMonth() + 2, 0);
-    let dias = [];
-    let contador = 0;
     let day_target;
 
 
     for (let i = 0; i < this.actividades.length; i++) {
+      let dias = [];
+      let contador = 0;
       for (let dia in this.actividades[i].days) {
         dias[contador] = dia;
         contador++;
@@ -373,27 +372,39 @@ export class TusClasesPage implements OnInit {
 
     this.clasesTotales = this.clasesTotales.sort((a,b) => a.tiempo-b.tiempo);
 
-    let clasesTotalesAntes = Object.assign([], this.clasesTotales);
     // let clasesTotalesAntes = this.clasesTotales;
+    // let clasesTotalesAntes = this.clasesTotales.splice(0, this.clasesTotales.length, this.clasesTotales);
+    // let clasesTotalesAntes = Object.assign([], this.clasesTotales);
+    // let clasesTotalesAntes = JSON.parse(JSON.stringify(this.clasesTotales));
+
+
+    // No tengo ni pajolera idea de por qué, pero si se llama clasesTotalesAntes cambia todo a la vez que clasesTotales y no van por separado haga lo que haga
+    // Si se llama de cualquier otra forma funciona
+    let antesClasesTotales = JSON.parse(JSON.stringify(this.clasesTotales));
+    // console.log(this.clasesTotales);
+    // console.log(antesClasesTotales);
+
 
     this.sinAsistir = [];
     let contadorSinAsistir = 0;
-    // console.log(clasesTotalesAntes);
-    // console.log(this.clasesTotales);
 
 
-    for (let k = 0; k < clasesTotalesAntes.length; k++) {
-      this._service.getCustomerUnassistances(clasesTotalesAntes[k].id_grupo, this.customer_id, clasesTotalesAntes[k].tiempo).subscribe( (res:any) => {
-        this._service.getIsHoliday(clasesTotalesAntes[k].tiempo, clasesTotalesAntes[k].id_centro).subscribe( (resp:any) => {
+    for (let k = 0; k < antesClasesTotales.length; k++) {
+      this._service.getCustomerUnassistances(antesClasesTotales[k].id_grupo, this.customer_id, antesClasesTotales[k].tiempo).subscribe( (res:any) => {
+        this._service.getIsHoliday(antesClasesTotales[k].tiempo, antesClasesTotales[k].id_centro).subscribe( (resp:any) => {
           if (res.Unassistance === 'YES'){
             // this.clasesTotales.splice(k, 1);
+            this.sinAsistir[contadorSinAsistir] = antesClasesTotales[k];
+            this.sinAsistir = this.sinAsistir.sort((a,b) => a.tiempo-b.tiempo);
             this.clasesTotales[k].tiempo = 0
-            this.sinAsistir[contadorSinAsistir] = k;
+            // this.sinAsistir[contadorSinAsistir] = k;
             contadorSinAsistir++;
           } else {
             if (resp.holiday === 'YES'){
+              this.sinAsistir[contadorSinAsistir] = antesClasesTotales[k];
+              this.sinAsistir = this.sinAsistir.sort((a,b) => a.tiempo-b.tiempo);
               this.clasesTotales[k].tiempo = 0
-              this.sinAsistir[contadorSinAsistir] = k;
+              // this.sinAsistir[contadorSinAsistir] = k;
               contadorSinAsistir++;
             }
           }
@@ -410,8 +421,6 @@ export class TusClasesPage implements OnInit {
 
   getTicketsCliente() {
 
-    // this._service.getPurchasedTickets(5211).subscribe(res => {
-    // this._service.getPurchasedTickets(5250).subscribe(res => {
     this._service.getPurchasedTickets(this.customer_id).subscribe(res => {
       this.tickets = res;
       // console.log(this.tickets)

@@ -27,6 +27,14 @@
 
     </ion-card>
 
+    <!-- <ion-card class="my-2 py-2 px-0 border-top" *ngIf="sinAsistir?.length > 0">
+
+        <ion-card-header>
+            <ion-card-title class="border-bottom" style="color: red;">Tienes {{sinAsistir?.length}} clases a recuperar</ion-card-title>
+        </ion-card-header>
+
+    </ion-card> -->
+
 
     <ion-card class="my-2 py-2 px-0 border-top">
         <ion-card-header>
@@ -71,6 +79,62 @@
     </ion-card>
 
     <!--------------------------------------------------------------------MENSUALMENTE-------------------------------------------------- -->
+
+    <!-- Esto era para mostrar las clases canceladas -->
+    <!-- <ion-card class="my-2 py-2 px-0 border-top" *ngIf="sinAsistir">
+
+        <ion-card-header>
+            <ion-card-title class="border-bottom" style="margin-bottom: -15px !important;">Clases canceladas</ion-card-title>
+        </ion-card-header>
+
+
+        <ion-card-content>
+
+            <ion-card-content class="my-2 px-4">
+
+                <ion-list>
+                    <ion-item *ngIf="sinAsistir?.length > 0">
+                        <ion-label slot="start">
+                            <h2>{{sinAsistir[0]?.actividad}}</h2>
+                        </ion-label>
+                        <ion-label>
+                            <h3>{{sinAsistir[0]?.fecha}}, {{sinAsistir[0]?.hora_inicio}}</h3>
+                            <h4>{{sinAsistir[0]?.centro}}</h4>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item *ngIf="sinAsistir?.length > 1">
+                        <ion-label slot="start">
+                            <h2>{{sinAsistir[1]?.actividad}}</h2>
+                        </ion-label>
+                        <ion-label>
+                            <h3>{{sinAsistir[1]?.fecha}}, {{sinAsistir[1]?.hora_inicio}}</h3>
+                            <h4>{{sinAsistir[1]?.centro}}</h4>
+                        </ion-label>
+                    </ion-item>
+                </ion-list>
+
+
+                <div id="CollapseMes" class="accordion-collapse collapse row">
+                    <ion-list *ngFor="let sin of sinAsistir; let i = index">
+                        <ion-item *ngIf="i>1">
+                            <ion-label slot="start">
+                                <h2>{{sin.actividad}}</h2>
+                            </ion-label>
+                            <ion-label>
+                                <h3>{{sin.fecha}}, {{sin.hora_inicio}}</h3>
+                                <h4>{{sin.centro}}</h4>
+                            </ion-label>
+                        </ion-item>
+                    </ion-list>
+                </div>
+
+                <button *ngIf="sinAsistir?.length > 2" class="accordion-button collapsed p-0 mt-4" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseMes" aria-expanded="false" aria-controls="flush-collapseOne" style="background-color:transparent">
+                        Ver {{sinAsistir?.length - 2}} más
+                    </button>
+
+            </ion-card-content>
+        </ion-card-content>
+    </ion-card> -->
 
     <ion-card class="my-2 py-2 px-0 border-top">
         <ion-card-header>
