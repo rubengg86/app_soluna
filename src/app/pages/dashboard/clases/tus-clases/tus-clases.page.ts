@@ -48,6 +48,7 @@ export class TusClasesPage implements OnInit {
   // public customer_id = 5211;
   // public customer_id = 4841;
   // public customer_id = 4892;
+  // public customer_id = 5384;
   public cliente;
   public clasesMes: Array<ClasesMes>;
   public clasesMesSiguiente: Array<ClasesMes>;
@@ -525,6 +526,8 @@ export class TusClasesPage implements OnInit {
 
     let fecha = (this.fechaElegida)/1000 | 0;
     // console.log(fecha);
+    // console.log(activity_id);
+    // console.log(center_id);
 
     this._service.getFreeHours(fecha, activity_id, center_id).subscribe( res => {
       this.huecos = res;

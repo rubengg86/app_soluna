@@ -66,16 +66,16 @@ export class ServicioService {
       return false;
     }
 
-    const expira = Number(localStorage.getItem('expira'));
-    const hoy = new Date();
-    hoy.setTime(expira);
+    // const expira = Number(localStorage.getItem('expira'));
+    // const hoy = new Date();
+    // hoy.setTime(expira);
 
-    if ( expira > Number(new Date()) ) {
+    // if ( expira > Number(new Date()) ) {
       return true;
-    } else {
-      localStorage.removeItem('currentUserSoluna');
-      return false;
-    }
+    // } else {
+    //   localStorage.removeItem('currentUserSoluna');
+    //   return false;
+    // }
   }
 
   registerUser(customer_id){

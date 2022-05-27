@@ -43,7 +43,6 @@ export class LoginPage{
     let password = this.forma.get('pass').value;
 
     this.servicio.getUsers(login, password).subscribe( (res: any) => {
-
       if (res){
         localStorage.setItem('currentUserSoluna', res.customer_id);
     
