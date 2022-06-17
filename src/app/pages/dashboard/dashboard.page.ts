@@ -12,6 +12,7 @@ export class DashboardPage implements OnInit{
 
   public customer_id = localStorage.getItem('currentUserSoluna');
   public cliente;
+  public email = 'mailto:aviles@solunapilates.es';
 
   constructor(public modalController: ModalController, public router: Router, private _service: ServicioService) { }
 
@@ -25,8 +26,26 @@ export class DashboardPage implements OnInit{
     // this._service.getCustomerById(5211).subscribe( res => {
       this.cliente = res[0];
       // console.log(res[0]);
+
+      this.buscarCentros();
     }, error =>{
       console.log(error);
+    })
+  }
+
+  buscarCentros() {
+
+    this._service.getCenters().subscribe( result => {
+      // console.log(result);
+
+      result.forEach(element => {
+        if (element.id == this.cliente.center_id){
+          this.email = `mailto:${element.email}`;
+        }
+      });
+
+    }, error => {
+      console.log(<any>error);
     })
   }
 

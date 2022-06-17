@@ -18,11 +18,47 @@ export class CambiarClasePage implements OnInit {
   public fecha_antigua;
   public grupo_antiguo;
   public inicio_antiguo;
+  public cliente;
+  public email;
+  public emailFormat;
 
   constructor(public modalController: ModalController, private _service: ServicioService, private alertCtrl: AlertController) { }
 
   ngOnInit() {
-    this.gestionarHuecos();
+    // this.gestionarHuecos();
+    this.getCliente();
+  }
+
+  getCliente() {
+
+    this._service.getCustomerById(this.customer_id).subscribe( res => {
+    // this._service.getCustomerById(5211).subscribe( res => {
+      this.cliente = res[0];
+      // console.log(res[0]);
+
+      this.buscarCentros();
+    }, error =>{
+      console.log(error);
+    })
+  }
+
+  buscarCentros() {
+
+    this._service.getCenters().subscribe( result => {
+      // console.log(result);
+
+      result.forEach(element => {
+        if (element.id == this.cliente.center_id){
+          this.email = `mailto:${element.email}`;
+          this.emailFormat = element.email;
+        }
+
+        this.gestionarHuecos();
+      });
+
+    }, error => {
+      console.log(<any>error);
+    })
   }
 
   gestionarHuecos(){
