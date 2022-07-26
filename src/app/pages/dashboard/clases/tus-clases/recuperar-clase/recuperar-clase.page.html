@@ -1,0 +1,67 @@
+<!---------------------------------------------------------------- MODAL (editar)------------------------------------------------------------->
+<!-------------------------------------------------------------------CABECERA ---------------------------------------------------------------->
+<ion-header>
+    <ion-toolbar class="p-3" style="--background: #363636;">
+        <!-- <ion-toolbar class="p-3" color="light"> -->
+        <div class="d-flex justify-content-between border-bottom">
+            <ion-title class="text-white">
+                RECUPERAR {{activity_name}} <br> {{fechaAntiguaFormato}}
+            </ion-title>
+            <i class="fas fa-times fa-2x text-white" (click)="dismiss()"></i>
+            <br>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<!-------------------------------------------------------------------FORMULARIO--------------------------------------------------------------->
+<ion-content *ngIf="fechasLibres" style="--background: #363636;" id="contenidoComprar">
+    <!-- <ion-content color="light" id="contenidoComprar"> -->
+    <ion-card class="bg-white border-top col-12">
+        <ion-card-header class="border-bottom">
+            <ion-card-title>
+                Puedes recuperar {{recoverable_number}} clases de esta actividad
+            </ion-card-title>
+
+        </ion-card-header>
+    </ion-card>
+    <ion-card *ngIf="fechasLibres.length == 0" class="bg-white border-top col-12">
+        <ion-card-header class="border-bottom">
+            <ion-card-title>
+                Ahora mismo no hay huecos disponibles para recuperar una clase en esta fecha
+            </ion-card-title>
+
+            <ion-card-content>
+                Para más información, o pedir una recuperación de clase manual, contacte con
+                <a [href]="email">{{emailFormat}}</a>
+            </ion-card-content>
+
+            <!-- <button type="button" class="btn" id="comprar">Cambiar</button>
+          <h1>{{huecos[fecha][0].start_time}}</h1> -->
+        </ion-card-header>
+    </ion-card>
+    <ion-card class="bg-white border-top col-12" *ngFor="let fecha of fechasLibres; let i = index">
+        <ion-card-header class="border-bottom">
+            <ion-card-title>
+                {{fechasLibresFormato[i]}}
+            </ion-card-title>
+
+            <ion-card-content>
+                <ion-card class="bg-white border-top col-12" *ngFor="let hueco of huecos[fecha]; let j = index">
+                    <ion-card-header class="border-bottom">
+                        <button type="button" class="btn" id="comprar" (click)="confirmarCambiar(hueco.id, fecha, hueco.start_time, fechasLibresFormato[i])">Recuperar</button>
+                        <!-- <button type="button" class="btn" id="comprar" (click)="cambiar(hueco.id, fecha, hueco.start_time)">Cambiar</button> -->
+                        <h1>{{hueco.start_time}}</h1>
+                    </ion-card-header>
+                </ion-card>
+            </ion-card-content>
+
+            <!-- <button type="button" class="btn" id="comprar">Cambiar</button>
+          <h1>{{huecos[fecha][0].start_time}}</h1> -->
+        </ion-card-header>
+    </ion-card>
+
+</ion-content>
+<!-------------------------------------------------------------------FOOTER-------------------------------------------------------------------->
+<!-- <ion-footer class="p-4" id="contenidoFooter">
+  <button type="button" class="btn" id="comprar">Comprar</button>
+</ion-footer> -->

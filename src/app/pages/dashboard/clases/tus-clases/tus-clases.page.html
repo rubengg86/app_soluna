@@ -12,6 +12,7 @@
                         <h2>{{actividad.activity_name}}</h2>
                         <h2>{{actividad.center_name}}</h2>
                         <h3>{{actividad.group_name}}</h3>
+                        <h3 style="color: red;" *ngIf="actividad?.recoverable_number">Tienes {{actividad?.recoverable_number}} clases a recuperar</h3>
                     </ion-label>
                 </ion-item>
             </div>
@@ -30,7 +31,7 @@
     <!-- <ion-card class="my-2 py-2 px-0 border-top" *ngIf="sinAsistir?.length > 0">
 
         <ion-card-header>
-            <ion-card-title class="border-bottom" style="color: red;">Tienes {{sinAsistir?.length}} clases a recuperar</ion-card-title>
+            <ion-card-title class="border-bottom" style="color: red;">Tienes {{recuperables}} clases a recuperar</ion-card-title>
         </ion-card-header>
 
     </ion-card> -->
@@ -154,7 +155,8 @@
             <!-- <button (click)="getFecha()">fecha</button> -->
 
             <ion-card-content class="my-2 px-4" *ngIf="fechaElegida">
-                <div *ngIf="!fechaIgual && !fechaIgualTickets">
+                <div *ngIf="!fechaIgual && !fechaIgualTickets && recuperables == 0">
+                    <!-- <div *ngIf="!fechaIgual && !fechaIgualTickets"> -->
                     <ion-title class="border-bottom p-0">Clases</ion-title>
                     <p class="mt-2">No tienes clases este día</p>
                     <br>
@@ -187,6 +189,21 @@
                             <ion-label>
                                 <h3>{{ticket.start_time}}</h3>
                                 <h4>{{ticket.center_name}}</h4>
+                            </ion-label>
+                        </ion-item>
+                    </ion-list>
+                </div>
+                <div *ngIf="!fechaIgual && !fechaIgualTickets && recuperables != 0">
+                    <!-- <div *ngIf="recuperables != 0"> -->
+                    <p class="mt-2">No tienes clases este día, pero puedes recuperar una clase para una actividad:</p>
+                    <!-- <p class="mt-2">Puedes recuperar una clase para una actividad:</p> -->
+                    <ion-list *ngFor="let actividad of actividades">
+                        <ion-item *ngIf="actividad?.recoverable_number">
+                            <ion-label slot="start">
+                                <h2 class="mt-2">{{actividad.activity_name}}</h2>
+                            </ion-label>
+                            <ion-label>
+                                <button class="btn" id="cambiar" style="font-size: 11px;" (click)="getHuecosOnDate(actividad.activity_id, actividad.group_id, actividad.start_time, actividad.center_id, actividad?.recoverable_number, actividad.activity_name)">RECUPERAR</button>
                             </ion-label>
                         </ion-item>
                     </ion-list>

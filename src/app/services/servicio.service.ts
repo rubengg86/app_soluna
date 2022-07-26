@@ -87,7 +87,6 @@ export class ServicioService {
   }
 
   getCustomerById(customer_id) {
-    // return this.http.get(this.url+`/get_customer/${customer_id}`);
     return this.http.get(this.url+`/get_customer/${customer_id}`, {headers: this.headers});
   }
 
@@ -139,12 +138,32 @@ export class ServicioService {
     return this.http.get(this.url+`/ca_get_free_hours/${date}/${activity_id}/${center_id}`, {headers: this.headers});
   }
 
+  getFreeHoursOnDate(date, activity_id, center_id){
+    return this.http.get(this.url+`/ca_get_free_hours_on_date/${date}/${activity_id}/${center_id}`, {headers: this.headers});
+  }
+
   recordUnassistNew(date_time, customer_id){
     return this.http.get(this.url+`/ca_record_unassist_new/${date_time}/${customer_id}`, {headers: this.headers});
   }
 
+  recordRecoverableClass(date_time, customer_id){
+    return this.http.get(this.url+`/ca_record_recoverable_class/${date_time}/${customer_id}`, {headers: this.headers});
+  }
+
+  redeemRecoverableClass(date_time, customer_id){
+    return this.http.get(this.url+`/ca_redeem_recoverable_class/${date_time}/${customer_id}`, {headers: this.headers});
+  }
+
   recordAssistNew(date_time, customer_id){
     return this.http.get(this.url+`/ca_record_assist_new/${date_time}/${customer_id}`, {headers: this.headers});
+  }
+
+  getRecoverableClassesNumber(customer_id){
+    return this.http.get(this.url+`/ca_get_recoverable_classes_number/${customer_id}`, {headers: this.headers});
+  }
+
+  getRecoverableClasses(customer_id){
+    return this.http.get(this.url+`/ca_get_recoverable_classes/${customer_id}`, {headers: this.headers});
   }
 
   saveNotification(data){

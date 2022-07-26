@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ServicioService } from '../../../../../services/servicio.service';
 
+
 @Component({
-  selector: 'app-cambiar-clase',
-  templateUrl: './cambiar-clase.page.html',
-  styleUrls: ['./cambiar-clase.page.scss'],
+  selector: 'app-recuperar-clase',
+  templateUrl: './recuperar-clase.page.html',
+  styleUrls: ['./recuperar-clase.page.scss'],
 })
-export class CambiarClasePage implements OnInit {
+export class RecuperarClasePage implements OnInit {
 
   public customer_id = localStorage.getItem('currentUserSoluna');
   public fechasLibres;
@@ -21,6 +22,8 @@ export class CambiarClasePage implements OnInit {
   public cliente;
   public email;
   public emailFormat;
+  public recoverable_number;
+  public activity_name;
 
   constructor(public modalController: ModalController, private _service: ServicioService, private alertCtrl: AlertController) { }
 
@@ -133,7 +136,8 @@ export class CambiarClasePage implements OnInit {
     
     const alert = await this.alertCtrl.create({
       cssClass: 'confirmarCambiar',
-      header: '¿Seguro que quiere cambiar la clase?',
+      header: '¿Seguro que quiere recuperar la clase este día?',
+      subHeader: 'No podrás volver a recuperarla en otro día',
 
       buttons: [
         {
@@ -143,7 +147,7 @@ export class CambiarClasePage implements OnInit {
         },
         {
           cssClass: 'confirmarCambiarBoton',
-          text: 'Cambiar',
+          text: 'Recuperar',
           handler: () => {
 
             this.cambiar(id, date, start_time, fechaNueva);
@@ -163,84 +167,25 @@ export class CambiarClasePage implements OnInit {
 
     let date_id_nueva = id + '_' + date;
     // console.log(date_id_nueva);
-
     // console.log(start_time);
 
-    // this._service.recordUnassistNew(date_id_antigua, 5211).subscribe( res => {
-    this._service.recordUnassistNew(date_id_antigua, this.customer_id).subscribe(res => {
-      // this._service.recordAssistNew(date_id_nueva, 5211).subscribe( res => {
+    this._service.redeemRecoverableClass(date_id_nueva, this.customer_id).subscribe( resp => {
       this._service.recordAssistNew(date_id_nueva, this.customer_id).subscribe( res => {
         // this.dismiss();
         this.notificacionCambiar(start_time, fechaNueva);
       }, error =>{
-      console.log(error);
+        console.log(error);
       })
     }, error =>{
       console.log(error);
-    });
+    })
   }
 
   notificacionCambiar(start_time, fechaNueva) {
 
     let updated = new FormData()
     updated.append('customer_id', this.customer_id);
-    updated.append('text', `Has cambiado una clase. Tu nueva clase es: <b>${fechaNueva} - ${start_time}</b>`);
-    updated.append('type', "CLASS_CHANGE");
-
-    this._service.saveNotification(updated).subscribe( res => {
-      this.dismiss();
-    });
-  }
-
-  async confirmarCancelar(){
-    
-    const alert = await this.alertCtrl.create({
-      cssClass: 'confirmarCambiar',
-      header: '¿Seguro que quiere anular la clase?',
-
-      buttons: [
-        {
-          cssClass: 'confirmarCambiarBoton',
-          text: 'Atrás',
-          role: 'cancel', //esto hace que también pase al hacer click fuera
-        },
-        {
-          cssClass: 'confirmarCambiarBoton',
-          text: 'Anular',
-          handler: () => {
-
-            this.cancelarClase();
-
-          } 
-        }
-      ]
-    });
-
-    alert.present();
-  }
-
-  cancelarClase() {
-
-    let date_id_antigua = this.grupo_antiguo + '_' + this.fecha_antigua;
-    // console.log(date_id_antigua);
-
-    // this._service.recordUnassistNew(date_id_antigua, 5211).subscribe( res => {
-    this._service.recordUnassistNew(date_id_antigua, this.customer_id).subscribe(res => {
-      // console.log(res);
-      this._service.recordRecoverableClass(date_id_antigua, this.customer_id).subscribe(resp => {
-        this.notificacionCancelar();
-      });
-    }, error =>{
-      console.log(error);
-    });
-
-  }
-
-  notificacionCancelar() {
-
-    let updated = new FormData()
-    updated.append('customer_id', this.customer_id);
-    updated.append('text', `Has anulado una clase del <b>${this.fechaAntiguaFormato}</b>`);
+    updated.append('text', `Has recuperado una clase de <b>${this.activity_name}</b> el día: <b>${fechaNueva} - ${start_time}</b>`);
     updated.append('type', "CLASS_CHANGE");
 
     this._service.saveNotification(updated).subscribe( res => {

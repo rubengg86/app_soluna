@@ -7,6 +7,7 @@ import { ModalController } from '@ionic/angular';
 import { CambiarClasePage } from './cambiar-clase/cambiar-clase.page';
 import { AnularClasePage } from './anular-clase/anular-clase.page';
 import { ClasesMes } from '../../../../models/clases-mes';
+import { RecuperarClasePage } from './recuperar-clase/recuperar-clase.page';
 
 @Component({
   selector: 'app-tus-clases',
@@ -43,6 +44,9 @@ export class TusClasesPage implements OnInit {
   };
 
   public customer_id = localStorage.getItem('currentUserSoluna');
+  // public customer_id = 5254; // esta es prueba programador
+  // public customer_id = 56; // esta es la maria
+  // public customer_id = 19;
   // public customer_id = 3274;
   // public customer_id = 2534;
   // public customer_id = 5211;
@@ -59,6 +63,10 @@ export class TusClasesPage implements OnInit {
   public noAsistencia;
   public sinAsistir;
   public huecos;
+  public recuperables;
+  public recuperablesDetalle;
+  public recuperablesNumero;
+  public counts;
   public fechasLibres;
   public fechaAntigua;
   public grupoAntiguo;
@@ -78,7 +86,7 @@ export class TusClasesPage implements OnInit {
     this.getCliente();
     this.getActividadesCliente();
     this.getTicketsCliente();
-
+    
   }
 
   // get fechaString() {
@@ -165,9 +173,45 @@ export class TusClasesPage implements OnInit {
       // console.log(this.actividades);
 
       this.getAsistencias();
+      this.getRecoverableClasses();
 
     }, error =>{
       console.log(error);
+    })
+  }
+
+  getRecoverableClasses() {
+
+    this.recuperablesNumero = [];
+    this.counts = {};
+
+    this._service.getRecoverableClasses(this.customer_id).subscribe( (res:any) => {
+      // console.log(res);
+      this.recuperablesDetalle = res;
+
+      res.forEach(element => {
+        if (this.actividades) {
+          this.actividades.forEach(actividad => {
+            if (element.redeemed == 0) {
+              if (actividad.group_id == element.date_id.split('_')[0]) {
+                if (actividad.recoverable_number) {
+                  actividad.recoverable_number++;
+                } else {
+                  actividad.recoverable_number = 1;
+                }
+              }
+            }
+          });
+        }
+        
+      });
+
+
+    })
+
+    this._service.getRecoverableClassesNumber(this.customer_id).subscribe( res => {
+      // console.log(res);
+      this.recuperables = res;
     })
   }
 
@@ -541,6 +585,34 @@ export class TusClasesPage implements OnInit {
     })
   }
 
+  getHuecosOnDate(activity_id, group_id, start_time, center_id, recoverable_number, activity_name) {
+
+    // console.log(activity_id);
+    // console.log(center_id);
+    // console.log(group_id);
+    // console.log(start_time);
+    // console.log(this.actividades);
+
+    this._service.presentLoading();
+
+    let fecha = (this.fechaElegida)/1000 | 0;
+    // console.log(fecha);
+    // console.log(activity_id);
+    // console.log(center_id);
+
+    this._service.getFreeHoursOnDate(fecha, activity_id, center_id).subscribe( res => {
+      this.huecos = res;
+      this.fechaAntigua = fecha;
+      this.grupoAntiguo = group_id;
+      this.inicioAntiguo = start_time;
+      this.abrirModalRecuperar(recoverable_number, activity_name);
+      this._service.dismissLoading();
+
+    }, error =>{
+      console.log(error);
+    })
+  }
+
   async abrirModalCambio() {
 
     // console.log(this.huecos);
@@ -552,6 +624,30 @@ export class TusClasesPage implements OnInit {
         fecha_antigua: this.fechaAntigua,
         grupo_antiguo: this.grupoAntiguo,
         inicio_antiguo: this.inicioAntiguo
+      }
+    });
+    modal.onDidDismiss().then((data) => {
+      this.getCliente();
+      this.getActividadesCliente();
+      this.getTicketsCliente();
+    });
+    return await modal.present();
+
+  }
+
+  async abrirModalRecuperar(recoverable_number, activity_name) {
+
+    // console.log(this.huecos);
+
+    const modal = await this.modalController.create({
+      component: RecuperarClasePage,
+      componentProps: { 
+        huecos: this.huecos,
+        fecha_antigua: this.fechaAntigua,
+        grupo_antiguo: this.grupoAntiguo,
+        inicio_antiguo: this.inicioAntiguo,
+        recoverable_number: recoverable_number,
+        activity_name: activity_name,
       }
     });
     modal.onDidDismiss().then((data) => {
