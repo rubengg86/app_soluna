@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario';
 import { ServicioService } from 'src/app/services/servicio.service';
 import { ModalController } from '@ionic/angular';
@@ -21,6 +21,13 @@ export class LoginPage{
   public parametro;
   public signature;
 
+
+
+  public querystring;
+  public category;
+  public id;
+  private urlParameters: Array<any> = [];
+
   // user local: hola@solunapilates.es
   // pass local: 987654321
 
@@ -31,7 +38,8 @@ export class LoginPage{
 
   constructor(private servicio: ServicioService,
               private router: Router,
-              private modalController: ModalController){
+              private modalController: ModalController,
+              private route: ActivatedRoute) {
               }
   /* --------------------------------------------------Recojo los datos de la BD---------------------------------------------------- */
 

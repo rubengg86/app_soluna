@@ -53,6 +53,7 @@ export class TusClasesPage implements OnInit {
   // public customer_id = 4841;
   // public customer_id = 4892;
   // public customer_id = 5384;
+  // public customer_id = 5537;
   public cliente;
   public clasesMes: Array<ClasesMes>;
   public clasesMesSiguiente: Array<ClasesMes>;
@@ -575,6 +576,7 @@ export class TusClasesPage implements OnInit {
 
     this._service.getFreeHours(fecha, activity_id, center_id).subscribe( res => {
       this.huecos = res;
+      // console.log(this.huecos);
       this.fechaAntigua = fecha;
       this.grupoAntiguo = group_id;
       this.inicioAntiguo = start_time;

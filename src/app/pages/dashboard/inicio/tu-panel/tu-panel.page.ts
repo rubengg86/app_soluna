@@ -7,6 +7,11 @@ import { ChartDataSets, ChartType } from 'chart.js';
 import { Label } from 'ng2-charts';
 import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 import { ServicioService } from '../../../../services/servicio.service';
+import * as cryptojs from 'crypto-js';
+import * as moment from 'moment';
+import { GLOBAL } from '../../../../services/global';
+import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-app-browser/ngx';
+
 
 @Component({
   selector: 'app-tu-panel',
@@ -23,17 +28,42 @@ export class TuPanelPage implements OnInit{
   mes: number = new Date().getMonth();
   
   public customer_id = localStorage.getItem('currentUserSoluna');
+  // public customer_id = 5211;
   public asistencia;
   public cliente;
   public pagosCliente;
   public fechaFiltro;
   public pagosFiltrados:any = [];
   public cuota;
+  public pagar = false;
 
   public pagos;
-  public options;
+  // public options;
+  options : InAppBrowserOptions = {
+    location : 'yes',//Or 'no' 
+    hidden : 'no', //Or  'yes'
+    clearcache : 'yes',
+    clearsessioncache : 'yes',
+    zoom : 'yes',//Android only ,shows browser zoom controls 
+    hardwareback : 'yes',
+    mediaPlaybackRequiresUserAction : 'no',
+    shouldPauseOnSuspend : 'no', //Android only 
+    closebuttoncaption : 'Cerrar',
+    disallowoverscroll : 'no', //iOS only 
+    toolbar : 'yes', //iOS only 
+    enableViewportScale : 'no', //iOS only 
+    allowInlineMediaPlayback : 'no',//iOS only 
+    presentationstyle : 'pagesheet',//iOS only 
+    fullscreen : 'yes',//Windows only    
+  };
+  merchantParams;
+  signature;
 
-  constructor(public modalController: ModalController, private calendar: NgbCalendar, private _service: ServicioService) {}
+
+  constructor(public modalController: ModalController, 
+              private calendar: NgbCalendar, 
+              private _service: ServicioService,
+              private iab: InAppBrowser) {}
 
 
  /*--------------------------------------------GRAFICO------------------------------------------- */
@@ -123,9 +153,8 @@ lineChartType: ChartType = 'line';
   getCliente() {
 
     this._service.getCustomerById(this.customer_id).subscribe( res => {
-    // this._service.getCustomerById(5211).subscribe( res => {
       this.cliente = res[0];
-      // console.log(res[0]);
+      console.log(res[0]);
       this.getAsistencia();
       this.getPagos();
       this.getCuota();
@@ -137,7 +166,6 @@ lineChartType: ChartType = 'line';
   getAsistencia() {
 
     this._service.getAsssistanceById(this.customer_id).subscribe( res => {
-    // this._service.getAsssistanceById(5211).subscribe( res => {
       this.asistencia = res;
     }, error =>{
       console.log(error);
@@ -146,7 +174,6 @@ lineChartType: ChartType = 'line';
 
   getPagos() {
     this._service.getLastPayments(this.customer_id).subscribe( res => {
-    // this._service.getLastPayments(5211).subscribe( res => {
       // console.log(res);
       this.pagosCliente = res;
       this.pagosFiltrados = res;
@@ -157,9 +184,12 @@ lineChartType: ChartType = 'line';
 
   getCuota() {
     this._service.getBillUser(this.customer_id, this.cliente.center_id).subscribe ( res => {
-    // this._service.getBillUser(5211, 1).subscribe ( res => {
-      // console.log(res);
+      console.log(res);
       this.cuota = res;
+      let price = (+this.cuota.total + this.cuota.extra_payments.total)*100;
+      if (price != 0) {
+        this.pagar=true;
+      }
     }, error =>{
       console.log(error);
     })
@@ -178,6 +208,133 @@ lineChartType: ChartType = 'line';
         contadorFiltroPagos++;
       }
     }
+  }
+
+  generatemerchantparams() {
+
+    let price = (+this.cuota.total + this.cuota.extra_payments.total)*100;
+    let order = moment().format('YYMMDDHHmmss');
+
+    let hash1 = cryptojs.SHA1(order+GLOBAL.PASSWD_SEED+GLOBAL.PASSWD_SEED+order+'1').toString();
+    let hash2 = cryptojs.SHA1(order+GLOBAL.PASSWD_SEED+GLOBAL.PASSWD_SEED+order+'2').toString();
+    let urlok = "https://solunapilates.es/finish-app-true.php?order="+order+'&type='+'M'+'&hash='+hash1;
+
+
+    let tpvdata = {
+      "DS_MERCHANT_AMOUNT": price.toString(),
+      "DS_MERCHANT_CURRENCY": "978",
+      "DS_MERCHANT_MERCHANTCODE": "355780867",
+      "DS_MERCHANT_ORDER": order,
+      "DS_MERCHANT_TERMINAL": "1",
+      "DS_MERCHANT_TRANSACTIONTYPE": "0",
+      "DS_MERCHANT_URLKO": "https://solunapilates.es/finish-app-true.php?order="+order+'&type='+'M'+'&hash='+hash2,
+      "DS_MERCHANT_URLOK": "https://solunapilates.es/finish-app-true.php?order="+order+'&type='+'M'+'&hash='+hash1
+    }
+
+    // Base64 encoding of parameters
+    var merchantWordArray = cryptojs.enc.Utf8.parse(JSON.stringify(tpvdata));
+    this.merchantParams = merchantWordArray.toString(cryptojs.enc.Base64);
+    document.getElementById('id_formulario')['Ds_MerchantParameters'].value = merchantWordArray.toString(cryptojs.enc.Base64);
+    
+    // Decode key
+    var keyWordArray = cryptojs.enc.Base64.parse('sq7HjrUOBfKmC576ILgskD5srU870gJ7');
+    // var keyWordArray = cryptojs.enc.Base64.parse(merchant_key);
+    
+    // Generate transaction key
+    var iv = cryptojs.enc.Hex.parse("0000000000000000");
+    var cipher = cryptojs.TripleDES.encrypt(tpvdata.DS_MERCHANT_ORDER, keyWordArray, {
+      iv:iv,
+      mode: cryptojs.mode.CBC,
+      padding: cryptojs.pad.ZeroPadding
+    });
+    
+    // Sign
+    var signature = cryptojs.HmacSHA256(this.merchantParams, cipher.ciphertext);
+    this.signature = signature.toString(cryptojs.enc.Base64);
+    document.getElementById('id_formulario')['Ds_Signature'].value = signature.toString(cryptojs.enc.Base64);
+    
+    // Done, we can return response
+    var response = {
+      signatureVersion: "HMAC_SHA256_V1",
+      merchantParameters: this.merchantParams,
+      signature: this.signature
+    };
+    // console.log(response);
+
+
+    let pageContent = '<html><head></head><body><form id="form2" action="https://sis-t.redsys.es:25443/sis/realizarPago" method="post">' +
+    '<input type="hidden" name="Ds_MerchantParameters" value="' + this.merchantParams + '">' +
+    '<input type="hidden" name="Ds_Signature" value="' + this.signature + '">' +
+    '<input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1">' +
+    '</form> <script type="text/javascript">document.getElementById("form2").submit();</script></body></html>';
+    let pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
+    
+    // let browserRef = window.cordova.InAppBrowser.open(
+    //     pageContentUrl ,
+    //     "_blank",
+    //     "hidden=no,location=no,clearsessioncache=no,clearcache=no"
+    // );
+
+
+    this._service.getMonthlyPaymentCreate(this.customer_id, this.cliente.center_id, order).subscribe(res => {
+      const browserRef = this.iab
+      .create(
+        pageContentUrl,
+        '_blank',
+        this.options
+      );
+    });
+
+
+    
+      // Esto es para hacer que se cierre solo al llegar a la web de soluna
+    // browserRef.on('loadstop').subscribe(event => {
+    //   // console.log('loadstop started');
+    //   // console.log(event);
+    //   // console.log('loadstop url', event.url);
+    
+    //   if (event.url == "https://solunapilates.es/finish-app-true.php?order="+order+"&type="+"T"+"&hash="+hash1) {
+    //     // console.log(JSON.stringify(event));
+
+    //     this.service.getTicketPaymentUpdate(order, '1', hash1).subscribe(res => {
+    //       console.log(res);
+    //       this.presentAlert('¡Tu compra se ha confirmado con éxito!');
+    //     });
+
+
+    //     browserRef.close();
+    //   } else if (event.url == "https://solunapilates.es/finish-app-true.php?order="+order+"&type="+"T"+"&hash="+hash2) {
+
+    //     browserRef.close();
+
+    //   }
+    
+    // });
+
+
+    // Esto era el método antiguo
+    // setTimeout(() => {
+    //   this.pruebaPago(order, price, response);
+    // }, 10);
+
+  }
+
+  pruebaPago(order, price, urlok) {
+
+    this._service.getMonthlyPaymentCreate(this.customer_id, this.cliente.center_id, order).subscribe(res => {
+      (<HTMLFormElement>document.getElementById('id_formulario')).submit();
+      
+      // this._service.getMonthlyPaymentUpdate(order, '1').subscribe(res => {
+      //   console.log(res);
+      //   // this.presentAlert('¡Tu compra se ha confirmado con éxito!');
+      // });      
+
+      // console.log(urlok);
+
+    });
+  
+    // (<HTMLFormElement>document.getElementById('id_formulario')).submit();
+    // console.log((<HTMLFormElement>document.getElementById('id_formulario')).elements);
   }
 
   ngOnInit(): void {

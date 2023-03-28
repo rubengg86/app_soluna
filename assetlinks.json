@@ -1,0 +1,8 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+        "namespace": "android_app",
+        "package_name": "com.soluna.cliente",
+        "sha256_cert_fingerprints": ["5B:73:38:2B:52:05:19:BA:DE:1D:84:1A:54:51:00:EB:D0:B8:23:D4:C8:7B:79:DF:8A:63:C8:0A:0A:D0:0F:7C", "D3:4A:3F:80:35:19:72:B4:38:EB:77:4B:BC:0B:E3:69:C5:D8:A6:03:3C:71:6D:E6:4F:F9:FB:E9:56:98:B0:71"]
+    }
+}]

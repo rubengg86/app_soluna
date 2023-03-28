@@ -10,6 +10,7 @@ import { TuPanelPageRoutingModule } from './tu-panel-routing.module';
 import { TuPanelPage } from './tu-panel.page';
 
 import { ChartsModule } from 'ng2-charts';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { ChartsModule } from 'ng2-charts';
     FlatpickrModule.forRoot(),
     ChartsModule
   ],
-  declarations: [TuPanelPage]
+  declarations: [TuPanelPage],
+  providers: [InAppBrowser]
 })
 export class TuPanelPageModule {}

@@ -4,10 +4,10 @@
     <ion-toolbar class="p-3" style="--background: #363636;">
         <!-- <ion-toolbar class="p-3" color="light"> -->
         <div class="d-flex justify-content-between border-bottom">
-            <ion-title class="text-black">
+            <ion-title class="text-white">
                 COMPRAR
             </ion-title>
-            <i class="fas fa-times fa-2x text-black" (click)="dismiss()"></i>
+            <i class="fas fa-times fa-2x text-white" (click)="dismiss()"></i>
             <br>
         </div>
     </ion-toolbar>
@@ -16,31 +16,31 @@
 <!-------------------------------------------------------------------FORMULARIO--------------------------------------------------------------->
 <ion-content style="--background: #363636;" id="contenidoComprar">
 
-    <form action="https://sis-t.redsys.es:25443/sis/realizarPago" method="post" id="id_formulario" name="nombre_formulario">
-        <input type="hidden" name="Ds_MerchantParameters" value="eyJEU19NRVJDSEFOVF9BTU9VTlQiOjY5MCwiRFNfTUVSQ0hBTlRfT1JERVIiOiIyMjA0MTMxMzQ4MTUiLCJEU19NRVJDSEFOVF9NRVJDSEFOVENPREUiOiIzNTI4MjgyMjIiLCJEU19NRVJDSEFOVF9DVVJSRU5DWSI6Ijk3OCIsIkRTX01FUkNIQU5UX1RSQU5TQUNUSU9OVFlQRSI6IjAiLCJEU19NRVJDSEFOVF9URVJNSU5BTCI6IjAwMSIsIkRTX01FUkNIQU5UX01FUkNIQU5UVVJMIjoiaHR0cDpcL1wvbG9jYWxob3N0XC9kZXZcL3BocFwvdGlja2V0c19jYWxsYmFjay5waHAiLCJEU19NRVJDSEFOVF9VUkxPSyI6Imh0dHA6XC9cL2xvY2FsaG9zdFwvZGV2XC9waHBcL3RpY2tldHNfZ2V0X2NhbGxiYWNrLnBocCIsIkRTX01FUkNIQU5UX1VSTEtPIjoiaHR0cDpcL1wvbG9jYWxob3N0XC9kZXZcL2NvbXByYXItY2xhc2VzLnBocD9wYWdlPVBBR09fS08iLCJEU19NRVJDSEFOVF9NRVJDSEFOVE5BTUUiOiJTb2x1bmEsIGN1ZXJwbyB5IG1lbnRlIiwiRFNfTUVSQ0hBTlRfVElUVUxBUiI6IlNvbHVuYSIsIkRTX01FUkNIQU5UX1BST0RVQ1RERVNDUklQVElPTiI6IkNvbXByYSBlbnRyYWRhIGNsYXNlIn0="
-        />
-        <input type="hidden" name="Ds_Signature" value="jCCdXnBrEYg2fgodCP3rfk72WC0Zc29YMzGSX6PVb70=" />
-        <input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1" />
-        <input type="submit" name="btn_submit" id="btn_id" value="Enviar" style="font-size:14px; color:#ff00c1; display:none;">
-    </form>
+
     <!-- <ion-content color="light" id="contenidoComprar"> -->
     <ion-card class="bg-white border-top">
         <ion-card-header class="border-bottom">
             <ion-card-title>
-                Ejemplo - 01/01 - 10:00
+                {{ticket.activity_name}}
             </ion-card-title>
-            <h1>100&euro;</h1>
+            <ion-card-subtitle>
+                {{diaSemana}}, {{fechaString}}
+            </ion-card-subtitle>
+            <ion-card-subtitle>
+                {{ticket.start_time}}
+            </ion-card-subtitle>
+            <h1>{{ticket.price}}&euro;</h1>
         </ion-card-header>
     </ion-card>
 
     <ion-radio-group class="mt-2">
         <!------------------------------------------------------RADIO BUTTON TARJETA--------------------------------------------------------->
-        <div class="mx-3">
+        <!-- <div class="mx-3">
             <ion-radio id="tarjeta" class="me-2" (click)="change($event)"></ion-radio>
             <label for=""><i class="far fa-credit-card"></i> Tarjeta de credito</label>
-        </div>
+        </div> -->
         <!---------------------------------------------------------DIV TARJETA--------------------------------------------------------->
-        <ion-card *ngIf="tarjeta" class="border-top">
+        <!-- <ion-card *ngIf="tarjeta" class="border-top">
             <ion-card-header class="border-bottom">
                 <ion-card-title>
                     Pagar con tarjeta
@@ -74,14 +74,14 @@
                     <label for="" class="ml-3"><small>Recordar esta tarjeta para su uso posterior</small></label>
                 </form>
             </ion-card-content>
-        </ion-card>
+        </ion-card> -->
         <!------------------------------------------------------RADIO BUTTON PAYPAL--------------------------------------------------------->
-        <div class="mx-3">
+        <!-- <div class="mx-3">
             <ion-radio id="paypal" class="me-2" (click)="change($event)"></ion-radio>
             <label for=""><i class="fab fa-paypal"></i> Paypal</label>
-        </div>
+        </div> -->
         <!---------------------------------------------------------DIV TARJETA--------------------------------------------------------->
-        <ion-card *ngIf="paypal" class="border-top">
+        <!-- <ion-card *ngIf="paypal" class="border-top">
             <ion-card-header class="border-bottom">
                 <ion-card-title>
                     Pagar con Paypal
@@ -104,27 +104,52 @@
                     <label for="" class="ml-3"><small>Recordar esta tarjeta para su uso posterior</small></label>
                 </form>
             </ion-card-content>
-        </ion-card>
+        </ion-card> -->
     </ion-radio-group>
+
+    <!-- <script src="https://sis-t.redsys.es:25443/sis/NC/sandbox/redsysV2.js"></script>
+    <div id="card-form" style="height: 400px"></div>
+    <input type="hidden" id="token">
+    <input type="hidden" id="errorCode">
+    <script>
+        // Listener
+        window.addEventListener("message", function receiveMessage(event) {
+            storeIdOper(event, "token", "errorCode", merchantValidationEjemplo);
+        });
+        // Petición de carga de iframe
+        let estiloBoton = ''
+        let estiloBody = ''
+        let estiloCaja = ''
+        let estiloInputs = ''
+            // getInSiteForm('card-form', estiloBoton, estiloBody, estiloCaja, estiloInputs, 'Aceptar',
+            //     '999008881', '1', 'F8OYDISB16DA', '1');
+        getInSiteForm('card-form', '', '', '', '', 'Aceptar', '999008881', '001', 'Order00123', 'ES', true);
+    </script> -->
 
 
 
 </ion-content>
 <!-------------------------------------------------------------------FOOTER-------------------------------------------------------------------->
 <ion-footer class="p-4" id="contenidoFooter">
-    <!-- <button type="button" class="btn" id="comprar" (click)="comprar()">Comprar</button> -->
 
-    <!-- <form action="https://sis-t.redsys.es:25443/sis/realizarPago" method="post" id="id_formulario" name="nombre_formulario">
-        <input type="hidden" name="Ds_MerchantParameters" value="eyJEU19NRVJDSEFOVF9BTU9VTlQiOjY5MCwiRFNfTUVSQ0hBTlRfT1JERVIiOiIyMjA0MTMxMzQ4MTUiLCJEU19NRVJDSEFOVF9NRVJDSEFOVENPREUiOiIzNTI4MjgyMjIiLCJEU19NRVJDSEFOVF9DVVJSRU5DWSI6Ijk3OCIsIkRTX01FUkNIQU5UX1RSQU5TQUNUSU9OVFlQRSI6IjAiLCJEU19NRVJDSEFOVF9URVJNSU5BTCI6IjAwMSIsIkRTX01FUkNIQU5UX01FUkNIQU5UVVJMIjoiaHR0cDpcL1wvbG9jYWxob3N0XC9kZXZcL3BocFwvdGlja2V0c19jYWxsYmFjay5waHAiLCJEU19NRVJDSEFOVF9VUkxPSyI6Imh0dHA6XC9cL2xvY2FsaG9zdFwvZGV2XC9waHBcL3RpY2tldHNfZ2V0X2NhbGxiYWNrLnBocCIsIkRTX01FUkNIQU5UX1VSTEtPIjoiaHR0cDpcL1wvbG9jYWxob3N0XC9kZXZcL2NvbXByYXItY2xhc2VzLnBocD9wYWdlPVBBR09fS08iLCJEU19NRVJDSEFOVF9NRVJDSEFOVE5BTUUiOiJTb2x1bmEsIGN1ZXJwbyB5IG1lbnRlIiwiRFNfTUVSQ0hBTlRfVElUVUxBUiI6IlNvbHVuYSIsIkRTX01FUkNIQU5UX1BST0RVQ1RERVNDUklQVElPTiI6IkNvbXByYSBlbnRyYWRhIGNsYXNlIn0="
-        />
-        <input type="hidden" name="Ds_Signature" value="jCCdXnBrEYg2fgodCP3rfk72WC0Zc29YMzGSX6PVb70=" />
+    <!-- <form action="https://sis-t.redsys.es:25443/sis/realizarPago" method="POST" id="id_formulario" name="nombre_formulario">
+        <input type="hidden" name="Ds_MerchantParameters" [value]="merchantParams" />
+        <input type="hidden" name="Ds_Signature" [value]="signature" />
         <input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1" />
-        <input type="submit" name="btn_submit" id="btn_id" value="Enviar" style="font-size:14px; color:#ff00c1; display:none;">
-        <button type="submit" name="btn_submit" id="btn_id" value="Enviar" style="font-size:14px; color:#ff00c1;">Prueba pago</button>
+    </form> -->
+    <!-- <form #testForm="ngForm" action="https://sis-t.redsys.es:25443/sis/realizarPago" method="POST" id="id_formulario" name="nombre_formulario">
+        <input type="hidden" id="params" name="Ds_MerchantParameters" value="" />
+        <input type="hidden" id="signat" name="Ds_Signature" value="" />
+        <input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1" />
     </form> -->
 
-    <!-- <ion-button (click)="pruebaPago()" expand="block" fill="clear" shape="round">
-        Prueba Pago
-    </ion-button> -->
+    <!-- <input type="submit" name="btn_submit" id="btn_id" value="Enviar" style="font-size:14px; color:#ff00c1; display:none;"> -->
 
+
+    <ion-button *ngIf="!loading" (click)="generatemerchantparams()" expand="block" fill="clear" shape="round">
+        Pagar
+    </ion-button>
+    <ion-button *ngIf="loading" expand="block" fill="clear" shape="round">
+        Cargando...
+    </ion-button>
 </ion-footer>

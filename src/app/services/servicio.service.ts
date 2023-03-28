@@ -194,12 +194,27 @@ export class ServicioService {
     return this.http.get(this.url+`/tickets_create_payment/${customer_id}/${tpv_order}/${amount}/${ticket_id}`, {headers: this.headers});
   }
 
+  getTicketPaymentUpdate( tpv_order, status, hash) {
+    return this.http.get(this.url+`/tickets_update_tpv_order/${tpv_order}/${status}/${hash}`, {headers: this.headers});
+    // return this.http.get(this.url+`/tickets_update_tpv_order/${tpv_order}/${status}/${hash}`);
+  }
+
+  getMonthlyPaymentCreate(customer_id,center_id, tpv_order) {
+    return this.http.get(this.url+`/ca_create_payment/${customer_id}/${center_id}/${tpv_order}`, {headers: this.headers});
+  }
+
+  getMonthlyPaymentUpdate( tpv_order, status) {
+    return this.http.get(this.url+`/ca_update_tpv_order/${tpv_order}/${status}`, {headers: this.headers});
+    // return this.http.get(this.url+`/tickets_update_tpv_order/${tpv_order}/${status}/${hash}`);
+  }
+
   getBondActivities(center_id): Observable<any>{
     return this.http.get(this.url+`/bonds_get_activities/${center_id}`, {headers: this.headers});
   }
 
   getCenters(): Observable<any>{
     return this.http.get(this.url+'/get_centers/', {headers: this.headers});
+    // return this.http.get(this.url+'/get_centers/');
   }
 
   // pruebaPagoRedsys() {

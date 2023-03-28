@@ -4,6 +4,8 @@ import { FlatpickrDefaultsInterface } from 'angularx-flatpickr/flatpickr-default
 import { BotonComprarPage } from '../../boton-comprar/boton-comprar.page';
 import { ServicioService } from '../../../../services/servicio.service';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+import * as cryptojs from 'crypto-js';
+
 
 @Component({
   selector: 'app-tickets',
@@ -18,6 +20,8 @@ export class TicketsPage implements OnInit {
   dia: number = new Date().getDate();
   mes: number = new Date().getMonth();
 
+  
+  public customer_id = localStorage.getItem('currentUserSoluna');
   public centros;
   public idCentro;
   public fechaElegida:any = new Date();
@@ -74,8 +78,7 @@ export class TicketsPage implements OnInit {
 
   getCliente() {
 
-    // this._service.getCustomerById(this.customer_id).subscribe( res => {
-    this._service.getCustomerById(5211).subscribe( res => {
+    this._service.getCustomerById(this.customer_id).subscribe( res => {
 
       this.cliente = res[0];
       // console.log(this.cliente);
@@ -168,7 +171,7 @@ export class TicketsPage implements OnInit {
 
   /*--------------------------------MODAL BOTONES COMPRAR ---------------------------- */
   // async comprarModal(activity_id, center_id, group_id, amount, ticket_type) {
-  comprarModal(activity_id, center_id, group_id, amount, ticket_type) {
+  comprarModal(activity_id, center_id, group_id, amount, ticket_type, ticket, diaSemana, fechaString) {
     
 
     // Revertimos el cambio de hora
@@ -184,9 +187,12 @@ export class TicketsPage implements OnInit {
 
     // console.log(get_date_id);
     // console.log(session_date_id);
+    // console.log(idReserva);
 
     if((get_date_id !== session_date_id) && idReserva) {
-      this._service.getTicketDeletePreReserve(idReserva).subscribe();
+      this._service.getTicketDeletePreReserve(idReserva).subscribe(res => {
+        // console.log(res);
+      });
     }
 
     this._service.getTicketCreatePreReserve(this.fechaClaseTicket, activity_id, center_id, group_id, amount, ticket_type).subscribe( (res:any) => {
@@ -200,8 +206,11 @@ export class TicketsPage implements OnInit {
       localStorage.setItem('soluna_group_id', group_id);
       localStorage.setItem('soluna_class_date', this.fechaClaseTicket);
 
-      this.abrirModal();
+      this.abrirModal(ticket, diaSemana, fechaString);
     });
+
+
+    // this.abrirModal(ticket, diaSemana, fechaString);
 
     // Esto funcionaba pero a saber si se ejecuta siempre antes de 200
     // setTimeout(async() => {
@@ -227,18 +236,68 @@ export class TicketsPage implements OnInit {
     // return await modal.present();
   }
 
-  async abrirModal() {
+  async abrirModal(ticket, diaSemana, fechaString) {
 
     const modal = await this.modalController.create({
       component: BotonComprarPage,
       componentProps: { 
-        ticket: this.ticket_reserva,
+        // ticket: this.ticket_reserva,
+        ticket: ticket,
+        diaSemana: diaSemana,
+        fechaString: fechaString
       }
     });
 
     return await modal.present();
 
   }
+
+  // generatemerchantparams() {
+  //   let tpvdata = {
+  //     "DS_MERCHANT_AMOUNT": "145",
+  //     "DS_MERCHANT_CURRENCY": "978",
+  //     "DS_MERCHANT_MERCHANTCODE": "355780867",
+  //     "DS_MERCHANT_ORDER": "1446068583",
+  //     "DS_MERCHANT_TERMINAL": "1",
+  //     "DS_MERCHANT_TRANSACTIONTYPE": "0",
+  //   }
+
+  //   // Base64 encoding of parameters
+  //   var merchantWordArray = cryptojs.enc.Utf8.parse(JSON.stringify(tpvdata));
+  //   var merchantBase64 = merchantWordArray.toString(cryptojs.enc.Base64);
+    
+  //   // Decode key
+  //   var keyWordArray = cryptojs.enc.Base64.parse('sq7HjrUOBfKmC576ILgskD5srU870gJ7');
+  //   // var keyWordArray = cryptojs.enc.Base64.parse(merchant_key);
+    
+  //   // Generate transaction key
+  //   var iv = cryptojs.enc.Hex.parse("0000000000000000");
+  //   var cipher = cryptojs.TripleDES.encrypt(tpvdata.DS_MERCHANT_ORDER, keyWordArray, {
+  //     iv:iv,
+  //     mode: cryptojs.mode.CBC,
+  //     padding: cryptojs.pad.ZeroPadding
+  //   });
+    
+  //   // Sign
+  //   var signature = cryptojs.HmacSHA256(merchantBase64, cipher.ciphertext);
+  //   var signatureBase64 = signature.toString(cryptojs.enc.Base64);
+    
+  //   // Done, we can return response
+  //   var response = {
+  //     signatureVersion: "HMAC_SHA256_V1",
+  //     merchantParameters: merchantBase64,
+  //     signature: signatureBase64
+  //   };
+  //   console.log(response);
+
+  // }
+
+
+  // pruebaPago() {
+
+  //   (<HTMLFormElement>document.getElementById('id_formulario')).submit();
+  //   // console.log((<HTMLFormElement>document.getElementById('id_formulario')).elements);
+  // }
 
 
 

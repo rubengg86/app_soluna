@@ -27,8 +27,7 @@ export class TaichiPage implements OnInit {
 
   getCliente() {
 
-    // this._service.getCustomerById(this.customer_id).subscribe( res => {
-    this._service.getCustomerById(5211).subscribe( res => {
+    this._service.getCustomerById(this.customer_id).subscribe( res => {
       this.cliente = res[0];
       // console.log(res[0]);
 
