@@ -12,6 +12,11 @@
                         <h2>{{actividad.activity_name}}</h2>
                         <h2>{{actividad.center_name}}</h2>
                         <h3>{{actividad.group_name}}</h3>
+                        <h3 *ngIf="actividad.dayselect == 1">(Solo los Lunes)</h3>
+                        <h3 *ngIf="actividad.dayselect == 2">(Solo los Martes)</h3>
+                        <h3 *ngIf="actividad.dayselect == 3">(Solo los Miércoles)</h3>
+                        <h3 *ngIf="actividad.dayselect == 4">(Solo los Jueves)</h3>
+                        <h3 *ngIf="actividad.dayselect == 5">(Solo los Viernes)</h3>
                         <h3 style="color: red;" *ngIf="actividad?.recoverable_number">Tienes {{actividad?.recoverable_number}} clases a recuperar</h3>
                     </ion-label>
                 </ion-item>

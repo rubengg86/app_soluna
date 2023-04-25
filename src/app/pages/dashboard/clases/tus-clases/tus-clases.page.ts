@@ -8,6 +8,7 @@ import { CambiarClasePage } from './cambiar-clase/cambiar-clase.page';
 import { AnularClasePage } from './anular-clase/anular-clase.page';
 import { ClasesMes } from '../../../../models/clases-mes';
 import { RecuperarClasePage } from './recuperar-clase/recuperar-clase.page';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-tus-clases',
@@ -52,8 +53,10 @@ export class TusClasesPage implements OnInit {
   // public customer_id = 5211;
   // public customer_id = 4841;
   // public customer_id = 4892;
-  // public customer_id = 5384;
-  // public customer_id = 5537;
+  // public customer_id = 5384; //clase lunes miercoles y aparte viernes
+  // public customer_id = 5686; //usuario con actividad de 2h pero 1 dia solo seleccionado (en este caso solo lunes)
+  // public customer_id = 2495; //fallos al cambiar clase y recuperar (sale blanco)
+  // public customer_id = 5462; //fallos al cambiar clase y recuperar (sale blanco)
   public cliente;
   public clasesMes: Array<ClasesMes>;
   public clasesMesSiguiente: Array<ClasesMes>;
@@ -171,7 +174,7 @@ export class TusClasesPage implements OnInit {
     this._service.getCustomerActivity(this.customer_id).subscribe( res => {
 
       this.actividades = res;
-      // console.log(this.actividades);
+      console.log(this.actividades);
 
       this.getAsistencias();
       this.getRecoverableClasses();
@@ -189,12 +192,18 @@ export class TusClasesPage implements OnInit {
     this._service.getRecoverableClasses(this.customer_id).subscribe( (res:any) => {
       // console.log(res);
       this.recuperablesDetalle = res;
+      // console.log(res);
+
+      // console.log(moment().add(-2, 'months').format('DD/MM/YYYY'))
 
       res.forEach(element => {
         if (this.actividades) {
           this.actividades.forEach(actividad => {
             if (element.redeemed == 0) {
-              if (actividad.group_id == element.date_id.split('_')[0]) {
+              if (actividad.group_id == element.date_id.split('_')[0] && moment(element.remove_date).valueOf() > moment().add(-2, 'months').valueOf()) {
+                // console.log(element)
+                // console.log(moment(element.remove_date).format("DD/MM/YYYY"))
+
                 if (actividad.recoverable_number) {
                   actividad.recoverable_number++;
                 } else {
@@ -302,19 +311,21 @@ export class TusClasesPage implements OnInit {
                   d = '0'+(+timestampdate.getDate())
                 }
 
-                this.clasesMes.push({
-                  fecha: d + '/' + mes,
-                  tiempo: timestampdate.getTime()/1000 | 0,
-                  hora_inicio: this.actividades[i].start_time,
-                  actividad: this.actividades[i].activity_name,
-                  centro: this.actividades[i].center_name,
-                  profesor: this.actividades[i].teacher_name,
-                  id_grupo: this.actividades[i].group_id,
-                  id_centro: this.actividades[i].center_id,
-                  id_actividad: this.actividades[i].activity_id,
-                  cambiada: false
-                })
-
+                // console.log(timestampdate.getDay(), timestampdate.getDay() == this.actividades[i].dayselect || this.actividades[i].dayselect == 0);
+                if (timestampdate.getDay() == this.actividades[i].dayselect || this.actividades[i].dayselect == 0) {
+                  this.clasesMes.push({
+                    fecha: d + '/' + mes,
+                    tiempo: timestampdate.getTime()/1000 | 0,
+                    hora_inicio: this.actividades[i].start_time,
+                    actividad: this.actividades[i].activity_name,
+                    centro: this.actividades[i].center_name,
+                    profesor: this.actividades[i].teacher_name,
+                    id_grupo: this.actividades[i].group_id,
+                    id_centro: this.actividades[i].center_id,
+                    id_actividad: this.actividades[i].activity_id,
+                    cambiada: false
+                  })
+                }
               }
 
             }
@@ -348,18 +359,20 @@ export class TusClasesPage implements OnInit {
                   d = '0'+(+timestampdate.getDate())
                 }
 
-                this.clasesMesSiguiente.push({
-                  fecha: d + '/' + mes,
-                  tiempo: timestampdate.getTime()/1000 | 0,
-                  hora_inicio: this.actividades[i].start_time,
-                  actividad: this.actividades[i].activity_name,
-                  centro: this.actividades[i].center_name,
-                  profesor: this.actividades[i].teacher_name,
-                  id_grupo: this.actividades[i].group_id,
-                  id_centro: this.actividades[i].center_id,
-                  id_actividad: this.actividades[i].activity_id,
-                  cambiada: false
-                })
+                if (timestampdate.getDay() == this.actividades[i].dayselect || this.actividades[i].dayselect == 0) {
+                  this.clasesMesSiguiente.push({
+                    fecha: d + '/' + mes,
+                    tiempo: timestampdate.getTime()/1000 | 0,
+                    hora_inicio: this.actividades[i].start_time,
+                    actividad: this.actividades[i].activity_name,
+                    centro: this.actividades[i].center_name,
+                    profesor: this.actividades[i].teacher_name,
+                    id_grupo: this.actividades[i].group_id,
+                    id_centro: this.actividades[i].center_id,
+                    id_actividad: this.actividades[i].activity_id,
+                    cambiada: false
+                  })  
+                }
 
               }
 
