@@ -120,10 +120,10 @@ export class BotonComprarPage implements OnInit {
     // Base64 encoding of parameters
     var merchantWordArray = cryptojs.enc.Utf8.parse(JSON.stringify(tpvdata));
     this.merchantParams = merchantWordArray.toString(cryptojs.enc.Base64);
-    document.getElementById('id_formulario')['Ds_MerchantParameters'].value = merchantWordArray.toString(cryptojs.enc.Base64);
+    // document.getElementById('id_formulario')['Ds_MerchantParameters'].value = merchantWordArray.toString(cryptojs.enc.Base64);
     
     // Decode key
-    var keyWordArray = cryptojs.enc.Base64.parse('sq7HjrUOBfKmC576ILgskD5srU870gJ7');
+    var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD);
     // var keyWordArray = cryptojs.enc.Base64.parse(merchant_key);
     
     // Generate transaction key
@@ -137,7 +137,7 @@ export class BotonComprarPage implements OnInit {
     // Sign
     var signature = cryptojs.HmacSHA256(this.merchantParams, cipher.ciphertext);
     this.signature = signature.toString(cryptojs.enc.Base64);
-    document.getElementById('id_formulario')['Ds_Signature'].value = signature.toString(cryptojs.enc.Base64);
+    // document.getElementById('id_formulario')['Ds_Signature'].value = signature.toString(cryptojs.enc.Base64);
     
     // Done, we can return response
     var response = {
@@ -147,7 +147,12 @@ export class BotonComprarPage implements OnInit {
     };
     // console.log(response);
 
-    let pageContent = '<html><head></head><body><form id="form2" action="https://sis-t.redsys.es:25443/sis/realizarPago" method="post">' +
+    // let pageContent = '<html><head></head><body><form id="form2" action="https://sis-t.redsys.es:25443/sis/realizarPago" method="post">' +
+    // '<input type="hidden" name="Ds_MerchantParameters" value="' + this.merchantParams + '">' +
+    // '<input type="hidden" name="Ds_Signature" value="' + this.signature + '">' +
+    // '<input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1">' +
+    // '</form> <script type="text/javascript">document.getElementById("form2").submit();</script></body></html>';
+    let pageContent = '<html><head></head><body><form id="form2" action="https://sis.redsys.es/sis/realizarPago" method="post">' +
     '<input type="hidden" name="Ds_MerchantParameters" value="' + this.merchantParams + '">' +
     '<input type="hidden" name="Ds_Signature" value="' + this.signature + '">' +
     '<input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1">' +
@@ -164,8 +169,8 @@ export class BotonComprarPage implements OnInit {
     this.service.getTicketPaymentCreate(this.customer_id, order, price/100, this.reserve_id).subscribe(res => {
       this.loading = false;
 
-      console.log("https://solunapilates.es/finish-app-true.php?order="+order+"&type="+"T"+"&hash="+hash1)
-      console.log("https://solunapilates.es/finish-app-true.php?order="+order+"&type="+"T"+"&hash="+hash2)
+      // console.log("https://solunapilates.es/finish-app-true.php?order="+order+"&type="+"T"+"&hash="+hash1)
+      // console.log("https://solunapilates.es/finish-app-true.php?order="+order+"&type="+"T"+"&hash="+hash2)
 
       const browserRef = this.iab
       .create(

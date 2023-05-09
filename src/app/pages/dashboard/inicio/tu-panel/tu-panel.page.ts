@@ -234,10 +234,12 @@ lineChartType: ChartType = 'line';
     // Base64 encoding of parameters
     var merchantWordArray = cryptojs.enc.Utf8.parse(JSON.stringify(tpvdata));
     this.merchantParams = merchantWordArray.toString(cryptojs.enc.Base64);
-    document.getElementById('id_formulario')['Ds_MerchantParameters'].value = merchantWordArray.toString(cryptojs.enc.Base64);
+    // document.getElementById('id_formulario')['Ds_MerchantParameters'].value = merchantWordArray.toString(cryptojs.enc.Base64);
     
     // Decode key
-    var keyWordArray = cryptojs.enc.Base64.parse('sq7HjrUOBfKmC576ILgskD5srU870gJ7');
+    // Pruebas
+    // var keyWordArray = cryptojs.enc.Base64.parse('sq7HjrUOBfKmC576ILgskD5srU870gJ7');
+    var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD);
     // var keyWordArray = cryptojs.enc.Base64.parse(merchant_key);
     
     // Generate transaction key
@@ -251,7 +253,7 @@ lineChartType: ChartType = 'line';
     // Sign
     var signature = cryptojs.HmacSHA256(this.merchantParams, cipher.ciphertext);
     this.signature = signature.toString(cryptojs.enc.Base64);
-    document.getElementById('id_formulario')['Ds_Signature'].value = signature.toString(cryptojs.enc.Base64);
+    // document.getElementById('id_formulario')['Ds_Signature'].value = signature.toString(cryptojs.enc.Base64);
     
     // Done, we can return response
     var response = {
