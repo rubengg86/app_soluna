@@ -57,6 +57,9 @@ export class TusClasesPage implements OnInit {
   // public customer_id = 5686; //usuario con actividad de 2h pero 1 dia solo seleccionado (en este caso solo lunes)
   // public customer_id = 2495; //fallos al cambiar clase y recuperar (sale blanco)
   // public customer_id = 5462; //fallos al cambiar clase y recuperar (sale blanco)
+  // public customer_id = 5721; //Al cambiar clase, el dia de la clase nueva pone que no tiene clase
+  // public customer_id = 3715; //No sale junio, directamente julio
+  // public customer_id = 4146; //No le salen sus clases
   public cliente;
   public clasesMes: Array<ClasesMes>;
   public clasesMesSiguiente: Array<ClasesMes>;
@@ -105,6 +108,7 @@ export class TusClasesPage implements OnInit {
 
   get fechaIgual() {
     if ( this.fechaElegida && this.sinAsistir){
+      // console.log(+this .fechaElegida.getTime());
       let contador = 0
       this.actividadDia = [];
       this.diaACambiar = null;
@@ -174,7 +178,7 @@ export class TusClasesPage implements OnInit {
     this._service.getCustomerActivity(this.customer_id).subscribe( res => {
 
       this.actividades = res;
-      console.log(this.actividades);
+      // console.log(this.actividades);
 
       this.getAsistencias();
       this.getRecoverableClasses();
@@ -192,13 +196,19 @@ export class TusClasesPage implements OnInit {
     this._service.getRecoverableClasses(this.customer_id).subscribe( (res:any) => {
       // console.log(res);
       this.recuperablesDetalle = res;
-      // console.log(res);
 
       // console.log(moment().add(-2, 'months').format('DD/MM/YYYY'))
 
       res.forEach(element => {
+
         if (this.actividades) {
           this.actividades.forEach(actividad => {
+
+
+            // console.log(actividad)
+            // console.log(actividad.group_id == element.date_id.split('_')[0]);
+
+
             if (element.redeemed == 0) {
               if (actividad.group_id == element.date_id.split('_')[0] && moment(element.remove_date).valueOf() > moment().add(-2, 'months').valueOf()) {
                 // console.log(element)
@@ -244,7 +254,7 @@ export class TusClasesPage implements OnInit {
     this.clasesTotales = [];
 
     let mesActual = new Date();
-    let mesSiguiente = new Date(new Date().getFullYear(), new Date().getMonth() + 2, 0);
+    let mesSiguiente = new Date(mesActual.getFullYear(), mesActual.getMonth() + 2, 0);
     let day_target;
 
 
