@@ -28,6 +28,7 @@ export class TuPanelPage implements OnInit{
   mes: number = new Date().getMonth();
   
   public customer_id = localStorage.getItem('currentUserSoluna');
+  // public customer_id = 56;
   // public customer_id = 5211;
   public asistencia;
   public cliente;
@@ -263,8 +264,15 @@ lineChartType: ChartType = 'line';
     };
     // console.log(response);
 
+    // Pruebas
+    // let pageContent = '<html><head></head><body><form id="form2" action="https://sis-t.redsys.es:25443/sis/realizarPago" method="post">' +
+    // '<input type="hidden" name="Ds_MerchantParameters" value="' + this.merchantParams + '">' +
+    // '<input type="hidden" name="Ds_Signature" value="' + this.signature + '">' +
+    // '<input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1">' +
+    // '</form> <script type="text/javascript">document.getElementById("form2").submit();</script></body></html>';
 
-    let pageContent = '<html><head></head><body><form id="form2" action="https://sis-t.redsys.es:25443/sis/realizarPago" method="post">' +
+    // Produccion
+    let pageContent = '<html><head></head><body><form id="form2" action="https://sis.redsys.es/sis/realizarPago" method="post">' +
     '<input type="hidden" name="Ds_MerchantParameters" value="' + this.merchantParams + '">' +
     '<input type="hidden" name="Ds_Signature" value="' + this.signature + '">' +
     '<input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1">' +
