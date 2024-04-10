@@ -57,3 +57,9 @@ img {
 ion-input {
     color: black;
 }
+
+ion-header{
+    // padding-top: 100px !important;
+    padding-top: constant(safe-area-inset-top) !important;
+    padding-top: env(safe-area-inset-top) !important; 
+}

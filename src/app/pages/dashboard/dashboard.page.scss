@@ -32,3 +32,13 @@ img {
     margin-bottom: 5px;
 }
 
+#accordionFlushExample{
+    // padding-top: 100px !important;
+    padding-top: constant(safe-area-inset-top) !important;
+    padding-top: env(safe-area-inset-top) !important; 
+}
+
+.accordion-itemmy-4 {
+        text-align: left !important;
+}
+

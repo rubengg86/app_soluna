@@ -75,3 +75,9 @@ ion-checkbox {
     width: 20px;
     height: 20px;
 }
+
+ion-header{
+    // padding-top: 100px !important;
+    padding-top: constant(safe-area-inset-top) !important;
+    padding-top: env(safe-area-inset-top) !important; 
+}
