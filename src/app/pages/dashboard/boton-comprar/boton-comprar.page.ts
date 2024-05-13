@@ -22,6 +22,7 @@ export class BotonComprarPage implements OnInit {
   paypal=false;
   merchantParams;
   signature;
+  centro;
 
   // Variables que vienen al crear el modal
   ticket;
@@ -97,6 +98,37 @@ export class BotonComprarPage implements OnInit {
 
   generatemerchantparams() {
     this.loading = true;
+    console.log(this.centro);
+
+
+    let merchantCode;
+    let url;
+
+    if(this.centro == "5"){
+      console.log('Aviles')
+
+      url = "https://sis.redsys.es/sis/realizarPago";
+      merchantCode = "355780867";
+      var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_AVILES);
+
+    } else if (this.centro == "9") {
+      console.log('Gijon')
+
+      // url = "https://sis-t.redsys.es:25443/sis/realizarPago";
+      url = "https://sis.redsys.es/sis/realizarPago";
+      merchantCode = "363064700";
+      // var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_TEST_GIJON);
+      var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_GIJON);
+      
+    } else {
+      console.log('Default')
+
+      url = "https://sis.redsys.es/sis/realizarPago";
+      merchantCode = "355780867";
+      var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_AVILES);
+
+    }
+
 
     let price = +this.ticket.price * 100;
     let order = moment().format('YYMMDDHHmmss');
@@ -107,12 +139,12 @@ export class BotonComprarPage implements OnInit {
     let tpvdata = {
       "DS_MERCHANT_AMOUNT": price.toString(),
       "DS_MERCHANT_CURRENCY": "978",
-      "DS_MERCHANT_MERCHANTCODE": "355780867",
+      "DS_MERCHANT_MERCHANTCODE": merchantCode,
       "DS_MERCHANT_ORDER": order,
       "DS_MERCHANT_TERMINAL": "1",
       "DS_MERCHANT_TRANSACTIONTYPE": "0",
-      // "DS_MERCHANT_URLKO": "https://solunapilates.es/finish-app-true.php",
-      // "DS_MERCHANT_URLOK": "https://solunapilates.es/finish-app-true.php"
+      // "DS_MERCHANT_URLKO": "https://solunapilates.es",
+      // "DS_MERCHANT_URLOK": "https://solunapilates.es/actividades.php"
       "DS_MERCHANT_URLKO": "https://solunapilates.es/finish-app-true.php?order="+order+"&type="+"T"+"&hash="+hash2,
       "DS_MERCHANT_URLOK": "https://solunapilates.es/finish-app-true.php?order="+order+"&type="+"T"+"&hash="+hash1
     }
@@ -122,9 +154,6 @@ export class BotonComprarPage implements OnInit {
     this.merchantParams = merchantWordArray.toString(cryptojs.enc.Base64);
     // document.getElementById('id_formulario')['Ds_MerchantParameters'].value = merchantWordArray.toString(cryptojs.enc.Base64);
     
-    // Decode key
-    var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD);
-    // var keyWordArray = cryptojs.enc.Base64.parse(merchant_key);
     
     // Generate transaction key
     var iv = cryptojs.enc.Hex.parse("0000000000000000");
@@ -142,21 +171,31 @@ export class BotonComprarPage implements OnInit {
     // Done, we can return response
     var response = {
       signatureVersion: "HMAC_SHA256_V1",
+      // signatureVersion: "SHA256",
       merchantParameters: this.merchantParams,
       signature: this.signature
     };
     // console.log(response);
+
+    let pageContent = '<html><head></head><body><form id="form2" action='+url+' method="post">' +
+    '<input type="hidden" name="Ds_MerchantParameters" value="' + this.merchantParams + '">' +
+    '<input type="hidden" name="Ds_Signature" value="' + this.signature + '">' +
+    '<input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1">' +
+    '</form> <script type="text/javascript">document.getElementById("form2").submit();</script></body></html>';
 
     // let pageContent = '<html><head></head><body><form id="form2" action="https://sis-t.redsys.es:25443/sis/realizarPago" method="post">' +
     // '<input type="hidden" name="Ds_MerchantParameters" value="' + this.merchantParams + '">' +
     // '<input type="hidden" name="Ds_Signature" value="' + this.signature + '">' +
     // '<input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1">' +
     // '</form> <script type="text/javascript">document.getElementById("form2").submit();</script></body></html>';
-    let pageContent = '<html><head></head><body><form id="form2" action="https://sis.redsys.es/sis/realizarPago" method="post">' +
-    '<input type="hidden" name="Ds_MerchantParameters" value="' + this.merchantParams + '">' +
-    '<input type="hidden" name="Ds_Signature" value="' + this.signature + '">' +
-    '<input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1">' +
-    '</form> <script type="text/javascript">document.getElementById("form2").submit();</script></body></html>';
+
+    // let pageContent = '<html><head></head><body><form id="form2" action="https://sis.redsys.es/sis/realizarPago" method="post">' +
+    // '<input type="hidden" name="Ds_MerchantParameters" value="' + this.merchantParams + '">' +
+    // '<input type="hidden" name="Ds_Signature" value="' + this.signature + '">' +
+    // '<input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1">' +
+    // '</form> <script type="text/javascript">document.getElementById("form2").submit();</script></body></html>';
+
+
     let pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
     
     // let browserRef = window.cordova.InAppBrowser.open(

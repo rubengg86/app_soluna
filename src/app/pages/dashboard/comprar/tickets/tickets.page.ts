@@ -244,7 +244,8 @@ export class TicketsPage implements OnInit {
         // ticket: this.ticket_reserva,
         ticket: ticket,
         diaSemana: diaSemana,
-        fechaString: fechaString
+        fechaString: fechaString,
+        centro: this.idCentro
       }
     });
 

@@ -30,6 +30,7 @@ export class TuPanelPage implements OnInit{
   public customer_id = localStorage.getItem('currentUserSoluna');
   // public customer_id = 56;
   // public customer_id = 5211;
+  // public customer_id = 5825;
   public asistencia;
   public cliente;
   public pagosCliente;
@@ -185,7 +186,7 @@ lineChartType: ChartType = 'line';
 
   getCuota() {
     this._service.getBillUser(this.customer_id, this.cliente.center_id).subscribe ( res => {
-      console.log(res);
+      // console.log(res);
       this.cuota = res;
       let price = (+this.cuota.total + this.cuota.extra_payments.total)*100;
       if (price != 0) {
@@ -216,6 +217,35 @@ lineChartType: ChartType = 'line';
     let price = (+this.cuota.total + this.cuota.extra_payments.total)*100;
     let order = moment().format('YYMMDDHHmmss');
 
+    let merchantCode;
+    let url;
+
+    if(this.cliente.center_id == "5"){
+      console.log('Aviles')
+
+      url = "https://sis.redsys.es/sis/realizarPago";
+      merchantCode = "355780867";
+      var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_AVILES);
+
+    } else if (this.cliente.center_id == "9") {
+      console.log('Gijon')
+
+      // url = "https://sis-t.redsys.es:25443/sis/realizarPago";
+      url = "https://sis.redsys.es/sis/realizarPago";
+      merchantCode = "363064700";
+      // var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_TEST_GIJON);
+      var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_GIJON);
+      
+    } else {
+      console.log('Default')
+
+      url = "https://sis.redsys.es/sis/realizarPago";
+      merchantCode = "355780867";
+      var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_AVILES);
+
+    }
+
+
     let hash1 = cryptojs.SHA1(order+GLOBAL.PASSWD_SEED+GLOBAL.PASSWD_SEED+order+'1').toString();
     let hash2 = cryptojs.SHA1(order+GLOBAL.PASSWD_SEED+GLOBAL.PASSWD_SEED+order+'2').toString();
     let urlok = "https://solunapilates.es/finish-app-true.php?order="+order+'&type='+'M'+'&hash='+hash1;
@@ -224,7 +254,7 @@ lineChartType: ChartType = 'line';
     let tpvdata = {
       "DS_MERCHANT_AMOUNT": price.toString(),
       "DS_MERCHANT_CURRENCY": "978",
-      "DS_MERCHANT_MERCHANTCODE": "355780867",
+      "DS_MERCHANT_MERCHANTCODE": merchantCode,
       "DS_MERCHANT_ORDER": order,
       "DS_MERCHANT_TERMINAL": "1",
       "DS_MERCHANT_TRANSACTIONTYPE": "0",
@@ -240,7 +270,7 @@ lineChartType: ChartType = 'line';
     // Decode key
     // Pruebas
     // var keyWordArray = cryptojs.enc.Base64.parse('sq7HjrUOBfKmC576ILgskD5srU870gJ7');
-    var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD);
+    // var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_AVILES);
     // var keyWordArray = cryptojs.enc.Base64.parse(merchant_key);
     
     // Generate transaction key
@@ -272,11 +302,16 @@ lineChartType: ChartType = 'line';
     // '</form> <script type="text/javascript">document.getElementById("form2").submit();</script></body></html>';
 
     // Produccion
-    let pageContent = '<html><head></head><body><form id="form2" action="https://sis.redsys.es/sis/realizarPago" method="post">' +
+    let pageContent = '<html><head></head><body><form id="form2" action='+url+' method="post">' +
     '<input type="hidden" name="Ds_MerchantParameters" value="' + this.merchantParams + '">' +
     '<input type="hidden" name="Ds_Signature" value="' + this.signature + '">' +
     '<input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1">' +
     '</form> <script type="text/javascript">document.getElementById("form2").submit();</script></body></html>';
+    // let pageContent = '<html><head></head><body><form id="form2" action="https://sis.redsys.es/sis/realizarPago" method="post">' +
+    // '<input type="hidden" name="Ds_MerchantParameters" value="' + this.merchantParams + '">' +
+    // '<input type="hidden" name="Ds_Signature" value="' + this.signature + '">' +
+    // '<input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1">' +
+    // '</form> <script type="text/javascript">document.getElementById("form2").submit();</script></body></html>';
     let pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
     
     // let browserRef = window.cordova.InAppBrowser.open(
