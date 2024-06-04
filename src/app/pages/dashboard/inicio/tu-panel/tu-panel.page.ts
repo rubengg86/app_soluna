@@ -31,6 +31,7 @@ export class TuPanelPage implements OnInit{
   // public customer_id = 56;
   // public customer_id = 5211;
   // public customer_id = 5825;
+  // public customer_id = 27;
   public asistencia;
   public cliente;
   public pagosCliente;
@@ -235,6 +236,13 @@ lineChartType: ChartType = 'line';
       merchantCode = "363064700";
       // var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_TEST_GIJON);
       var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_GIJON);
+      
+    } else if (this.cliente.center_id == "1") {
+      console.log('La Florida')
+
+      url = "https://sis.redsys.es/sis/realizarPago";
+      merchantCode = "352828222";
+      var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_FLORIDA);
       
     } else {
       console.log('Default')

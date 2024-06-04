@@ -119,6 +119,13 @@ export class BotonComprarPage implements OnInit {
       merchantCode = "363064700";
       // var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_TEST_GIJON);
       var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_GIJON);
+
+    } else if (this.centro == "1") {
+      console.log('La Florida')
+
+      url = "https://sis.redsys.es/sis/realizarPago";
+      merchantCode = "352828222";
+      var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_FLORIDA);
       
     } else {
       console.log('Default')
