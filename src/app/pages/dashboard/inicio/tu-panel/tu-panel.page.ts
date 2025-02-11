@@ -32,6 +32,8 @@ export class TuPanelPage implements OnInit{
   // public customer_id = 5211;
   // public customer_id = 5825;
   // public customer_id = 27;
+  // public customer_id = 6406;
+  // public customer_id = 6391;
   public asistencia;
   public cliente;
   public pagosCliente;
@@ -39,6 +41,7 @@ export class TuPanelPage implements OnInit{
   public pagosFiltrados:any = [];
   public cuota;
   public pagar = false;
+  public pagado = false;
 
   public pagos;
   // public options;
@@ -191,7 +194,11 @@ lineChartType: ChartType = 'line';
       this.cuota = res;
       let price = (+this.cuota.total + this.cuota.extra_payments.total)*100;
       if (price != 0) {
-        this.pagar=true;
+        if(!this.cuota.payed_this_month) {
+          this.pagar=true;
+        } else {
+          this.pagado = true;
+        }
       }
     }, error =>{
       console.log(error);
@@ -240,6 +247,7 @@ lineChartType: ChartType = 'line';
     } else if (this.cliente.center_id == "1") {
       console.log('La Florida')
 
+      // url = "https://sis-t.redsys.es:25443/sis/realizarPago";
       url = "https://sis.redsys.es/sis/realizarPago";
       merchantCode = "352828222";
       var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_FLORIDA);
@@ -266,9 +274,11 @@ lineChartType: ChartType = 'line';
       "DS_MERCHANT_ORDER": order,
       "DS_MERCHANT_TERMINAL": "1",
       "DS_MERCHANT_TRANSACTIONTYPE": "0",
-      "DS_MERCHANT_URLKO": "https://solunapilates.es/finish-app-true.php?order="+order+'&type='+'M'+'&hash='+hash2,
-      "DS_MERCHANT_URLOK": "https://solunapilates.es/finish-app-true.php?order="+order+'&type='+'M'+'&hash='+hash1
+      "DS_MERCHANT_URLOK": "https://solunapilates.es/finish-app-true.php?order="+order+'&type='+'M'+'&hash='+hash1,
+      "DS_MERCHANT_URLKO": "https://solunapilates.es/finish-app-true.php?order="+order+'&type='+'M'+'&hash='+hash2
     }
+
+    
 
     // Base64 encoding of parameters
     var merchantWordArray = cryptojs.enc.Utf8.parse(JSON.stringify(tpvdata));
@@ -302,32 +312,18 @@ lineChartType: ChartType = 'line';
     };
     // console.log(response);
 
-    // Pruebas
-    // let pageContent = '<html><head></head><body><form id="form2" action="https://sis-t.redsys.es:25443/sis/realizarPago" method="post">' +
-    // '<input type="hidden" name="Ds_MerchantParameters" value="' + this.merchantParams + '">' +
-    // '<input type="hidden" name="Ds_Signature" value="' + this.signature + '">' +
-    // '<input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1">' +
-    // '</form> <script type="text/javascript">document.getElementById("form2").submit();</script></body></html>';
-
-    // Produccion
     let pageContent = '<html><head></head><body><form id="form2" action='+url+' method="post">' +
     '<input type="hidden" name="Ds_MerchantParameters" value="' + this.merchantParams + '">' +
     '<input type="hidden" name="Ds_Signature" value="' + this.signature + '">' +
     '<input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1">' +
     '</form> <script type="text/javascript">document.getElementById("form2").submit();</script></body></html>';
-    // let pageContent = '<html><head></head><body><form id="form2" action="https://sis.redsys.es/sis/realizarPago" method="post">' +
-    // '<input type="hidden" name="Ds_MerchantParameters" value="' + this.merchantParams + '">' +
-    // '<input type="hidden" name="Ds_Signature" value="' + this.signature + '">' +
-    // '<input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1">' +
-    // '</form> <script type="text/javascript">document.getElementById("form2").submit();</script></body></html>';
+
     let pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
     
-    // let browserRef = window.cordova.InAppBrowser.open(
-    //     pageContentUrl ,
-    //     "_blank",
-    //     "hidden=no,location=no,clearsessioncache=no,clearcache=no"
-    // );
 
+    // const link = document.createElement("a")
+    // link.href = pageContentUrl;
+    // link.click()
 
     this._service.getMonthlyPaymentCreate(this.customer_id, this.cliente.center_id, order).subscribe(res => {
       const browserRef = this.iab
@@ -338,37 +334,6 @@ lineChartType: ChartType = 'line';
       );
     });
 
-
-    
-      // Esto es para hacer que se cierre solo al llegar a la web de soluna
-    // browserRef.on('loadstop').subscribe(event => {
-    //   // console.log('loadstop started');
-    //   // console.log(event);
-    //   // console.log('loadstop url', event.url);
-    
-    //   if (event.url == "https://solunapilates.es/finish-app-true.php?order="+order+"&type="+"T"+"&hash="+hash1) {
-    //     // console.log(JSON.stringify(event));
-
-    //     this.service.getTicketPaymentUpdate(order, '1', hash1).subscribe(res => {
-    //       console.log(res);
-    //       this.presentAlert('¡Tu compra se ha confirmado con éxito!');
-    //     });
-
-
-    //     browserRef.close();
-    //   } else if (event.url == "https://solunapilates.es/finish-app-true.php?order="+order+"&type="+"T"+"&hash="+hash2) {
-
-    //     browserRef.close();
-
-    //   }
-    
-    // });
-
-
-    // Esto era el método antiguo
-    // setTimeout(() => {
-    //   this.pruebaPago(order, price, response);
-    // }, 10);
 
   }
 

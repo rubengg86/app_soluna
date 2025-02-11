@@ -12,7 +12,10 @@
         </div>
         <!-------------------------------------------BOTON MENU------------------------->
         <ion-buttons slot="end" id="menu">
-            <ion-menu-button><i class="fas fa-bars fa-lg text-white"></i></ion-menu-button>
+            <!-- <ion-menu-button><i class="fas fa-bars fa-lg text-white"></i></ion-menu-button> -->
+            <ion-menu-button style="color:#fff !important">
+                <ion-icon slot="start" name="menu"></ion-icon>
+            </ion-menu-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
@@ -141,39 +144,39 @@
         </ion-content>
         <!------------------------------------------------------------------------FOOTER----------------------------------------------------------------->
         <ion-footer>
-          
+
 
             <ion-toolbar end style="--background: #363636;" class="border-bottom border-top">
                 <!-- <ion-title class="accordion-itemmy-4 border-bottom border-top"> -->
-                    <button class="btn my-2 boton" [routerLink]="['/dashboard/mi-cuenta']">
+                <button class="btn my-2 boton" [routerLink]="['/dashboard/mi-cuenta']">
                       <i class="fas fa-user-circle fa-lg me-2 text-white"></i>
                       <span class="text-white">Mi cuenta</span>
                     </button>
                 <!-- </ion-title> -->
-              </ion-toolbar>
-              <ion-toolbar style="--background: #363636;" class="border-bottom">
+            </ion-toolbar>
+            <ion-toolbar style="--background: #363636;" class="border-bottom">
 
                 <!-- <ion-title class="accordion-itemmy-4 border-bottom"> -->
-                    <button class="btn mb-2 boton" (click)="cambiarModal()">
+                <button class="btn mb-2 boton" (click)="cambiarModal()">
                         <i class="fas fa-unlock fa-lg me-2 text-white"></i>
                         <span class="text-white">Cambiar contraseña</span>
                     </button>
                 <!-- </ion-title> -->
-              </ion-toolbar>
-              <ion-toolbar style="--background: #363636;" class="border-bottom">
+            </ion-toolbar>
+            <ion-toolbar style="--background: #363636;" class="border-bottom">
 
                 <!-- <ion-title class="accordion-itemmy-4 border-bottom"> -->
-                    <button class="btn mb-2 boton">
+                <button class="btn mb-2 boton">
                         <i class="fas fa-at fa-lg me-2 text-white"></i>
                         <a [href]="email" class="text-white">Contacto</a>
                     </button>
                 <!-- </ion-title> -->
-              </ion-toolbar>
-              <ion-toolbar style="--background: #363636;" class="border-bottom">
+            </ion-toolbar>
+            <ion-toolbar style="--background: #363636;" class="border-bottom">
 
 
                 <!-- <ion-title class="accordion-itemmy-4 border-bottom"> -->
-                    <button class="btn mb-2 boton" (click)="cerrarSesion()">
+                <button class="btn mb-2 boton" (click)="cerrarSesion()">
                         <i class="fas fa-power-off fa-lg me-2 text-white"></i>
                         <span class="text-white">Cerrar sesión</span>
                     </button>

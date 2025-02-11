@@ -7,7 +7,8 @@
             <ion-title class="text-white">
                 COMPRAR
             </ion-title>
-            <i class="fas fa-times fa-2x text-white" (click)="dismiss()"></i>
+            <!-- <i class="fas fa-times fa-2x text-white" (click)="dismiss()"></i> -->
+            <ion-icon style="color:white !important" (click)="dismiss()" slot="start" name="close"></ion-icon>
             <br>
         </div>
     </ion-toolbar>
@@ -31,6 +32,14 @@
             </ion-card-subtitle>
             <h1>{{ticket.price}}&euro;</h1>
         </ion-card-header>
+        <ion-card-content>
+            <br>
+            <ion-card-title style="color:red">ATENCIÓN</ion-card-title>
+            <br>
+            <p>Al pulsar en "Pagar" se le redigirá a una página de pago. Tras introducir sus datos y pagar NO SALGA DE LA PÁGINA Y PULSE EN CONTINUAR CUANDO EL PAGO SE REALICE CORRECTAMENTE. Una vez se le cargue la siguiente página podrá salir sin problemas.</p>
+            <p style="color:red">SI NO HACE ESTO SU COMPRA NO SE EFECTUARÁ CORRECTAMENTE</p>
+            <br>
+        </ion-card-content>
     </ion-card>
 
     <ion-radio-group class="mt-2">

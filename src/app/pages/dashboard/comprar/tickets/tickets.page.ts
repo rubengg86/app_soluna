@@ -198,10 +198,7 @@ export class TicketsPage implements OnInit {
     this._service.getTicketCreatePreReserve(this.fechaClaseTicket, activity_id, center_id, group_id, amount, ticket_type).subscribe( (res:any) => {
 
       this.ticket_reserva = res;
-      // idReserva = res.id;
-      // console.log(idReserva);
       this.reserva_id = res.id;
-      // console.log(this.reserva_id);
       localStorage.setItem('soluna_reserve_id', res.id);
       localStorage.setItem('soluna_group_id', group_id);
       localStorage.setItem('soluna_class_date', this.fechaClaseTicket);

@@ -5,7 +5,10 @@
     <ion-card class="border-top" *ngIf="pilatesRegalo">
         <ion-card-header>
             <!--------------------------------------------------TITULO CARD--------------------------------------->
-            <ion-card-title class="border-bottom">{{pilatesRegalo.activity_name}}<i class="fas fa-angle-double-left fa-lg" [routerLink]="['/dashboard/bono-regalo']"></i></ion-card-title>
+            <ion-card-title class="border-bottom">{{pilatesRegalo.activity_name}}
+                <!-- <i class="fas fa-angle-double-left fa-lg" [routerLink]="['/dashboard/bono-regalo']"></i> -->
+                <ion-icon style="float:right" [routerLink]="['/dashboard/bono-regalo']" name="close"></ion-icon>
+            </ion-card-title>
             <!--------------------------------------------------SUBTITULO CARD--------------------------------------->
             <ion-card-subtitle>
                 <div class="border-bottom">
