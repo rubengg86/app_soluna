@@ -1,6 +1,7 @@
 {
   "name": "solunaPilates",
   "integrations": {
+    "capacitor": {},
     "cordova": {}
   },
   "type": "angular"

@@ -22,7 +22,6 @@
         "@awesome-cordova-plugins/core": "^6.2.0",
         "@awesome-cordova-plugins/deeplinks": "5.43.0",
         "@awesome-cordova-plugins/in-app-browser": "^5.41.0",
-        "@capacitor/core": "3.4.0",
         "@ionic/angular": "^5.5.2",
         "@ng-bootstrap/ng-bootstrap": "^10.0.0",
         "angularx-flatpickr": "^6.5.2",
@@ -46,7 +45,6 @@
         "@angular/compiler": "~12.0.1",
         "@angular/compiler-cli": "~12.0.1",
         "@angular/language-service": "~12.0.1",
-        "@capacitor/cli": "3.4.0",
         "@ionic/angular-toolkit": "^4.0.0",
         "@types/jasmine": "~3.6.0",
         "@types/jasminewd2": "~2.0.3",
@@ -54,10 +52,11 @@
         "@typescript-eslint/eslint-plugin": "4.16.1",
         "@typescript-eslint/parser": "4.16.1",
         "cordova-android": "^10.1.2",
+        "cordova-ios": "^6.3.0",
         "cordova-plugin-device": "^2.0.2",
         "cordova-plugin-inappbrowser": "^5.0.0",
         "cordova-plugin-ionic-keyboard": "^2.2.0",
-        "cordova-plugin-ionic-webview": "^5.0.0",
+        "cordova-plugin-ionic-webview": "^5.0.1",
         "cordova-plugin-splashscreen": "^5.0.2",
         "cordova-plugin-statusbar": "^2.4.2",
         "eslint": "^7.6.0",
@@ -86,7 +85,6 @@
             "cordova-plugin-splashscreen": {},
             "cordova-plugin-ionic-webview": {},
             "cordova-plugin-ionic-keyboard": {},
-            "cordova-plugin-inappbrowser": {},
             "ionic-plugin-deeplinks": {
                 "URL_SCHEME": "solunapilates",
                 "DEEPLINK_SCHEME": "https",
@@ -104,10 +102,12 @@
                 "DEEPLINK_4_HOST": " ",
                 "DEEPLINK_5_SCHEME": " ",
                 "DEEPLINK_5_HOST": " "
-            }
+            },
+            "cordova-plugin-inappbrowser": {}
         },
         "platforms": [
-            "android"
+            "android",
+            "ios"
         ]
     }
 }

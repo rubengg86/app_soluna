@@ -34,25 +34,25 @@ export class BotonComprarPage implements OnInit {
   loading = false;
 
   options : InAppBrowserOptions = {
-    location : 'yes',//Or 'no' 
+    location : 'yes',//Or 'no'
     hidden : 'no', //Or  'yes'
     clearcache : 'yes',
     clearsessioncache : 'yes',
-    zoom : 'yes',//Android only ,shows browser zoom controls 
+    zoom : 'yes',//Android only ,shows browser zoom controls
     hardwareback : 'yes',
     mediaPlaybackRequiresUserAction : 'no',
-    shouldPauseOnSuspend : 'no', //Android only 
+    shouldPauseOnSuspend : 'no', //Android only
     closebuttoncaption : 'Cerrar',
-    disallowoverscroll : 'no', //iOS only 
-    toolbar : 'yes', //iOS only 
-    enableViewportScale : 'no', //iOS only 
-    allowInlineMediaPlayback : 'no',//iOS only 
-    presentationstyle : 'pagesheet',//iOS only 
-    fullscreen : 'yes',//Windows only    
+    disallowoverscroll : 'no', //iOS only
+    toolbar : 'yes', //iOS only
+    enableViewportScale : 'no', //iOS only
+    allowInlineMediaPlayback : 'no',//iOS only
+    presentationstyle : 'pagesheet',//iOS only
+    fullscreen : 'yes',//Windows only
   };
 
-  constructor(public modalController: ModalController, 
-              private service: ServicioService, 
+  constructor(public modalController: ModalController,
+              private service: ServicioService,
               private alertController: AlertController,
               private iab: InAppBrowser) { }
 
@@ -71,7 +71,7 @@ export class BotonComprarPage implements OnInit {
 
   }
 
-  
+
   change(event){
     const radio=event.target.id;
     if(radio==='tarjeta'){
@@ -126,7 +126,7 @@ export class BotonComprarPage implements OnInit {
       url = "https://sis.redsys.es/sis/realizarPago";
       merchantCode = "352828222";
       var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_FLORIDA);
-      
+
     } else {
       console.log('Default')
 
@@ -142,7 +142,7 @@ export class BotonComprarPage implements OnInit {
 
     let hash1 = cryptojs.SHA1(order+GLOBAL.PASSWD_SEED+GLOBAL.PASSWD_SEED+order+'1').toString();
     let hash2 = cryptojs.SHA1(order+GLOBAL.PASSWD_SEED+GLOBAL.PASSWD_SEED+order+'2').toString();
-      
+
     let tpvdata = {
       "DS_MERCHANT_AMOUNT": price.toString(),
       "DS_MERCHANT_CURRENCY": "978",
@@ -151,6 +151,7 @@ export class BotonComprarPage implements OnInit {
       "DS_MERCHANT_TERMINAL": "1",
       "DS_MERCHANT_TRANSACTIONTYPE": "0",
       // "DS_MERCHANT_URLKO": "https://solunapilates.es",
+      "DS_MERCHANT_MERCHANTURL": "https://solunapilates.es/finish-app-true.php?order="+order+'&type='+'M'+'&hash='+hash1,
       // "DS_MERCHANT_URLOK": "https://solunapilates.es/actividades.php"
       "DS_MERCHANT_URLKO": "https://solunapilates.es/finish-app-true.php?order="+order+"&type="+"T"+"&hash="+hash2,
       "DS_MERCHANT_URLOK": "https://solunapilates.es/finish-app-true.php?order="+order+"&type="+"T"+"&hash="+hash1
@@ -160,8 +161,8 @@ export class BotonComprarPage implements OnInit {
     var merchantWordArray = cryptojs.enc.Utf8.parse(JSON.stringify(tpvdata));
     this.merchantParams = merchantWordArray.toString(cryptojs.enc.Base64);
     // document.getElementById('id_formulario')['Ds_MerchantParameters'].value = merchantWordArray.toString(cryptojs.enc.Base64);
-    
-    
+
+
     // Generate transaction key
     var iv = cryptojs.enc.Hex.parse("0000000000000000");
     var cipher = cryptojs.TripleDES.encrypt(tpvdata.DS_MERCHANT_ORDER, keyWordArray, {
@@ -169,12 +170,12 @@ export class BotonComprarPage implements OnInit {
       mode: cryptojs.mode.CBC,
       padding: cryptojs.pad.ZeroPadding
     });
-    
+
     // Sign
     var signature = cryptojs.HmacSHA256(this.merchantParams, cipher.ciphertext);
     this.signature = signature.toString(cryptojs.enc.Base64);
     // document.getElementById('id_formulario')['Ds_Signature'].value = signature.toString(cryptojs.enc.Base64);
-    
+
     // Done, we can return response
     var response = {
       signatureVersion: "HMAC_SHA256_V1",
@@ -204,7 +205,7 @@ export class BotonComprarPage implements OnInit {
 
 
     let pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
-    
+
     // let browserRef = window.cordova.InAppBrowser.open(
     //     pageContentUrl ,
     //     "_blank",
@@ -227,13 +228,13 @@ export class BotonComprarPage implements OnInit {
     });
 
 
-    
+
       // Esto es para hacer que se cierre solo al llegar a la web de soluna
     // browserRef.on('loadstop').subscribe(event => {
     //   // console.log('loadstop started');
     //   // console.log(event);
     //   // console.log('loadstop url', event.url);
-    
+
     //   if (event.url == "https://solunapilates.es/finish-app-true.php?order="+order+"&type="+"T"+"&hash="+hash1) {
     //     // console.log(JSON.stringify(event));
 
@@ -249,7 +250,7 @@ export class BotonComprarPage implements OnInit {
     //     browserRef.close();
 
     //   }
-    
+
     // });
 
 
@@ -271,7 +272,7 @@ export class BotonComprarPage implements OnInit {
       (<HTMLFormElement>document.getElementById('id_formulario')).submit();
       this.loading = false;
     });
-  
+
   }
 
   async presentAlert(msg) {

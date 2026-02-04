@@ -18,7 +18,7 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, Deeplinks, InAppBrowser],
   bootstrap: [AppComponent],
