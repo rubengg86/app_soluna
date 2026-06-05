@@ -51,7 +51,7 @@
         "@types/node": "^12.11.1",
         "@typescript-eslint/eslint-plugin": "4.16.1",
         "@typescript-eslint/parser": "4.16.1",
-        "cordova-android": "^10.1.2",
+        "cordova-android": "^15.0.0",
         "cordova-ios": "^6.3.0",
         "cordova-plugin-device": "^2.0.2",
         "cordova-plugin-inappbrowser": "^5.0.0",
@@ -106,8 +106,8 @@
             "cordova-plugin-inappbrowser": {}
         },
         "platforms": [
-            "android",
-            "ios"
+            "ios",
+            "android"
         ]
     }
 }

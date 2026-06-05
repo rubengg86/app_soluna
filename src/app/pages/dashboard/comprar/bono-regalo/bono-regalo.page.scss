@@ -1,193 +1,94 @@
-* {
-    color: white;
-    background-color: transparent;
-    font-size: medium;
+/* ── Header ─────────────────────────────────────── */
+.buy-header {
+  background: var(--sl-surface);
+  padding: calc(env(safe-area-inset-top) + 20px) 20px 18px;
+  border-bottom: 1px solid var(--sl-border-soft);
 }
 
-ion-card {}
-
-#columnas {
-    column-count: 2;
-    padding: 0px;
-    background-color: transparent
+.buy-title {
+  font-family: var(--sl-font-display);
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--sl-text);
+  letter-spacing: -0.5px;
+  margin: 0;
 }
 
-#pilates {
-    height: 115.2px;
-    background-image: url(../../../../../assets/img/pilates-maquina.jpg);
-    text-align: center;
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
+.buy-subtitle {
+  font-size: 13px;
+  color: var(--sl-text-3);
+  margin: 2px 0 0;
 }
 
-#pilates:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+/* ── Grid ───────────────────────────────────────── */
+.activities-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 16px 14px calc(var(--sl-tab-height) + env(safe-area-inset-bottom) + 16px);
 }
 
-#aerosoluna {
-    height: 115.2px;
-    background-image: url(../../../../../assets/img/aerosoluna.jpg);
-    text-align: center;
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
+/* ── Activity card ──────────────────────────────── */
+.activity-card {
+  border-radius: var(--sl-radius-md);
+  overflow: hidden;
+  aspect-ratio: 0.82;
+  position: relative;
+  cursor: pointer;
+  box-shadow: var(--sl-shadow-md);
+  display: block;
+  -webkit-tap-highlight-color: transparent;
+
+  &:active { transform: scale(0.97); }
+  transition: transform 0.12s;
 }
 
-#aerosoluna:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+.activity-card-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.3s;
 }
 
-#entrenamiento {
-    height: 115.2px;
-    background-image: url(../../../../../assets/img/entrenamiento-personal.jpg);
-    text-align: center;
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
+.activity-card:active .activity-card-img {
+  transform: scale(1.04);
 }
 
-#entrenamiento:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+.activity-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(15,10,5,.75) 0%,
+    rgba(15,10,5,.15) 50%,
+    transparent 100%
+  );
 }
 
-#readapt {
-    height: 115.2px;
-    background-image: url(../../../../../assets/img/readaptacion-fisica.jpg);
-    text-align: center;
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
+.activity-card-body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px 14px 16px;
 }
 
-#readapt:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+.activity-card-name {
+  font-family: var(--sl-font-display);
+  font-size: 17px;
+  font-weight: 500;
+  color: white !important;
+  line-height: 1.2;
+  letter-spacing: -0.2px;
 }
 
-#embarazada {
-    height: 115.2px;
-    background-image: url(../../../../../assets/img/pilates-embarazadas.jpg);
-    text-align: center;
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-#embarazada:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-#yoga {
-    height: 115.2px;
-    background-image: url(../../../../../assets/img/yoga.jpg);
-    text-align: center;
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-#yoga:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-#infantil {
-    height: 115.2px;
-    background-image: url(../../../../../assets/img/yoga-infantil.jpg);
-    text-align: center;
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-#infantil:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-#hipopresivo {
-    height: 115.2px;
-    background-image: url(../../../../../assets/img/hipopresivo.jpg);
-    text-align: center;
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-#hipopresivo:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-#taichi {
-    height: 115.2px;
-    background-image: url(../../../../../assets/img/taichi.jpg);
-    text-align: center;
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-#aerosolunaYoga {
-    height: 115.2px;
-    background-image: url(../../../../../assets/img/aerosoluna1.webp);
-    text-align: center;
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-}
+/* ── Background images ──────────────────────────── */
+#bg-pilates        { background-image: url(../../../../../assets/img/pilates-maquina.jpg); }
+#bg-aerosoluna     { background-image: url(../../../../../assets/img/aerosoluna.jpg); }
+#bg-readapt        { background-image: url(../../../../../assets/img/readaptacion-fisica.jpg); }
+#bg-entrenamiento  { background-image: url(../../../../../assets/img/entrenamiento-personal.jpg); }
+#bg-yoga           { background-image: url(../../../../../assets/img/yoga.jpg); }
+#bg-embarazadas    { background-image: url(../../../../../assets/img/pilates-embarazadas.jpg); }
+#bg-taichi         { background-image: url(../../../../../assets/img/taichi.jpg); }
+#bg-aerosolunayoga { background-image: url(../../../../../assets/img/aerosoluna1.webp); }

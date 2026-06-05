@@ -1,18 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
 import { EditarBancariosPage } from '../inicio/tu-panel/editar-bancarios/editar-bancarios.page';
 import { EditarTusDatosPage } from '../inicio/tu-panel/editar-tus-datos/editar-tus-datos.page';
+import { ContraseniaPage } from '../contrasenia/contrasenia.page';
 import { FlatpickrDefaultsInterface } from 'angularx-flatpickr/flatpickr-defaults.service';
 import { ChartDataSets, ChartType } from 'chart.js';
 import { Label } from 'ng2-charts';
 import { ServicioService } from '../../../services/servicio.service';
+import { RefreshService } from '../../../services/refresh.service';
 
 @Component({
   selector: 'app-mi-cuenta',
   templateUrl: './mi-cuenta.page.html',
   styleUrls: ['./mi-cuenta.page.scss'],
 })
-export class MiCuentaPage implements OnInit {
+export class MiCuentaPage implements OnInit, OnDestroy {
+  private refreshSub: Subscription;
 
   /*--------------------------------------------GRAFICO------------------------------------------- 
   public lineChartData: ChartDataSets[] = [
@@ -70,10 +75,25 @@ longhand: ['Enero', 'Febreo', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agos
   public customer_id = localStorage.getItem('currentUserSoluna');
   public cliente;
 
-  constructor(public modalController: ModalController, private _service: ServicioService) { }
+  public email = 'mailto:hola@narancobrands.com';
+
+  constructor(
+    public modalController: ModalController,
+    private _service: ServicioService,
+    private router: Router,
+    private refreshService: RefreshService
+  ) { }
 
   ngOnInit(): void {
+    this.refreshSub = this.refreshService.refresh$.subscribe(() => this.getCliente());
+  }
+
+  ionViewWillEnter(): void {
     this.getCliente();
+  }
+
+  ngOnDestroy(): void {
+    this.refreshSub?.unsubscribe();
   }
 
   getCliente() {
@@ -97,10 +117,22 @@ longhand: ['Enero', 'Febreo', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agos
     });
     return await modal.present();
   }
+  async cambiarModal() {
+    const modal = await this.modalController.create({
+      component: ContraseniaPage
+    });
+    return await modal.present();
+  }
+
   async editarBancarios() {
     const modal = await this.modalController.create({
       component: EditarBancariosPage
     });
     return await modal.present();
+  }
+
+  cerrarSesion() {
+    localStorage.removeItem('currentUserSoluna');
+    this.router.navigate(['/login']);
   }
 }

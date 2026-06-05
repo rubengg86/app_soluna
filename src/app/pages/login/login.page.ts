@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Usuario } from 'src/app/models/usuario';
 import { ServicioService } from 'src/app/services/servicio.service';
 import { ModalController } from '@ionic/angular';
@@ -15,79 +15,69 @@ import { RegistroPage } from '../registro/registro.page';
 })
 export class LoginPage{
 
-  public incorrecto = false;
-  public usuarios: Array<Usuario>=[];
-
-  public parametro;
-  public signature;
-
-
-
-  public querystring;
-  public category;
-  public id;
-  private urlParameters: Array<any> = [];
+  public incorrect = false;
+  public users: Array<Usuario>=[];
+  public signature: any;
+  public querystring: any;
+  public category: any;
+  public id: any;
 
   // user local: hola@solunapilates.es
   // pass local: 987654321
 
-  forma= new FormGroup ({
-      nombre:new FormControl('', [Validators.required]),
-      pass:new FormControl('', [Validators.required])
+  form = new FormGroup({
+    nombre: new FormControl('', [Validators.required]),
+    pass: new FormControl('', [Validators.required])
   });
 
-  constructor(private servicio: ServicioService,
-              private router: Router,
-              private modalController: ModalController,
-              private route: ActivatedRoute) {
-              }
-  /* --------------------------------------------------Recojo los datos de la BD---------------------------------------------------- */
+  constructor(private service: ServicioService,
+    private router: Router,
+    private modalController: ModalController
+  ) {
+  }
 
-  getUsuariosSoluna(){
+  async getUsersSoluna(){
 
-    this.servicio.presentLoading();
+    await this.service.presentLoading();
 
-    let login = this.forma.get('nombre').value;
-    let password = this.forma.get('pass').value;
+    const login = this.form.get('nombre').value;
+    const password = this.form.get('pass').value;
 
-    this.servicio.getUsers(login, password).subscribe( (res: any) => {
+    this.service.getUsers(login, password).subscribe(async (res: any) => {
       if (res){
         localStorage.setItem('currentUserSoluna', res.customer_id);
-    
-        let hoy = new Date();
+
+        const hoy = new Date();
         hoy.setSeconds(3600);
         localStorage.setItem('expira', hoy.getTime().toString() );
 
-        this.servicio.dismissLoading();
-        this.router.navigateByUrl('dashboard/tu-panel')
+        await this.service.dismissLoading();
+        await this.router.navigateByUrl('dashboard/tu-panel');
       } else {
-        this.incorrecto = true;
-        this.servicio.dismissLoading();
+        this.incorrect = true;
+        await this.service.dismissLoading();
       }
 
     }, error =>{
       console.log(error);
-    })
+    });
   }
 
-  async recuperarContrasenia() {
+  async recoverPassword() {
     const modal = await this.modalController.create({
       component: RecuperarContraseniaPage
     });
     return await modal.present();
   }
 
-  async registrarse() {
+  async registerUser() {
     const modal = await this.modalController.create({
       component: RegistroPage
     });
     return await modal.present();
   }
 
-  /* --------------------------------------Compruebo esos datos con lo escrito en el formulario-------------------------------------- */
-  onLogin(){
-    // this.getUsuarios();
-    this.getUsuariosSoluna();
+  async onLogin(){
+    await this.getUsersSoluna();
   }
-
 }

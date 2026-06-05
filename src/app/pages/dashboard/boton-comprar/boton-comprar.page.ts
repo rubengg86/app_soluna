@@ -33,7 +33,7 @@ export class BotonComprarPage implements OnInit {
   class_date;
   loading = false;
 
-  options : InAppBrowserOptions = {
+  options: InAppBrowserOptions = {
     location : 'yes',//Or 'no'
     hidden : 'no', //Or  'yes'
     clearcache : 'yes',
@@ -57,7 +57,7 @@ export class BotonComprarPage implements OnInit {
               private iab: InAppBrowser) { }
 
   ngOnInit() {
-    console.log(this.ticket)
+    console.log(this.ticket);
     this.reserve_id = localStorage.getItem('soluna_reserve_id');
     this.group_id = localStorage.getItem('soluna_group_id');
     this.class_date = localStorage.getItem('soluna_class_date');
@@ -97,95 +97,91 @@ export class BotonComprarPage implements OnInit {
   };
 
   generatemerchantparams() {
+    let keyWordArray;
     this.loading = true;
     console.log(this.centro);
 
 
-    let merchantCode;
-    let url;
+    let merchantCode: string;
+    let url: string;
 
-    if(this.centro == "5"){
-      console.log('Aviles')
+    url = GLOBAL.tpvUrl;
 
-      url = "https://sis.redsys.es/sis/realizarPago";
-      merchantCode = "355780867";
-      var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_AVILES);
+    // eslint-disable-next-line eqeqeq
+    if(this.centro == '5'){
+      console.log('Aviles');
 
-    } else if (this.centro == "9") {
-      console.log('Gijon')
+      merchantCode = '355780867';
+      keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.shaProdAviles);
 
-      // url = "https://sis-t.redsys.es:25443/sis/realizarPago";
-      url = "https://sis.redsys.es/sis/realizarPago";
-      merchantCode = "363064700";
-      // var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_TEST_GIJON);
-      var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_GIJON);
+      // eslint-disable-next-line eqeqeq
+    } else if (this.centro == '9') {
+      console.log('Gijon');
 
-    } else if (this.centro == "1") {
-      console.log('La Florida')
+      merchantCode = '363064700';
+      keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.shaProdGijon);
 
-      url = "https://sis.redsys.es/sis/realizarPago";
-      merchantCode = "352828222";
-      var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_FLORIDA);
+      // eslint-disable-next-line eqeqeq
+    } else if (this.centro == '1') {
+      console.log('La Florida');
+
+      merchantCode = '352828222';
+      keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.shaProdFlorida);
 
     } else {
-      console.log('Default')
-
-      url = "https://sis.redsys.es/sis/realizarPago";
-      merchantCode = "355780867";
-      var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_AVILES);
-
+      console.log('Default');
+      merchantCode = '355780867';
+      keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.shaProdAviles);
     }
 
 
-    let price = +this.ticket.price * 100;
-    let order = moment().format('YYMMDDHHmmss');
+    const price = +this.ticket.price * 100;
+    const order = moment().format('YYMMDDHHmmss');
 
-    let hash1 = cryptojs.SHA1(order+GLOBAL.PASSWD_SEED+GLOBAL.PASSWD_SEED+order+'1').toString();
-    let hash2 = cryptojs.SHA1(order+GLOBAL.PASSWD_SEED+GLOBAL.PASSWD_SEED+order+'2').toString();
+    const hash1 = cryptojs.SHA1(order+GLOBAL.passwordSeed+GLOBAL.passwordSeed+order+'1').toString();
+    const hash2 = cryptojs.SHA1(order+GLOBAL.passwordSeed+GLOBAL.passwordSeed+order+'2').toString();
 
-    let tpvdata = {
-      "DS_MERCHANT_AMOUNT": price.toString(),
-      "DS_MERCHANT_CURRENCY": "978",
-      "DS_MERCHANT_MERCHANTCODE": merchantCode,
-      "DS_MERCHANT_ORDER": order,
-      "DS_MERCHANT_TERMINAL": "1",
-      "DS_MERCHANT_TRANSACTIONTYPE": "0",
-      // "DS_MERCHANT_URLKO": "https://solunapilates.es",
-      "DS_MERCHANT_MERCHANTURL": "https://solunapilates.es/finish-app-true.php?order="+order+'&type='+'M'+'&hash='+hash1,
-      // "DS_MERCHANT_URLOK": "https://solunapilates.es/actividades.php"
-      "DS_MERCHANT_URLKO": "https://solunapilates.es/finish-app-true.php?order="+order+"&type="+"T"+"&hash="+hash2,
-      "DS_MERCHANT_URLOK": "https://solunapilates.es/finish-app-true.php?order="+order+"&type="+"T"+"&hash="+hash1
-    }
+    const tpvdata = {
+      DS_MERCHANT_AMOUNT: price.toString(),
+      DS_MERCHANT_CURRENCY: '978',
+      DS_MERCHANT_MERCHANTCODE: merchantCode,
+      DS_MERCHANT_ORDER: order,
+      DS_MERCHANT_TERMINAL: '1',
+      DS_MERCHANT_TRANSACTIONTYPE: '0',
+      DS_MERCHANT_MERCHANTURL: GLOBAL.solunaUrl + '/finish-app-true.php?order='+order+'&type='+'M'+'&hash='+hash1,
+      DS_MERCHANT_URLKO: GLOBAL.solunaUrl + '/finish-app-true.php?order='+order+'&type='+'T'+'&hash='+hash2,
+      DS_MERCHANT_URLOK: GLOBAL.solunaUrl + '/finish-app-true.php?order='+order+'&type='+'T'+'&hash='+hash1
+    };
 
     // Base64 encoding of parameters
-    var merchantWordArray = cryptojs.enc.Utf8.parse(JSON.stringify(tpvdata));
+    const merchantWordArray = cryptojs.enc.Utf8.parse(JSON.stringify(tpvdata));
     this.merchantParams = merchantWordArray.toString(cryptojs.enc.Base64);
     // document.getElementById('id_formulario')['Ds_MerchantParameters'].value = merchantWordArray.toString(cryptojs.enc.Base64);
 
 
     // Generate transaction key
-    var iv = cryptojs.enc.Hex.parse("0000000000000000");
-    var cipher = cryptojs.TripleDES.encrypt(tpvdata.DS_MERCHANT_ORDER, keyWordArray, {
-      iv:iv,
+    const iv = cryptojs.enc.Hex.parse('0000000000000000');
+    const cipher = cryptojs.TripleDES.encrypt(tpvdata.DS_MERCHANT_ORDER, keyWordArray, {
+      iv,
       mode: cryptojs.mode.CBC,
       padding: cryptojs.pad.ZeroPadding
     });
 
     // Sign
-    var signature = cryptojs.HmacSHA256(this.merchantParams, cipher.ciphertext);
+    const signature = cryptojs.HmacSHA256(this.merchantParams, cipher.ciphertext);
     this.signature = signature.toString(cryptojs.enc.Base64);
     // document.getElementById('id_formulario')['Ds_Signature'].value = signature.toString(cryptojs.enc.Base64);
 
     // Done, we can return response
-    var response = {
-      signatureVersion: "HMAC_SHA256_V1",
+    const response = {
+      signatureVersion: 'HMAC_SHA256_V1',
       // signatureVersion: "SHA256",
       merchantParameters: this.merchantParams,
       signature: this.signature
     };
     // console.log(response);
 
-    let pageContent = '<html><head></head><body><form id="form2" action='+url+' method="post">' +
+    const pageContent = '<html><head></head><body><form id="form2" action='+url+' method="post">' +
     '<input type="hidden" name="Ds_MerchantParameters" value="' + this.merchantParams + '">' +
     '<input type="hidden" name="Ds_Signature" value="' + this.signature + '">' +
     '<input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1">' +
@@ -204,7 +200,7 @@ export class BotonComprarPage implements OnInit {
     // '</form> <script type="text/javascript">document.getElementById("form2").submit();</script></body></html>';
 
 
-    let pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
+    const pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
 
     // let browserRef = window.cordova.InAppBrowser.open(
     //     pageContentUrl ,

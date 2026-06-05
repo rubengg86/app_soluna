@@ -1,48 +1,103 @@
-<!---------------------------------------------------------------- MODAL (editar)------------------------------------------------------------->
-<!-------------------------------------------------------------------CABECERA ---------------------------------------------------------------->
-<ion-header>
-    <ion-toolbar class="p-3" style="--background: #363636;">
-        <!-- <ion-toolbar class="p-3" color="light"> -->
-        <div class="d-flex justify-content-between">
-            <ion-title class="text-white">
-                MODIFICA TUS DATOS
-            </ion-title>
-            <!-- <i class="fas fa-times fa-2x text-white" (click)="dismiss()"></i> -->
-            <ion-icon style="color:white !important" (click)="dismiss()" slot="start" name="close"></ion-icon>
-        </div>
-        <br>
-    </ion-toolbar>
-</ion-header>
+<div class="modal-header">
+  <div class="modal-drag-handle"></div>
+  <div class="modal-header-row">
+    <span class="modal-header-title">Tus datos</span>
+    <button class="modal-close-btn" (click)="dismiss()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+</div>
 
-<!-------------------------------------------------------------------FORMULARIO--------------------------------------------------------------->
-<ion-content style="--background: #363636;">
-    <!-- <ion-content color="light"> -->
-    <br>
-    <form action="" [formGroup]="datos" class="px-4 py-1" id="formUpdate">
-        <br>
-        <!-- <span>+</span> -->
-        <div *ngIf="previsualizacion" class="d-block m-auto p-0 m-0" id="previsualizar" for="files">
-            <label for="files">
-                <img [src]="previsualizacion" alt="" class="p-0 m-0">
-            </label>
-        </div>
-        <!-- <label for="files" class="btn text-center col-12">Elegir una foto de perfil</label> -->
-        <!-- <input type="file" id="files" (change)="fileChangeEvent($event)"> -->
+<ion-content style="--background: var(--sl-bg)">
+  <form [formGroup]="datos" class="modal-form">
 
-        <div>
-            <br>
-            <ion-input placeholder="Nombre" formControlName='name' class="border-bottom mb-2"></ion-input>
-            <ion-input placeholder="Apellidos" formControlName='surname' class="border-bottom mb-2"></ion-input>
-            <ion-input placeholder="Email" formControlName='email' class="border-bottom mb-2"></ion-input>
-            <ion-input placeholder="Teléfono" formControlName='phone' class="border-bottom mb-2"></ion-input>
-            <ion-input placeholder="DNI" formControlName='id_card' class="border-bottom mb-2"></ion-input>
-            <ion-input placeholder="Cuenta bancaria" formControlName='bank_account' class="border-bottom mb-2"></ion-input>
-
-            <br>
+    <!-- Avatar -->
+    <div class="avatar-row" *ngIf="previsualizacion">
+      <label for="files" class="avatar-wrap">
+        <img [src]="previsualizacion" alt="">
+        <div class="avatar-edit-badge">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
         </div>
-    </form>
+      </label>
+      <input type="file" id="files" (change)="fileChangeEvent($event)">
+    </div>
+
+    <!-- Fields -->
+    <div class="fields-card">
+
+      <div class="modal-field">
+        <label class="sl-label">Nombre</label>
+        <div class="modal-input">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/>
+          </svg>
+          <ion-input placeholder="Nombre" formControlName="name"></ion-input>
+        </div>
+      </div>
+
+      <div class="modal-field">
+        <label class="sl-label">Apellidos</label>
+        <div class="modal-input">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/>
+          </svg>
+          <ion-input placeholder="Apellidos" formControlName="surname"></ion-input>
+        </div>
+      </div>
+
+      <div class="modal-field">
+        <label class="sl-label">Email</label>
+        <div class="modal-input">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/>
+          </svg>
+          <ion-input placeholder="Email" type="email" formControlName="email"></ion-input>
+        </div>
+      </div>
+
+      <div class="modal-field">
+        <label class="sl-label">Teléfono</label>
+        <div class="modal-input">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 7.82a19.79 19.79 0 01-3.07-8.67A2 2 0 011.9 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+          <ion-input placeholder="Teléfono" type="tel" formControlName="phone"></ion-input>
+        </div>
+      </div>
+
+      <div class="modal-field">
+        <label class="sl-label">DNI / NIF</label>
+        <div class="modal-input">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="9" x2="17" y2="9"/><line x1="7" y1="13" x2="13" y2="13"/>
+          </svg>
+          <ion-input placeholder="DNI / NIF" formControlName="id_card"></ion-input>
+        </div>
+      </div>
+
+      <div class="modal-field">
+        <label class="sl-label">Cuenta bancaria</label>
+        <div class="modal-input">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+          </svg>
+          <ion-input placeholder="IBAN" formControlName="bank_account"></ion-input>
+        </div>
+      </div>
+
+    </div>
+  </form>
 </ion-content>
-<!-------------------------------------------------------------------FOOTER-------------------------------------------------------------------->
-<ion-footer class="p-3" id="footer">
-    <button type="button" class="btn" id="guardar" (click)="guardar()">Guardar</button>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="modal-footer-actions">
+      <button class="sl-btn-primary" type="button" (click)="guardar()">Guardar cambios</button>
+    </div>
+  </ion-toolbar>
 </ion-footer>

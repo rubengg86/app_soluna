@@ -23,6 +23,10 @@ const routes: Routes = [
     canActivateChild: [AuthGuard]
   },
   {
+    path: 'actualizar',
+    loadChildren: () => import('./pages/actualizar/actualizar.module').then( m => m.ActualizarPageModule)
+  },
+  {
     path: 'recuperar-contrasenia',
     loadChildren: () => import('./pages/recuperar-contrasenia/recuperar-contrasenia.module').then( m => m.RecuperarContraseniaPageModule)
   },

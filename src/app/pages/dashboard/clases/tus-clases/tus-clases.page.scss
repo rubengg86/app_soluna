@@ -1,55 +1,243 @@
-* {
-    color: black;
-    background-color: white;
+/* ── Header ─────────────────────────────────────── */
+.classes-header {
+  background: var(--sl-surface);
+  padding: calc(env(safe-area-inset-top) + 20px) 20px 18px;
+  border-bottom: 1px solid var(--sl-border-soft);
 }
 
-#encabezado,
-#encabezado ion-card-header,
-#encabezado ion-card-title {
-    color: white;
-    background-color: #59137D;
+.classes-title {
+  font-family: var(--sl-font-display);
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--sl-text);
+  letter-spacing: -0.5px;
+  margin: 0;
 }
 
-ion-card-header {
-    ion-label {
-        background-color: #59137D;
-        h2 {
-            background-color: #59137D;
-            color: white;
-        }
-        h3 {
-            background-color: #59137D;
-            color: white;
-        }
-    }
+.classes-subtitle {
+  font-size: 13px;
+  color: var(--sl-text-3);
+  margin: 2px 0 0;
 }
 
-#cambiar {
-    // position: absolute;
-    position: relative;
-    padding-right: 12px;
-    padding-left: 12px;
-    right: 0;
-    bottom: 0;
-    // margin: 5px;
-    color: white;
-    background-color: #59137D;
-    font-weight: normal;
-    font-size: 14px;
-    float: right;
+/* ── Content ────────────────────────────────────── */
+.classes-content {
+  padding: 20px 16px calc(var(--sl-tab-height) + env(safe-area-inset-bottom) + 16px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-#cancelar {
-    // position: absolute;
-    position: relative;
-    padding-left: 6px;
-    padding-right: 6px;
-    right: 0;
-    bottom: 0;
-    margin: 5px;
-    color: white;
-    background-color: #59137D;
-    font-weight: normal;
-    font-size: 14px;
-    float: right;
+/* ── Activity list ──────────────────────────────── */
+.activity-list {
+  background: var(--sl-surface);
+  border-radius: var(--sl-radius-md);
+  overflow: hidden;
+  box-shadow: var(--sl-shadow-sm);
+  margin-top: 10px;
+}
+
+.activity-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--sl-border-soft);
+
+  &:last-child { border-bottom: none; }
+}
+
+.activity-icon-wrap {
+  width: 40px;
+  height: 40px;
+  background: var(--sl-primary-light);
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  svg { color: var(--sl-primary); }
+}
+
+.activity-info { flex: 1; min-width: 0; }
+
+.activity-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--sl-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activity-meta {
+  font-size: 12px;
+  color: var(--sl-text-2);
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.activity-day {
+  font-size: 11px;
+  color: var(--sl-text-3);
+  margin-top: 2px;
+}
+
+/* ── Meta dot ───────────────────────────────────── */
+.meta-dot {
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  background: var(--sl-text-3);
+  border-radius: 50%;
+  margin: 0 4px;
+  vertical-align: middle;
+}
+
+/* ── Ticket list ────────────────────────────────── */
+.ticket-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.ticket-row {
+  background: var(--sl-surface);
+  border-radius: var(--sl-radius-md);
+  padding: 14px 14px 14px 0;
+  box-shadow: var(--sl-shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow: hidden;
+}
+
+.ticket-time-bar {
+  width: 4px;
+  border-radius: 2px;
+  align-self: stretch;
+  background: var(--sl-accent);
+  margin-left: 14px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.ticket-body { flex: 1; min-width: 0; }
+
+.ticket-activity {
+  font-family: var(--sl-font-display);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--sl-text);
+}
+
+.ticket-meta {
+  font-size: 12px;
+  color: var(--sl-text-2);
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+}
+
+.ticket-center {
+  font-size: 11px;
+  color: var(--sl-text-3);
+  margin-top: 2px;
+}
+
+/* ── Calendar ───────────────────────────────────── */
+.calendar-wrap {
+  background: var(--sl-surface);
+  border-radius: var(--sl-radius-md);
+  padding: 20px;
+  box-shadow: var(--sl-shadow-sm);
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+/* ── Day class cards ────────────────────────────── */
+.day-class-card {
+  background: var(--sl-surface);
+  border-radius: var(--sl-radius-md);
+  padding: 14px 14px 14px 0;
+  box-shadow: var(--sl-shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.day-class-bar {
+  width: 4px;
+  border-radius: 2px;
+  align-self: stretch;
+  background: var(--sl-primary);
+  margin-left: 14px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.day-class-body { flex: 1; min-width: 0; }
+
+.day-class-name {
+  font-family: var(--sl-font-display);
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--sl-text);
+}
+
+.day-class-meta {
+  font-size: 12px;
+  color: var(--sl-text-2);
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+}
+
+.day-class-teacher {
+  font-size: 11px;
+  color: var(--sl-text-3);
+  margin-top: 2px;
+}
+
+.day-class-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-right: 4px;
+}
+
+/* ── Recover banner ─────────────────────────────── */
+.recover-banner {
+  background: var(--sl-accent-light);
+  border-radius: var(--sl-radius-sm);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--sl-accent);
+  font-weight: 500;
+  margin-bottom: 12px;
+
+  svg { flex-shrink: 0; color: var(--sl-accent); }
+}
+
+/* ── No classes ─────────────────────────────────── */
+.no-classes-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 32px 20px;
+  color: var(--sl-text-3);
+  font-size: 14px;
+  text-align: center;
 }

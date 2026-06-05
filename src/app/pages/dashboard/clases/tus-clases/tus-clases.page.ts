@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { FlatpickrDefaultsInterface } from 'angularx-flatpickr/flatpickr-defaults.service';
 import { ServicioService } from '../../../../services/servicio.service';
+import { RefreshService } from '../../../../services/refresh.service';
 import { FormControl } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { CambiarClasePage } from './cambiar-clase/cambiar-clase.page';
@@ -15,7 +16,8 @@ import * as moment from 'moment';
   templateUrl: './tus-clases.page.html',
   styleUrls: ['./tus-clases.page.scss'],
 })
-export class TusClasesPage implements OnInit {
+export class TusClasesPage implements OnInit, OnDestroy {
+  private refreshSub: Subscription;
 
   clases=false;
 
@@ -87,13 +89,28 @@ export class TusClasesPage implements OnInit {
   public fechaClaseTicket;
   public colapsar = false;
 
-  constructor(private _service: ServicioService, public modalController: ModalController) { }
+  constructor(
+    private _service: ServicioService,
+    public modalController: ModalController,
+    private refreshService: RefreshService
+  ) { }
 
   ngOnInit() {
+    this.refreshSub = this.refreshService.refresh$.subscribe(() => this.loadData());
+  }
+
+  ionViewWillEnter() {
+    this.loadData();
+  }
+
+  ngOnDestroy() {
+    this.refreshSub?.unsubscribe();
+  }
+
+  private loadData() {
     this.getCliente();
     this.getActividadesCliente();
     this.getTicketsCliente();
-    
   }
 
   // get fechaString() {
@@ -481,10 +498,19 @@ export class TusClasesPage implements OnInit {
       })
     }
 
-    // setTimeout(() => console.log(this.sinAsistir), 600);
-    // setTimeout(() => console.log(this.clasesTotales), 600);
+    // Wait for unassistance/holiday async checks to finish, then select next class
+    setTimeout(() => this.selectNextClass(), 1000);
 
   } //Fin de la función getProximasClases
+
+  selectNextClass() {
+    if (!this.clasesTotales?.length) { return; }
+    const nowSeconds = Math.floor(Date.now() / 1000);
+    const next = this.clasesTotales.find(c => c.tiempo > nowSeconds);
+    if (next) {
+      this.fechaElegida = new Date(next.tiempo * 1000);
+    }
+  }
 
 
 

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ModalController, ToastController } from '@ionic/angular';
 import { FlatpickrDefaultsInterface } from 'angularx-flatpickr/flatpickr-defaults.service';
 import { BotonComprarPage } from '../../boton-comprar/boton-comprar.page';
 import { EditarTusDatosPage } from './editar-tus-datos/editar-tus-datos.page';
@@ -7,6 +8,7 @@ import { ChartDataSets, ChartType } from 'chart.js';
 import { Label } from 'ng2-charts';
 import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 import { ServicioService } from '../../../../services/servicio.service';
+import { RefreshService } from '../../../../services/refresh.service';
 import * as cryptojs from 'crypto-js';
 import * as moment from 'moment';
 import { GLOBAL } from '../../../../services/global';
@@ -21,98 +23,86 @@ import { InAppBrowser, InAppBrowserOptions } from '@awesome-cordova-plugins/in-a
 
 
 
-export class TuPanelPage implements OnInit{
+export class TuPanelPage implements OnInit, OnDestroy {
+  private browserSub: Subscription;
+  private exitSub: Subscription;
+  private refreshSub: Subscription;
+  private paymentResult: 'ok' | 'ko' | null = null;
 
 /*-------- Mes y año Actual ---------*/
   anio: number = new Date().getFullYear();
   mes: number = new Date().getMonth();
 
-  public customer_id = localStorage.getItem('currentUserSoluna');
-  // public customer_id = 56;
-  // public customer_id = 5211;
-  // public customer_id = 5825;
-  // public customer_id = 27;
-  // public customer_id = 6406;
-  // public customer_id = 6391;
+  public customerId = localStorage.getItem('currentUserSoluna');//6249;//localStorage.getItem('currentUserSoluna');
   public asistencia;
   public cliente;
-  public pagosCliente;
   public fechaFiltro;
-  public pagosFiltrados:any = [];
+  public pagosFiltrados: any = [];
   public cuota;
   public pagar = false;
   public pagado = false;
 
   public pagos;
   // public options;
-  options : InAppBrowserOptions = {
-    location : 'yes',//Or 'no'
-    hidden : 'no', //Or  'yes'
-    clearcache : 'yes',
-    clearsessioncache : 'yes',
-    zoom : 'yes',//Android only ,shows browser zoom controls
-    hardwareback : 'yes',
+  options: InAppBrowserOptions = {
+    location: 'no',
+    hidden: 'no',
+    clearcache: 'yes',
+    clearsessioncache: 'yes',
+    zoom : 'no',
+    hardwareback : 'no',
     mediaPlaybackRequiresUserAction : 'no',
-    shouldPauseOnSuspend : 'no', //Android only
-    closebuttoncaption : 'Cerrar',
-    disallowoverscroll : 'no', //iOS only
-    toolbar : 'yes', //iOS only
-    enableViewportScale : 'no', //iOS only
-    allowInlineMediaPlayback : 'no',//iOS only
-    presentationstyle : 'pagesheet',//iOS only
-    fullscreen : 'yes',//Windows only
+    shouldPauseOnSuspend : 'no',
+    disallowoverscroll : 'no',
+    toolbar : 'no',
+    enableViewportScale : 'no',
+    allowInlineMediaPlayback : 'no',
+    presentationstyle : 'fullscreen',
+    fullscreen : 'yes',
   };
-  merchantParams;
-  signature;
+  merchantParams: string;
+  signature: string;
 
-
-  constructor(public modalController: ModalController,
-              private calendar: NgbCalendar,
-              private _service: ServicioService,
-              private iab: InAppBrowser) {}
-
-
- /*--------------------------------------------GRAFICO------------------------------------------- */
- public lineChartData: ChartDataSets[] = [
-  //{ data: [0, 10, 20, 30, 45.5, 45.5, 30, 20, 10, 10, 10, 20], label: 'Asistencia'},
-  { data: [0, 20, 30, 35, 40, 35, 35, 30, 30, 20, 35, 30], label: 'Pagos' },
+  /*--------------------------------------------GRAFICO------------------------------------------- */
+  public lineChartData: ChartDataSets[] = [
+    //{ data: [0, 10, 20, 30, 45.5, 45.5, 30, 20, 10, 10, 10, 20], label: 'Asistencia'},
+    { data: [0, 20, 30, 35, 40, 35, 35, 30, 30, 20, 35, 30], label: 'Pagos' },
     { data: [0, 10, 30, 35, 10, 35, 35, 30, 30, 20, 35, 30], label: 'Bonos' },
-      { data: [0,0,0,0,0,0,0,35, 0,0,30], label: 'Tickets' },
-];
-public lineChartLabels: Label[] = ['', '', '', '', '', '', '', '', '', '', '', ''];
-public lineChartOptions: any = {
-  responsive: true
-};
+    { data: [0,0,0,0,0,0,0,35, 0,0,30], label: 'Tickets' },
+  ];
+  public lineChartLabels: Label[] = ['', '', '', '', '', '', '', '', '', '', '', ''];
+  public lineChartOptions: any = {
+    responsive: true
+  };
 
-public lineChartColors: Array<any> = [
-  { // verde
-    backgroundColor: 'transparent',
-    borderColor: '#1A6E26',
-    pointBackgroundColor: 'transparent',
-    pointBorderColor: 'transparent',
-    pointHoverBackgroundColor: 'transparent',
-    pointHoverBorderColor: 'transparent'
-  },
-  { // morado
-    backgroundColor: 'transparent' ,
-    borderColor: '#59137D',
-    pointBackgroundColor: 'transparent',
-    pointBorderColor: 'transparent',
-    pointHoverBackgroundColor: 'transparent',
-    pointHoverBorderColor: 'transparent'
-  },
-  { // rojo
-    backgroundColor: 'transparent' ,
-    borderColor: '#FF6C6C',
-    pointBackgroundColor: 'transparent',
-    pointBorderColor: 'transparent',
-    pointHoverBackgroundColor: 'transparent',
-    pointHoverBorderColor: 'transparent'
-  }
-];
-lineChartLegend = true;
-lineChartType: ChartType = 'line';
-
+  public lineChartColors: Array<any> = [
+    { // verde
+      backgroundColor: 'transparent',
+      borderColor: '#1A6E26',
+      pointBackgroundColor: 'transparent',
+      pointBorderColor: 'transparent',
+      pointHoverBackgroundColor: 'transparent',
+      pointHoverBorderColor: 'transparent'
+    },
+    { // morado
+      backgroundColor: 'transparent' ,
+      borderColor: '#59137D',
+      pointBackgroundColor: 'transparent',
+      pointBorderColor: 'transparent',
+      pointHoverBackgroundColor: 'transparent',
+      pointHoverBorderColor: 'transparent'
+    },
+    { // rojo
+      backgroundColor: 'transparent' ,
+      borderColor: '#FF6C6C',
+      pointBackgroundColor: 'transparent',
+      pointBorderColor: 'transparent',
+      pointHoverBackgroundColor: 'transparent',
+      pointHoverBorderColor: 'transparent'
+    }
+  ];
+  lineChartLegend = true;
+  lineChartType: ChartType = 'line';
 
   /*--------------------------------CALENDARIO------------------------- */
   public datePickerOptions: FlatpickrDefaultsInterface= {
@@ -123,42 +113,33 @@ lineChartType: ChartType = 'line';
     // this:
     enable: [{ from: new Date(0, 1), to: new Date(new Date().getFullYear() + 200, 12) }]
   };
-
-  modalDataResponse: any;
-
   public previsualizacion: string;
   sanitizer: any;
 
+  model: NgbDateStruct;
+  date: {year: number; month: number};
 
 
-  /*----------------------------------MODAL EDITAR------------------------- */
-  async editarModal() {
-    const modal = await this.modalController.create({
-      component: EditarTusDatosPage
-    });
-    return await modal.present();
-  };
-  /*----------------------------------MODAL BOTON COMPRAR------------------------- */
-  async comprarModal() {
-    const modal = await this.modalController.create({
-      component: BotonComprarPage
-    });
-    return await modal.present();
-  }
+  constructor(
+    public modalController: ModalController,
+    private calendar: NgbCalendar,
+    private service: ServicioService,
+    private iab: InAppBrowser,
+    private toastController: ToastController,
+    private refreshService: RefreshService
+  ) {}
+
 
 /*------------------- OBTENER DÍA ACTUAL -------------------*/
 
- model: NgbDateStruct;
-  date: {year: number, month: number};
-
-    selectToday() {
-        this.model = this.calendar.getToday();
-      }
+  selectToday() {
+    this.model = this.calendar.getToday();
+  }
 
 /*------------------- OBTENER CLIENTE -------------------*/
   getCliente() {
 
-    this._service.getCustomerById(this.customer_id).subscribe( res => {
+    this.service.getCustomerById(this.customerId).subscribe(res => {
       this.cliente = res[0];
       console.log(res[0]);
       this.getAsistencia();
@@ -166,33 +147,34 @@ lineChartType: ChartType = 'line';
       this.getCuota();
     }, error =>{
       console.log(error);
-    })
+    });
   }
 
   getAsistencia() {
 
-    this._service.getAsssistanceById(this.customer_id).subscribe( res => {
+    this.service.getAsssistanceById(this.customerId).subscribe(res => {
       this.asistencia = res;
     }, error =>{
       console.log(error);
-    })
+    });
   }
 
   getPagos() {
-    this._service.getLastPayments(this.customer_id).subscribe( res => {
-      // console.log(res);
-      this.pagosCliente = res;
-      this.pagosFiltrados = res;
+    this.service.getLastPayments(this.customerId).subscribe(res => {
+      this.pagosFiltrados = (res as any[]).sort((a, b) =>
+        new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
     }, error =>{
       console.log(error);
-    })
+    });
   }
 
   getCuota() {
-    this._service.getBillUser(this.customer_id, this.cliente.center_id).subscribe ( res => {
+    this.service.getBillUser(this.customerId, this.cliente.center_id).subscribe (res => {
       // console.log(res);
       this.cuota = res;
-      let price = (+this.cuota.total + this.cuota.extra_payments.total)*100;
+      console.log(this.cuota);
+      const price = (+this.cuota.total + this.cuota.extra_payments.total)*100;
       if (price != 0) {
         if(!this.cuota.payed_this_month) {
           this.pagar=true;
@@ -202,138 +184,94 @@ lineChartType: ChartType = 'line';
       }
     }, error =>{
       console.log(error);
-    })
+    });
   }
 
-/*------------------- FILTRO CLIENTE -------------------*/
-  comprobarFecha() {
-    // console.log(this.fechaFiltro);
+  generateMerchantParams() {
 
-    this.pagosFiltrados = [];
-    let contadorFiltroPagos = 0;
-    for (let i = 0; i < this.pagosCliente.length; i++) {
+    const price = (+this.cuota.total + this.cuota.extra_payments.total)*100;
+    const order = moment().format('YYMMDDHHmmss');
 
-      if (this.fechaFiltro === this.pagosCliente[i].date.slice(0,7)) {
-        this.pagosFiltrados[contadorFiltroPagos] = this.pagosCliente[i]
-        contadorFiltroPagos++;
-      }
-    }
-  }
+    const url = GLOBAL.tpvUrl;
+    const centerId = parseInt(this.cliente.center_id, 10);
+    const merchantCode = GLOBAL.merchants[centerId].merchantCode;
+    const keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.merchants[centerId].sha);
 
-  generatemerchantparams() {
+    const baseUrl = GLOBAL.solunaUrl + '/finish-app-true.php';
 
-    let price = (+this.cuota.total + this.cuota.extra_payments.total)*100;
-    let order = moment().format('YYMMDDHHmmss');
-
-    let merchantCode;
-    let url;
-
-    if(this.cliente.center_id == "5"){
-      console.log('Aviles')
-
-      url = "https://sis.redsys.es/sis/realizarPago";
-      merchantCode = "355780867";
-      var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_AVILES);
-
-    } else if (this.cliente.center_id == "9") {
-      console.log('Gijon')
-
-      // url = "https://sis-t.redsys.es:25443/sis/realizarPago";
-      url = "https://sis.redsys.es/sis/realizarPago";
-      merchantCode = "363064700";
-      // var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_TEST_GIJON);
-      var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_GIJON);
-
-    } else if (this.cliente.center_id == "1") {
-      console.log('La Florida')
-
-      // url = "https://sis-t.redsys.es:25443/sis/realizarPago";
-      url = "https://sis.redsys.es/sis/realizarPago";
-      merchantCode = "352828222";
-      var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_FLORIDA);
-
-    } else {
-      console.log('Default')
-
-      url = "https://sis.redsys.es/sis/realizarPago";
-      merchantCode = "355780867";
-      var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_AVILES);
-
-    }
-
-
-    let hash1 = cryptojs.SHA1(order+GLOBAL.PASSWD_SEED+GLOBAL.PASSWD_SEED+order+'1').toString();
-    let hash2 = cryptojs.SHA1(order+GLOBAL.PASSWD_SEED+GLOBAL.PASSWD_SEED+order+'2').toString();
-    let urlok = "https://solunapilates.es/finish-app-true.php?order="+order+'&type='+'M'+'&hash='+hash1;
-
-
-    /** Ruben refactor: TODO change DS_MERCHANT_MERCHANTURL to proper TPV callback */
-    let tpvdata = {
-      "DS_MERCHANT_AMOUNT": price.toString(),
-      "DS_MERCHANT_CURRENCY": "978",
-      "DS_MERCHANT_MERCHANTCODE": merchantCode,
-      "DS_MERCHANT_ORDER": order,
-      "DS_MERCHANT_TERMINAL": "1",
-      "DS_MERCHANT_TRANSACTIONTYPE": "0",
-      "DS_MERCHANT_MERCHANTURL": "https://solunapilates.es/finish-app-true.php?order="+order+'&type='+'M'+'&hash='+hash1,
-      "DS_MERCHANT_URLOK": "https://solunapilates.es/finish-app-true.php?order="+order+'&type='+'M'+'&hash='+hash1,
-      "DS_MERCHANT_URLKO": "https://solunapilates.es/finish-app-true.php?order="+order+'&type='+'M'+'&hash='+hash2
-    }
-
-
+    /* eslint-disable @typescript-eslint/naming-convention */
+    const tpvdata = {
+      DS_MERCHANT_AMOUNT: price.toString(),
+      DS_MERCHANT_CURRENCY: '978',
+      DS_MERCHANT_MERCHANTCODE: merchantCode,
+      DS_MERCHANT_ORDER: order,
+      DS_MERCHANT_TERMINAL: '1',
+      DS_MERCHANT_TRANSACTIONTYPE: '0',
+      DS_MERCHANT_MERCHANTURL: baseUrl + '?type=M&order=' + order,
+      DS_MERCHANT_URLOK:       baseUrl + '?app_result=ok',
+      DS_MERCHANT_URLKO:       baseUrl + '?app_result=ko'
+    };
+    /* eslint-enable @typescript-eslint/naming-convention */
 
     // Base64 encoding of parameters
-    var merchantWordArray = cryptojs.enc.Utf8.parse(JSON.stringify(tpvdata));
+    const merchantWordArray = cryptojs.enc.Utf8.parse(JSON.stringify(tpvdata));
     this.merchantParams = merchantWordArray.toString(cryptojs.enc.Base64);
-    // document.getElementById('id_formulario')['Ds_MerchantParameters'].value = merchantWordArray.toString(cryptojs.enc.Base64);
-
-    // Decode key
-    // Pruebas
-    // var keyWordArray = cryptojs.enc.Base64.parse('sq7HjrUOBfKmC576ILgskD5srU870gJ7');
-    // var keyWordArray = cryptojs.enc.Base64.parse(GLOBAL.SHA256_PROD_AVILES);
-    // var keyWordArray = cryptojs.enc.Base64.parse(merchant_key);
 
     // Generate transaction key
-    var iv = cryptojs.enc.Hex.parse("0000000000000000");
-    var cipher = cryptojs.TripleDES.encrypt(tpvdata.DS_MERCHANT_ORDER, keyWordArray, {
-      iv:iv,
+    const iv = cryptojs.enc.Hex.parse('0000000000000000');
+    const cipher = cryptojs.TripleDES.encrypt(tpvdata.DS_MERCHANT_ORDER, keyWordArray, {
+      iv,
       mode: cryptojs.mode.CBC,
       padding: cryptojs.pad.ZeroPadding
     });
+    console.log(cryptojs.enc.Base64.parse(GLOBAL.merchants[centerId].sha));
+    console.log(GLOBAL.merchants[centerId].sha);
+    console.log(JSON.stringify(tpvdata));
 
     // Sign
-    var signature = cryptojs.HmacSHA256(this.merchantParams, cipher.ciphertext);
+    const signature = cryptojs.HmacSHA256(this.merchantParams, cipher.ciphertext);
     this.signature = signature.toString(cryptojs.enc.Base64);
-    // document.getElementById('id_formulario')['Ds_Signature'].value = signature.toString(cryptojs.enc.Base64);
 
-    // Done, we can return response
-    var response = {
-      signatureVersion: "HMAC_SHA256_V1",
-      merchantParameters: this.merchantParams,
-      signature: this.signature
-    };
-    // console.log(response);
+    // // Done, we can return response
+    // const response = {
+    //   signatureVersion: 'HMAC_SHA256_V1',
+    //   merchantParameters: this.merchantParams,
+    //   signature: this.signature
+    // };
+    // // console.log(response);
 
-    let pageContent = '<html><head></head><body><form id="form2" action='+url+' method="post">' +
+    const pageContent = '<html><head></head><body><form id="form2" action='+url+' method="post">' +
     '<input type="hidden" name="Ds_MerchantParameters" value="' + this.merchantParams + '">' +
     '<input type="hidden" name="Ds_Signature" value="' + this.signature + '">' +
     '<input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1">' +
     '</form> <script type="text/javascript">document.getElementById("form2").submit();</script></body></html>';
 
-    let pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
+    const pageContentUrl = 'data:text/html;base64,' + btoa(pageContent);
 
+    this.paymentResult = null;
 
-    // const link = document.createElement("a")
-    // link.href = pageContentUrl;
-    // link.click()
+    this.service.getMonthlyPaymentCreate(this.customerId, this.cliente.center_id, order).subscribe(res => {
+      const browserRef = this.iab.create(pageContentUrl, '_blank', this.options);
 
-    this._service.getMonthlyPaymentCreate(this.customer_id, this.cliente.center_id, order).subscribe(res => {
-      const browserRef = this.iab
-      .create(
-        pageContentUrl,
-        '_blank',
-        this.options
-      );
+      this.browserSub = browserRef.on('loadstart').subscribe(event => {
+        if (event.url && event.url.includes('finish-app-true.php')) {
+          this.browserSub?.unsubscribe();
+          if (event.url.includes('app_result=ok')) {
+            this.paymentResult = 'ok';
+            this.getPagos();
+            this.getCuota();
+          } else {
+            this.paymentResult = 'ko';
+          }
+          browserRef.close();
+        }
+      });
+
+      this.exitSub = browserRef.on('exit').subscribe(() => {
+        this.exitSub?.unsubscribe();
+        this.browserSub?.unsubscribe();
+        this.showPaymentToast(this.paymentResult);
+      });
     });
 
 
@@ -341,7 +279,7 @@ lineChartType: ChartType = 'line';
 
   pruebaPago(order, price, urlok) {
 
-    this._service.getMonthlyPaymentCreate(this.customer_id, this.cliente.center_id, order).subscribe(res => {
+    this.service.getMonthlyPaymentCreate(this.customerId, this.cliente.center_id, order).subscribe(res => {
       (<HTMLFormElement>document.getElementById('id_formulario')).submit();
 
       // this._service.getMonthlyPaymentUpdate(order, '1').subscribe(res => {
@@ -357,9 +295,46 @@ lineChartType: ChartType = 'line';
     // console.log((<HTMLFormElement>document.getElementById('id_formulario')).elements);
   }
 
-  ngOnInit(): void {
-      this.getCliente();
+  formatDateSpanish(dateString: string): string {
+    const meses = [
+      'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ];
+
+    const fecha = new Date(dateString);
+    const dia = fecha.getDate();
+    const mes = meses[fecha.getMonth()];
+    const anio = fecha.getFullYear();
+
+    return `${dia} de ${mes} de ${anio}`;
   }
 
+  ngOnInit(): void {
+    this.refreshSub = this.refreshService.refresh$.subscribe(() => this.getCliente());
+  }
 
+  ionViewWillEnter(): void {
+    this.getCliente();
+  }
+
+  private async showPaymentToast(result: 'ok' | 'ko' | null) {
+    const config = result === 'ok'
+      ? { message: '¡Pago realizado con éxito!', color: 'success', icon: 'checkmark-circle-outline' }
+      : result === 'ko'
+      ? { message: 'El pago no se ha podido completar', color: 'danger', icon: 'close-circle-outline' }
+      : { message: 'Pago cancelado', color: 'medium', icon: 'information-circle-outline' };
+
+    const toast = await this.toastController.create({
+      ...config,
+      duration: 3500,
+      position: 'bottom',
+    });
+    await toast.present();
+  }
+
+  ngOnDestroy(): void {
+    this.browserSub?.unsubscribe();
+    this.exitSub?.unsubscribe();
+    this.refreshSub?.unsubscribe();
+  }
 }

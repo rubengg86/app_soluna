@@ -1,141 +1,149 @@
-<ion-content style="--background: #363636;">
-    <!-- <ion-content color="light"> -->
-    <!------------------------------------------------------------TU ASISTENCIA----------------------------------------------------------x
-    <ion-card class="my-2 py-2 px-0 border-top">
-        <ion-card-header>
-            <ion-card-title class="border-bottom">TU ASISTENCIA</ion-card-title>
-        </ion-card-header>
+<ion-content style="--background: var(--sl-bg)">
 
-        <ion-card-content>
-            <p>Porcentaje de asistencias y faltas que has tenido en el &uacute;ltimo mes</p>
-            <br>
-            <div class="d-flex justify-content-center">
-                <div id="verde"></div>
-                <p>Asistencia</p>
-                <div id="rojo"></div>
-                <p>Falta</p>
-            </div>
-        </ion-card-content>
-    </ion-card>
--->
-    <!---------------------------------------------------------------TUS DATOS------------------------------------------------------------->
-    <ion-card class="my-2 py-2 px-0 border-top">
-        <ion-card-header>
-            <ion-card-title class="border-bottom d-flex justify-content-between">
-                <!-- TUS DATOS-->
-                DATOS PERSONALES
-                <button (click)="editarModal()">
-                    <!-- <i class="fas fa-edit"></i> -->
-                    <ion-icon slot="start" name="create"></ion-icon>
-                </button>
-            </ion-card-title>
-        </ion-card-header>
+  <!-- ── Profile header ── -->
+  <div class="profile-header">
+    <div class="profile-avatar" *ngIf="cliente">
+      <img *ngIf="cliente.photo" [src]="'https://belife.io/cust_photo/' + cliente.photo" alt="">
+      <span *ngIf="!cliente.photo">{{ cliente.name?.charAt(0) }}</span>
+    </div>
+    <div class="profile-info" *ngIf="cliente">
+      <div class="profile-name">{{ cliente.name }} {{ cliente.surname }}</div>
+      <div class="profile-email">{{ cliente.email }}</div>
+    </div>
+  </div>
 
-        <ion-card-content *ngIf="cliente">
-            <!----------------------------------------TABLA---------------------------------------------------------------->
-            <img *ngIf="!cliente.photo" src="../../../../../assets/img/avatar.jpg" alt="" class="d-block m-auto">
-            <img *ngIf="cliente.photo" [src]='"https://belife.io/cust_photo/" + cliente.photo' alt="" class="d-block m-auto">
-            <table class="col-12">
-                <tr>
-                    <th class="col-1 text-center border-bottom"><i class='fas fa-user-circle'></i></th>
-                    <td class="col-11 border-bottom">{{cliente.name}} {{cliente.surname}}</td>
-                    <!-- <td class="col-11 border-bottom">Nombre y apellidos</td> -->
-                </tr>
-                <tr>
-                    <th class="col-1 text-center border-bottom"><i class="fas fa-map-marker-alt"></i></th>
-                    <td class="col-11 border-bottom">{{cliente.address_new}} {{cliente.address_more}}</td>
-                    <!-- <td class="col-11 border-bottom">Avenida de Aureliano San Román 19, 33011 Oviedo, Asturias</td> -->
-                </tr>
-                <tr>
-                    <th class="col-1 text-center border-bottom"><i class="fas fa-mobile-alt"></i></th>
-                    <td class="col-11 border-bottom">{{cliente.phone}}</td>
-                </tr>
-                <tr>
-                    <th class="col-1 text-center border-bottom"><i class="fas fa-envelope"></i></th>
-                    <td class="col-11 border-bottom">{{cliente.email}}</td>
-                </tr>
-                <tr>
-                    <th class="col-1 text-center border-bottom"><i class="far fa-id-badge"></i></th>
-                    <td class="col-11 border-bottom">{{cliente.id_card}}</td>
-                </tr>
-            </table>
-        </ion-card-content>
-    </ion-card>
+  <div class="account-content">
 
-    <!------------------------------------------------------------------ULTIMA ACTIVIDAD---------------------------------------------- 
-    <ion-card class="py-2 my-2 px-0 border-top">
-        <ion-card-content>
-            <div class="flex">
-                <div class="flex-item">
-                    <div style="display: block;">
-                       
-    <!--------------------------------------------------GRAFICO------------------------------------------------  
-                        <canvas baseChart height="200" [datasets]="lineChartData" [options]="lineChartOptions" [labels]="lineChartLabels" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
-                    </div>
-                </div>
-            </div>
-          
-    <!--------------------------------------------------TABLA------------------------------------------------  
-            <div>
-                <table>
-                    <tr class="col-12 text-center">
-                        <th class="col-2">Profesor</th>
-                        <th class="col-5">Actividad y hora</th>
-                        <th class="col-2">Fecha</th>
-                    </tr>
-                </table>
-            </div>
-        </ion-card-content>
-    </ion-card>
-    -->
+    <!-- Personal data -->
+    <div class="settings-group">
+      <div class="settings-group-label">Datos personales</div>
 
-    <!--------------------------------------------------------------------CALENDARIO--------------------------------------------------
+      <div class="settings-item" (click)="editarModal()">
+        <div class="settings-icon settings-icon-green">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/>
+          </svg>
+        </div>
+        <div class="settings-item-text">
+          <div class="settings-item-label">Nombre y apellidos</div>
+          <div class="settings-item-value" *ngIf="cliente">{{ cliente.name }} {{ cliente.surname }}</div>
+        </div>
+        <svg class="settings-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
 
-    <ion-card class="py-2 border-top">
-        <ion-card-header class="d-flex justify-content-center ">
-            <div id="calendario" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" dateFormat="Y-m-d" altFormat="F j, Y" [options]="datePickerOptions"></div>
-        </ion-card-header>
-        <ion-card-content class="my-2 px-4">
-            <ion-title class="border-bottom p-0">Clases</ion-title>
-            <p class="mt-2">No tienes clases este día</p>
-        </ion-card-content>
-    </ion-card>
-    -->
-    <!---------------------------------------------------------------------MODIFICAR DATOS BANCARIOS------>
-    <!-- <ion-card class="my-2 py-2 px-0 border-top">
-        <ion-card-header>
-            <ion-card-title class="border-bottom d-flex justify-content-between">
-                DATOS BANCARIOS
-                <button (click)="editarBancarios()">
-                    <i class="fas fa-edit"></i>
-                </button>
-            </ion-card-title>
-        </ion-card-header>
+      <div class="settings-item" (click)="editarModal()">
+        <div class="settings-icon settings-icon-green">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+        </div>
+        <div class="settings-item-text">
+          <div class="settings-item-label">Dirección</div>
+          <div class="settings-item-value" *ngIf="cliente">{{ cliente.address_new }} {{ cliente.address_more }}</div>
+        </div>
+        <svg class="settings-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
 
-        <ion-card-content>
+      <div class="settings-item" (click)="editarModal()">
+        <div class="settings-icon settings-icon-green">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013 7.82a19.79 19.79 0 01-3.07-8.67A2 2 0 011.9 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+          </svg>
+        </div>
+        <div class="settings-item-text">
+          <div class="settings-item-label">Teléfono</div>
+          <div class="settings-item-value" *ngIf="cliente">{{ cliente.phone }}</div>
+        </div>
+        <svg class="settings-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
 
-            <table class="col-12">
-                <tr>
-                    <th class="col-1 text-center border-bottom"><i class='fab fa-cc-mastercard'></i></th>
-                    <td class="col-11 border-bottom">Emisor</td>
-                </tr>
-                <tr>
-                    <th class="col-1 text-center border-bottom"><i class='fas fa-money-check-alt'></i></th>
-                    <td class="col-11 border-bottom">Número de cuenta</td>
-                </tr>
-                <tr>
-                    <th class="col-1 text-center border-bottom"><i class='fas fa-user-circle'></i></th>
-                    <td class="col-11 border-bottom">Nombre del titular</td>
-                </tr>
-                <tr>
-                    <th class="col-1 text-center border-bottom"><i class='far fa-calendar-alt'></i></th>
-                    <td class="col-11 border-bottom">Fecha de caducidad</td>
-                </tr>
-                <tr>
-                    <th class="col-1 text-center border-bottom"><i class='fas fa-credit-card'></i></th>
-                    <td class="col-11 border-bottom">Código se seguridad</td>
-                </tr>
-            </table>
-        </ion-card-content>
-    </ion-card> -->
+      <div class="settings-item" (click)="editarModal()">
+        <div class="settings-icon settings-icon-green">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/>
+          </svg>
+        </div>
+        <div class="settings-item-text">
+          <div class="settings-item-label">Email</div>
+          <div class="settings-item-value" *ngIf="cliente">{{ cliente.email }}</div>
+        </div>
+        <svg class="settings-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+
+      <div class="settings-item" (click)="editarModal()">
+        <div class="settings-icon settings-icon-green">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="16" rx="2"/><line x1="7" y1="9" x2="17" y2="9"/><line x1="7" y1="13" x2="13" y2="13"/>
+          </svg>
+        </div>
+        <div class="settings-item-text">
+          <div class="settings-item-label">DNI / NIF</div>
+          <div class="settings-item-value" *ngIf="cliente">{{ cliente.id_card }}</div>
+        </div>
+        <svg class="settings-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+    </div>
+
+    <!-- Security -->
+    <div class="settings-group">
+      <div class="settings-group-label">Seguridad</div>
+
+      <div class="settings-item" (click)="editarBancarios()">
+        <div class="settings-icon settings-icon-amber">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+          </svg>
+        </div>
+        <div class="settings-item-text">
+          <div class="settings-item-label">Datos bancarios</div>
+        </div>
+        <svg class="settings-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+
+      <div class="settings-item" (click)="cambiarModal()">
+        <div class="settings-icon settings-icon-amber">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+          </svg>
+        </div>
+        <div class="settings-item-text">
+          <div class="settings-item-label">Cambiar contraseña</div>
+        </div>
+        <svg class="settings-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="settings-group">
+      <div class="settings-item" [href]="email">
+        <div class="settings-icon settings-icon-green">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </div>
+        <div class="settings-item-text">
+          <div class="settings-item-label">Contacto</div>
+        </div>
+        <svg class="settings-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+    </div>
+
+    <!-- Logout -->
+    <div class="settings-group">
+      <div class="settings-item" (click)="cerrarSesion()">
+        <div class="settings-icon settings-icon-red">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
+          </svg>
+        </div>
+        <div class="settings-item-text">
+          <div class="settings-item-label settings-item-danger">Cerrar sesión</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="app-version">Soluna v1.2.4</div>
+
 </ion-content>

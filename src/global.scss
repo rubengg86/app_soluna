@@ -1,49 +1,267 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
- */
-
-
-/* Core CSS required for Ionic components to work properly */
-
+/* Core Ionic CSS */
 @import "~@ionic/angular/css/core.css";
-
-/* Basic CSS for apps built with Ionic */
-
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
 @import '~@ionic/angular/css/display.css';
-
-/* Optional CSS utils that can be commented out */
-
 @import "~@ionic/angular/css/padding.css";
 @import "~@ionic/angular/css/float-elements.css";
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
-//FLATPICKR (para el calendario)
+
 @import "../node_modules/flatpickr/dist/flatpickr.css";
-@import "../node_modules/flatpickr/dist/flatpickr.min.css";
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap');
+
 @font-face {
-    font-family: HelveticaNeue;
-    src: url(./assets/font/HelveticaNeue-Medium.ttf);
+  font-family: HelveticaNeue;
+  src: url(./assets/font/HelveticaNeue-Medium.ttf);
 }
 
+/* ─── Design tokens ─────────────────────────────── */
+:root {
+  --sl-bg:           #F7F4F0;
+  --sl-surface:      #FFFFFF;
+  --sl-primary:      #3D5A47;
+  --sl-primary-light:#EBF0EC;
+  --sl-primary-mid:  #6B8F76;
+  --sl-accent:       #B5714D;
+  --sl-accent-light: #F5EAE3;
+  --sl-moon:         #9B8DB5;
+  --sl-text:         #1E1B18;
+  --sl-text-2:       #7A7469;
+  --sl-text-3:       #B0A89F;
+  --sl-border:       #E6DDD5;
+  --sl-border-soft:  #F0EAE4;
+  --sl-success:      #4A8C6A;
+  --sl-success-light:#E8F4EE;
+  --sl-danger:       #B84040;
+  --sl-danger-light: #FAEDED;
+  --sl-warning:      #C4883A;
+  --sl-shadow-sm:    0 1px 4px rgba(30,27,24,.06), 0 2px 8px rgba(30,27,24,.04);
+  --sl-shadow-md:    0 4px 16px rgba(30,27,24,.08), 0 2px 6px rgba(30,27,24,.04);
+  --sl-font-display: 'Cormorant Garamond', Georgia, serif;
+  --sl-font-body:    'DM Sans', system-ui, sans-serif;
+  --sl-tab-height:   72px;
+  --sl-radius-sm:    10px;
+  --sl-radius-md:    16px;
+  --sl-radius-pill:  100px;
+}
+
+/* ─── Base reset ─────────────────────────────────── */
 * {
-    font-family: Poppins;
+  font-family: var(--sl-font-body);
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
-// Para la alerta de confirmación de camnbio de clase
+/* ─── Ionic overrides ────────────────────────────── */
+ion-content {
+  --background: var(--sl-bg);
+}
+
+ion-item {
+  --padding-end: 0px;
+  --inner-padding-end: 0px;
+  --background: transparent;
+  --border-color: var(--sl-border-soft);
+}
+
+ion-toolbar {
+  --background: var(--sl-primary);
+  --color: #ffffff;
+  --border-color: transparent;
+}
+
+ion-header ion-toolbar:last-of-type {
+  --border-width: 0;
+}
+
+ion-card {
+  --background: var(--sl-surface);
+  box-shadow: var(--sl-shadow-sm) !important;
+  border-radius: var(--sl-radius-md) !important;
+  margin: 0 !important;
+}
+
+ion-card-title {
+  font-family: var(--sl-font-display) !important;
+  color: var(--sl-text) !important;
+  font-size: 20px !important;
+}
+
+ion-card-subtitle {
+  color: var(--sl-text-2) !important;
+  font-size: 12px !important;
+  letter-spacing: 0.02em !important;
+}
+
+ion-input {
+  color: var(--sl-text) !important;
+  --placeholder-color: var(--sl-text-3);
+  font-family: var(--sl-font-body) !important;
+}
+
+ion-select {
+  color: var(--sl-text) !important;
+}
+
+/* ─── Shared button classes ──────────────────────── */
+.sl-btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 52px;
+  background: var(--sl-primary);
+  color: white !important;
+  border: none;
+  border-radius: var(--sl-radius-pill);
+  font-family: var(--sl-font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(61,90,71,.25);
+}
+
+.sl-btn-accent {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 20px;
+  background: var(--sl-accent);
+  color: white !important;
+  border: none;
+  border-radius: var(--sl-radius-pill);
+  font-family: var(--sl-font-body);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(181,113,77,.3);
+}
+
+.sl-btn-sm-primary {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: var(--sl-radius-pill);
+  font-family: var(--sl-font-body);
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  background: var(--sl-primary-light);
+  color: var(--sl-primary) !important;
+}
+
+.sl-btn-sm-ghost {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: var(--sl-radius-pill);
+  font-family: var(--sl-font-body);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  background: transparent;
+  color: var(--sl-text-2) !important;
+  border: 1.5px solid var(--sl-border);
+}
+
+/* ─── Shared badge classes ───────────────────────── */
+.sl-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: var(--sl-radius-pill);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.sl-badge-success { background: var(--sl-success-light); color: var(--sl-success) !important; }
+.sl-badge-danger  { background: var(--sl-danger-light);  color: var(--sl-danger) !important;  }
+.sl-badge-warning { background: #FFF4E6; color: var(--sl-warning) !important; }
+.sl-badge-neutral { background: var(--sl-bg); color: var(--sl-text-2) !important; }
+
+/* ─── Section title ──────────────────────────────── */
+.sl-section-title {
+  font-family: var(--sl-font-display);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--sl-text);
+  letter-spacing: -0.3px;
+}
+
+.sl-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sl-text-3);
+}
+
+/* ─── Flatpickr overrides ────────────────────────── */
+.flatpickr-calendar {
+  font-family: var(--sl-font-body) !important;
+  border-radius: var(--sl-radius-md) !important;
+  box-shadow: var(--sl-shadow-md) !important;
+  border: 1px solid var(--sl-border) !important;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.selected:hover,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+  background: var(--sl-primary) !important;
+  border-color: var(--sl-primary) !important;
+}
+
+.flatpickr-day:hover:not(.selected) {
+  background: var(--sl-primary-light) !important;
+  color: var(--sl-primary) !important;
+  border-color: transparent !important;
+}
+
+.flatpickr-months .flatpickr-month,
+.flatpickr-weekdays,
+span.flatpickr-weekday {
+  background: var(--sl-primary) !important;
+  color: white !important;
+  fill: white !important;
+}
+
+.flatpickr-prev-month svg,
+.flatpickr-next-month svg {
+  fill: white !important;
+}
+
+.flatpickr-current-month {
+  color: white !important;
+  font-family: var(--sl-font-display) !important;
+  font-size: 16px !important;
+}
+
+/* ─── Alert overrides ────────────────────────────── */
 .confirmarCambiar {
-    button.confirmarCambiarBoton {
-        color: #75249e !important;
-    }
+  button.confirmarCambiarBoton {
+    color: var(--sl-primary) !important;
+  }
+}
+
+/* ─── Modal header ───────────────────────────────── */
+ion-modal ion-header ion-toolbar,
+ion-modal ion-footer {
+  --background: var(--sl-surface);
+  --color: var(--sl-text);
+  border-top: 1px solid var(--sl-border-soft);
+}
+
+ion-modal ion-toolbar {
+  --border-width: 0;
+  --background: var(--sl-surface);
 }

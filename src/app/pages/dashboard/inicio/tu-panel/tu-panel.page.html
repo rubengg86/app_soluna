@@ -1,363 +1,84 @@
-<ion-content style="--background: #363636;">
-    <!-- <ion-content color="light"> -->
-    <!------------------------------------------------------------TU ASISTENCIA------------------------------------------------------------>
-    <ion-card class="my-2 py-2 px-0 border-top">
-        <ion-card-header>
-            <ion-card-title class="border-bottom">TU ASISTENCIA</ion-card-title>
-        </ion-card-header>
+<ion-content [fullscreen]="true" style="--background: var(--sl-bg)">
 
-        <ion-card-content>
-            <p>Porcentaje de asistencias y faltas que has tenido en el &uacute;ltimo mes.</p>
-            <br>
+  <!-- ── Header hero ── -->
+  <div class="home-hero">
+    <div class="home-hero-pattern"></div>
 
-            <div style="font-size:12px" class="d-flex justify-content-between text-center">
-
-                <div id="verde" style="border-radius:3px;margin-right:0;width:80px;
-                 height:28px; padding:6px;color:white">Asistencia</div>
-                <div id="rojo" style="border-radius:3px;margin-right:0;width:80px;
-                height:28px; padding:6px;color:white">Falta</div>
-
-            </div>
-            <!--<div class="d-flex justify-content-center">
-                <div id="verde"></div>
-                <p>Asistencia</p>
-                <div id="rojo"></div>
-                <p>Falta</p>
-            </div>
-            -->
-            <br>
-            <div class="d-flex justify-content-center" *ngIf="asistencia">
-                <div id="verde" style="border-radius:3px;"></div>
-                <p>{{asistencia.yes_percent}}%</p>
-                <!-- <p>85%</p> -->
-                <div id="rojo" style="border-radius:3px;"></div>
-                <p>{{asistencia.no_percent}}%</p>
-                <!-- <p>15%</p> -->
-            </div>
-        </ion-card-content>
-
-
-    </ion-card>
-
-
-    <!---------------------------------------------------------------TUS DATOS-----------------------------------------------------------
-    <ion-card class="my-2 py-2 px-0 border-top">
-        <ion-card-header>
-            <ion-card-title class="border-bottom d-flex justify-content-between">
-                TUS DATOS
-                <button (click)="editarModal()">
-                    <i class="fas fa-edit"></i>
-                </button>
-            </ion-card-title>
-        </ion-card-header>
-
-        <ion-card-content>
-            -->
-    <!----------------------------------------TABLA--------------------------------------------------------------
-            <img src="../../../../../assets/img/avatar.jpg" alt="" class="d-block m-auto">
-            <table class="col-12">
-                <tr>
-                    <th class="col-1 text-center border-bottom"><i class="far fa-user-circle"></i></th>
-                    <td class="col-11 border-bottom">Nombre y apellidos</td>
-                </tr>
-                <tr>
-                    <th class="col-1 text-center border-bottom"><i class="fas fa-map-marker-alt"></i></th>
-                    <td class="col-11 border-bottom">Avenida de Aureliano San Román 19, 33011 Oviedo, Asturias</td>
-                </tr>
-                <tr>
-                    <th class="col-1 text-center border-bottom"><i class="fas fa-mobile-alt"></i></th>
-                    <td class="col-11 border-bottom">123456789</td>
-                </tr>
-                <tr>
-                    <th class="col-1 text-center border-bottom"><i class="fas fa-envelope"></i></th>
-                    <td class="col-11 border-bottom">prueba@prueba.com</td>
-                </tr>
-                <tr>
-                    <th class="col-1 text-center border-bottom"><i class="far fa-id-badge"></i></th>
-                    <td class="col-11 border-bottom">123456768A</td>
-                </tr>
-            </table>
-        </ion-card-content>
-    </ion-card>
-    -->
-    <!------------------------------------------------------TU CUOTA DE ESTE MES---------------------------------------------------------->
-    <ion-card class="my-2 py-2 px-0 cuota ">
-        <ion-card-header class="cuota">
-            <ion-card-title class="border-bottom fw-lighter cuota">TU CUOTA DE ESTE MES</ion-card-title>
-        </ion-card-header>
-
-        <ion-card-content class="cuota" *ngIf="cuota">
-            <h1 class="cuota">{{cuota.total}}&euro;</h1>
-            <!-- <h1 class="cuota">0.0&euro;</h1> -->
-
-            <div class="d-flex justify-content-between cuota">
-                <div class="cuota">
-                    <span class="cuota">Servicio extra</span><br>
-                    <span class="cuota">{{cuota.extra_payments.total}}&euro;</span>
-                    <!-- <span class="cuota">0&euro;</span> -->
-                </div>
-                <div style="background-color:#59137D">
-                    <button class="btn btn-lg" id="pagar" *ngIf="pagar && !pagado" (click)="generatemerchantparams()">Pagar</button>
-                    <button class="btn btn-lg" id="pagar" *ngIf="pagado">Ya has pagado este mes</button>
-                    <!-- <form action="https://sis-t.redsys.es:25443/sis/realizarPago" method="POST" id="id_formulario" name="nombre_formulario">
-                        <input type="hidden" name="Ds_MerchantParameters" [value]="merchantParams" />
-                        <input type="hidden" name="Ds_Signature" [value]="signature" />
-                        <input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1" />
-                    </form> -->
-                    <!-- <form action="https://sis-t.redsys.es:25443/sis/realizarPago" method="POST" id="id_formulario" name="nombre_formulario">
-                        <input type="hidden" name="Ds_MerchantParameters" value="" />
-                        <input type="hidden" name="Ds_Signature" value="" />
-                        <input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1" />
-                    </form> -->
-                </div>
-            </div>
-        </ion-card-content>
-    </ion-card>
-
-
-
-    <!--
-    <div class="accordion-itemmy-4 border-bottom">
-          <h2 class="accordion-header" id="flush-headingOne">
-              <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseInicio" aria-expanded="false" aria-controls="flush-collapseOne">
-                <i class="fas fa-home fa-lg me-2"></i>
-                <span> Inicio</span>
-            </button>
-          </h2>
-          <div id="CollapseInicio" class="accordion-collapse collapse row" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-              <button class="btn px-4 pt-3 ms-4 boton" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseInicio" aria-expanded="false" aria-controls="flush-collapseOne" [routerLink]="['/dashboard/tu-panel']">
-                <i class="fas fa-user-circle fa-lg me-2"></i>
-                <span> Tu panel</span>
-            </button>
-          </div>
+    <div class="home-hero-top">
+      <div class="home-avatar-row">
+        <div class="home-avatar">
+          <img *ngIf="cliente?.photo" [src]="'https://belife.io/cust_photo/' + cliente.photo" alt="">
+          <span *ngIf="!cliente?.photo">{{ cliente?.name?.charAt(0) }}</span>
+        </div>
+        <div>
+          <div class="home-greeting">Buenos días</div>
+          <div class="home-name" *ngIf="cliente">{{ cliente.name }}</div>
+        </div>
       </div>
-    -->
-    <!-----------------------------------------------------------ULTIMOS PAGOS-------------------------------------------------------- -->
-    <ion-card class="my-2 py-2 px-0 border-top">
-        <ion-card-header>
+    </div>
 
-            <button class="accordion-button collapsed p-0" type="button" data-bs-toggle="collapse" data-bs-target="#CollapseInicio" aria-expanded="false" aria-controls="flush-collapseOne" style="background-color:transparent">
-                <ion-card-title class="border-bottom">PAGOS</ion-card-title>
-                <!-- <ion-card-title class="border-bottom">&Uacute;LTIMOS PAGOS</ion-card-title> -->
-            </button>
-        </ion-card-header>
-        <ion-card-content>
-            <div id="CollapseInicio" class="accordion-collapse collapse col">
+    <!-- Payment hero card -->
+    <div class="payment-hero" *ngIf="cuota">
+      <div>
+        <div class="payment-hero-label">Cuota del mes</div>
+        <div class="payment-hero-amount">{{ cuota.total }}<span class="payment-hero-euro">€</span></div>
+        <div class="payment-hero-note" *ngIf="cuota.extra_payments?.total > 0">
+          + {{ cuota.extra_payments.total }}€ servicio extra
+        </div>
+        <div class="payment-hero-note" *ngIf="pagado">Ya has pagado este mes</div>
+      </div>
+      <button class="sl-btn-accent" *ngIf="pagar && !pagado" (click)="generateMerchantParams()">
+        Pagar ahora
+      </button>
+      <div class="payment-paid-badge" *ngIf="pagado">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Pagado
+      </div>
+    </div>
+  </div>
 
-                <!-- <ion-item id="fecha">
-                    <ion-label>Comprueba según mes</ion-label>
-                    <ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" min="2017" #popoverDatetime (ionChange)="fechaFiltro = popoverDatetime.value.slice(0,7); comprobarFecha()"></ion-datetime>
-                </ion-item> -->
+  <!-- ── Scroll content ── -->
+  <div class="home-content">
 
-                <!-- <div class="wrapper">
-                    <input type="radio" [(ngModel)]="pagos" name="select" [value]="1" [checked]="options" id="option-1" checked>
-                    <label for="option-1" class="option option-1">
-                    <div class="dot"></div>
-                     <span>Gráfico</span>
-                </label>
+    <!-- Attendance -->
+    <div *ngIf="asistencia !== null">
+      <p class="sl-section-title">Asistencia</p>
+      <p class="home-section-sub">Último mes</p>
+      <div class="attendance-card" *ngIf="asistencia">
+        <div class="attendance-pill attendance-good">
+          <div class="attendance-pct">{{ asistencia.yes_percent }}<span>%</span></div>
+          <div class="attendance-tag">Asistencias</div>
+        </div>
+        <div class="attendance-divider"></div>
+        <div class="attendance-pill attendance-bad">
+          <div class="attendance-pct">{{ asistencia.no_percent }}<span>%</span></div>
+          <div class="attendance-tag">Faltas</div>
+        </div>
+      </div>
+    </div>
 
-                    <input type="radio" [(ngModel)]="pagos" name="select" [value]="0" [checked]="!options" id="option-2">
-                    <label for="option-2" class="option option-2">
-                    <div class="dot"></div>
-                     <span>Listado</span>
-                </label>
-                </div> -->
+    <!-- Recent payments -->
+    <div>
+      <p class="sl-section-title">Últimos pagos</p>
+    </div>
+    <div class="payments-card">
+      <div class="payment-item" *ngFor="let pago of pagosFiltrados | slice:0:10">
+        <div class="payment-dot"></div>
+        <div class="payment-info">
+          <div class="payment-date">{{ formatDateSpanish(pago.date) }}</div>
+          <div class="payment-type">Cuota mensual</div>
+        </div>
+        <div class="payment-amount">{{ pago.gross_amount }}€</div>
+        <div class="payment-dl">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12l7 7 7-7"/>
+          </svg>
+        </div>
+      </div>
+      <div class="payment-empty" *ngIf="!pagosFiltrados?.length">
+        <span>Sin pagos registrados</span>
+      </div>
+    </div>
 
-                <!--
-            <div class="mb-3">
-               -------------------------------------------MOSTRAR REGISTROS-----------------------------
-                <p>Mostrar registros:
-                    <a class="active" role="button" aria-pressed="true">5</a>
-                    <a class="active" role="button" aria-pressed="true">10</a>
-                    <a class="active" role="button" aria-pressed="true">15</a>
-                </p>
-            </div>
-           -->
-                <!--------------------------------------------TABLA-----------------------------
-            <table class="col-12">
-                <tr>
-                    <th class="col-4 border-bottom">Fecha</th>
-                    <td class="col-8 border-bottom">
-                        <input class="form-control" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" dateFormat="Y-m-d" altFormat="F j, Y" placeholder="dd-mm-yyyy" [options]="datePickerOptions" />
-                    </td>
-                </tr>
-                <!-- AÑADIDO-
-                <tr>
-                    <th class="col-4 border-bottom">Centro</th>
-                    <td class="col-8 border-bottom">Centro La Florida</td>
-                </tr>
-                <!---
-                <tr>
-                    <th class="col-4 border-bottom">Importe</th>
-                    <td class="col-8 border-bottom">50&euro;</td>
-                </tr>
-              <!-- <tr>
-                    <th class="col-4 border-bottom">M&eacute;todo</th>
-                    <td class="col-8 border-bottom">Primero</td>
-                </tr>
-            </table>
-        -->
-                <div class="flex" id="grafico" *ngIf="pagos ==1">
-                    <br>
-                    <div class="flex-item">
-                        <div style="display: block;">
-                            <!--------------------------------------------------GRAFICO------------------------------------------------  -->
-                            <canvas baseChart height="200" [datasets]="lineChartData" [options]="lineChartOptions" [labels]="lineChartLabels" [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- <div id="listado" *ngIf="pagos ==0"> -->
-                <div id="listado">
-                    <ion-list>
-                        <ion-item *ngFor="let pagoCliente of pagosFiltrados">
-                            <ion-label>{{pagoCliente.gross_amount}}€</ion-label>
-                            <small>{{pagoCliente.date.slice(0,10)}}</small>
-                        </ion-item>
-                        <!-- <ion-item>
-                            <ion-label>Ticket Yoga</ion-label>
-                            <ion-label>5€</ion-label>
-                            <small>12-12-2021</small>
-                        </ion-item>
-                        <ion-item>
-                            <ion-label>Bono Pilates</ion-label>
-                            <ion-label>105€</ion-label>
-                            <small>12-12-2021</small>
-                        </ion-item> -->
-                    </ion-list>
-                </div>
-
-            </div>
-        </ion-card-content>
-    </ion-card>
-
-    <!--------------------------------------------------------------TICKETS---------------------------------------------------------
-    <div  id="CollapseInicio" class="accordion-collapse collapse row">
-    <ion-card class="my-2 py-2 px-0 border-top">
-        <ion-card-header>
-            <ion-card-title class="border-bottom">TICKETS</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-            ---->
-    <!---
-            <div class="mb-3">
-               -----------------------------------------MOSTRAR REGISTROS----------------------------
-                <p>Mostrar registros:
-                    <a class="active" role="button" aria-pressed="true">5</a>
-                    <a class="active" role="button" aria-pressed="true">10</a>
-                    <a class="active" role="button" aria-pressed="true">15</a>
-                </p>
-            </div>
-           ------------------------------------------TABLA-----------------------------
-            <table class="col-12">
-
-                <tr>
-                    <th class="col-4 border-bottom">Grupo</th>
-                    <td class="col-8 border-bottom">Grupo 1</td>
-                </tr>
-                <tr>
-                    <th class="col-4 border-bottom">Centro</th>
-                    <td class="col-8 border-bottom">Centro La Florida</td>
-                </tr>
-                <tr>
-                    <th class="col-4 border-bottom">Importe</th>
-                    <td class="col-8 border-bottom">50&euro;</td>
-                </tr>
-                <tr>
-                    <th class="col-4 border-bottom">Comprado</th>
-                    <td class="col-8 border-bottom">Comprado</td>
-                </tr>
-
-            </table>
-        </ion-card-content>
-    </ion-card>
-</div>
- -->
-    <!------------------------------------------------------COMPRA RAPIDA DE TICKETS------------------------------------------------------------->
-    <!-- <ion-card class="my-2 py-2 px-0 border-top" id="contenidoTickets">
-        <ion-card-header>
-            <ion-card-title class="border-bottom">COMPRA RÁPIDA DE TICKETS</ion-card-title>
-        </ion-card-header>
-        <ion-toolbar id="columnas" color="light">
-            <select class="form-select mb-2" id="centros">
-                <option selected disabled>Centros</option>
-                <option value="1">La Florida</option>
-                <option value="2">Aviles</option>
-            </select>
-            <select class="form-select mb-2" id="actividades" color="light">
-                <option selected disabled>Actividades</option>
-                <option value="pilates">Pilates</option>
-                <option value="yoga">Yoga</option>
-                <option value="aerosoluna">Aerosoluna</option>
-                <option value="yoga-infantil">Yoga Infantil</option>
-                <option value="readapt-fisica">Readapt. Física</option>
-                <option value="gimnasia-hipopresiva">Gimn. Hipopresiva</option>
-                <option value="entrenam-persona">Entrenam. Personal</option>
-                <option value="pilates-embarazadas">Pilates Embarazadas</option>
-            </select>
-        </ion-toolbar> -->
-    <!-------------------------------------------------TARJETA 1------------------------------------------------>
-    <!-- <ion-card class="mx-0 mt-0 border-top border-radius">
-            <ion-card-header>
-                <ion-card-subtitle>Martes, 01/06, 9:30</ion-card-subtitle>
-                <ion-card-title>La Florida, Pilates</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-                <button class="btn" id="comprar" (click)="comprarModal()">Comprar</button>
-            </ion-card-content>
-        </ion-card> -->
-    <!-------------------------------------------------TARJETA 2------------------------------------------------>
-    <!-- <ion-card class="mx-0 mt-0 border-top border-radius">
-            <ion-card-header>
-                <ion-card-subtitle>Martes, 01/06, 9:30</ion-card-subtitle>
-                <ion-card-title>La Florida, Pilates</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-                <button class="btn" id="comprar" (click)="comprarModal()">Comprar</button>
-            </ion-card-content>
-        </ion-card> -->
-    <!-------------------------------------------------TARJETA 3------------------------------------------------>
-    <!-- <ion-card class="mx-0 mt-0 border-top border-radius">
-            <ion-card-header>
-                <ion-card-subtitle>Martes, 01/06, 9:30</ion-card-subtitle>
-                <ion-card-title>La Florida, Pilates</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-                <button class="btn" id="comprar" (click)="comprarModal()">Comprar</button>
-            </ion-card-content>
-        </ion-card> -->
-    <!-------------------------------------------------TARJETA 4----------------------------------------------
-        <ion-card class="mx-0 mt-0 border-top border-radius">
-            <ion-card-header>
-                <ion-card-subtitle>Martes, 01/06, 9:30</ion-card-subtitle>
-                <ion-card-title>La Florida, Pilates</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-                <button class="btn" id="comprar" (click)="comprarModal()">Comprar</button>
-            </ion-card-content>
-        </ion-card>
-        -->
-    <!--------------------------------------------------------------------PAGINADOR------------------------------------------------------------------>
-    <!-- <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link">1</a></li>
-                <li class="page-item"><a class="page-link">2</a></li>
-                <li class="page-item"><a class="page-link">3</a></li>
-
-                <li class="page-item">
-                    <a class="page-link" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </ion-card> -->
-
+  </div>
 </ion-content>

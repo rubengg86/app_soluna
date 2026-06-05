@@ -11,6 +11,10 @@ import { ServicioService } from '../../../services/servicio.service';
 export class ContraseniaPage implements OnInit {
 
   public customer_id = localStorage.getItem('currentUserSoluna');
+  showOldPassword = false;
+  showNewPassword = false;
+  showConfirmPassword = false;
+
   public data = this.fb.group({
     customer_id: [this.customer_id],
     old_password: ['', [Validators.required]],

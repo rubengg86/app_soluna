@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ContraseniaPage } from './contrasenia/contrasenia.page';
 import { ServicioService } from '../../services/servicio.service';
+import { RefreshService } from '../../services/refresh.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.page.html',
@@ -10,11 +11,24 @@ import { ServicioService } from '../../services/servicio.service';
 })
 export class DashboardPage implements OnInit{
 
-  public customer_id = localStorage.getItem('currentUserSoluna');
-  public cliente;
+  public customerId = 6249;//localStorage.getItem('currentUserSoluna');
+  public customer;
   public email = 'mailto:aviles@solunapilates.es';
 
-  constructor(public modalController: ModalController, public router: Router, private _service: ServicioService) { }
+  constructor(
+    public modalController: ModalController,
+    public router: Router,
+    private _service: ServicioService,
+    private refreshService: RefreshService
+  ) { }
+
+  navigateTo(route: string) {
+    if (this.router.url === route) {
+      this.refreshService.trigger();
+    } else {
+      this.router.navigate([route]);
+    }
+  }
 
   ngOnInit(): void {
       this.getCliente();
@@ -22,9 +36,9 @@ export class DashboardPage implements OnInit{
 
   getCliente() {
 
-    this._service.getCustomerById(this.customer_id).subscribe( res => {
+    this._service.getCustomerById(this.customerId).subscribe(res => {
     // this._service.getCustomerById(5211).subscribe( res => {
-      this.cliente = res[0];
+      this.customer = res[0];
       // console.log(res[0]);
 
       this.buscarCentros();
@@ -39,7 +53,7 @@ export class DashboardPage implements OnInit{
       // console.log(result);
 
       result.forEach(element => {
-        if (element.id == this.cliente.center_id){
+        if (element.id == this.customer.center_id){
           this.email = `mailto:${element.email}`;
         }
       });

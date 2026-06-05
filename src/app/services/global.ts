@@ -1,14 +1,25 @@
-export var GLOBAL = {
-    // url: 'http://localhost/dev/api',
+export const GLOBAL = {
+    appVersion: '2.0.0',
     url: 'https://api.belife.io',
-    // url: 'http://localhost/loginAPI/index.php',
-    PASSWD_SEED: 's0lun4rul3sb1tch',
-    SHA256_TEST_AVILES: 'sq7HjrUOBfKmC576ILgskD5srU870gJ7',
-    SHA256_PROD_AVILES: 'fDLuzLwM+YeG45hyQbAhZRV8JNvPRpZY',
-    SHA256_TEST_GIJON: 'sq7HjrUOBfKmC576ILgskD5srU870gJ7',
-    SHA256_PROD_GIJON: 'grJcg44MzJQkfRjRn8ASUDfD/PeEusdY',
-    // SHA256_TEST_FLORIDA: 'V/BDOvX2jEJwnPhDItNsmaNP9vZMr/Kp',
-    SHA256_PROD_FLORIDA: 'V/BDOvX2jEJwnPhDItNsmaNP9vZMr/Kp'
-    // SHA256_TEST_GIJON: 'sq7HjrUOBfKmC576ILgskD5sr]U870gJ7'
-    // sq7HjrUOBfKmC576ILgskD5srU870gJ7
+    solunaUrl: 'https://solunapilates.es',
+    tpvUrl: 'https://sis.redsys.es/sis/realizarPago',
+    passwordSeed: 's0lun4rul3sb1tch',
+    merchants : {
+        5: {
+            merchantCode: '355780867',
+            sha: 'fDLuzLwM+YeG45hyQbAhZRV8JNvPRpZY'
+        },
+        9: {
+            merchantCode: '363064700',
+            sha: 'grJcg44MzJQkfRjRn8ASUDfD/PeEusdY'
+            //sha: 'sq7HjrUOBfKmC576ILgskD5srU870gJ7'
+        },
+        1: {
+            merchantCode: '352828222',
+            sha: 'V/BDOvX2jEJwnPhDItNsmaNP9vZMr/Kp'
+        }
+    },
+    shaProdAviles: 'fDLuzLwM+YeG45hyQbAhZRV8JNvPRpZY',
+    shaProdGijon: 'grJcg44MzJQkfRjRn8ASUDfD/PeEusdY',
+    shaProdFlorida: 'V/BDOvX2jEJwnPhDItNsmaNP9vZMr/Kp',
 };

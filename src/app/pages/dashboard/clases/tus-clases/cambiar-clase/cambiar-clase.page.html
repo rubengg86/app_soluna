@@ -1,78 +1,71 @@
-<!---------------------------------------------------------------- MODAL (editar)------------------------------------------------------------->
-<!-------------------------------------------------------------------CABECERA ---------------------------------------------------------------->
-<ion-header>
-    <ion-toolbar class="p-3" style="--background: #363636;">
-        <!-- <ion-toolbar class="p-3" color="light"> -->
-        <div class="d-flex justify-content-between border-bottom">
-            <ion-title class="text-white">
-                CAMBIAR CLASE <br> {{fechaAntiguaFormato}}
-            </ion-title>
-            <!-- <i class="fas fa-times fa-2x text-white" (click)="dismiss()"></i> -->
-            <ion-icon style="color:white !important" (click)="dismiss()" slot="start" name="close"></ion-icon>
-            <br>
+<div class="modal-header">
+  <div class="modal-drag-handle"></div>
+  <div class="modal-header-row">
+    <span class="modal-header-title">Cambiar clase</span>
+    <button class="modal-close-btn" (click)="dismiss()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<ion-content style="--background: var(--sl-bg)">
+  <div class="modal-content">
+
+    <!-- Current class info -->
+    <div class="current-class-banner">
+      <div class="current-class-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+      </div>
+      <div>
+        <div class="current-class-label">Clase actual</div>
+        <div class="current-class-date">{{ fechaAntiguaFormato }}</div>
+      </div>
+    </div>
+
+    <!-- Cancel option -->
+    <div class="cancel-section">
+      <div class="cancel-section-text">
+        <div class="cancel-title">¿Prefieres anularla?</div>
+        <div class="cancel-desc">La clase quedará como recuperable</div>
+      </div>
+      <button class="sl-btn-sm-ghost danger-ghost" (click)="confirmarCancelar()">Anular</button>
+    </div>
+
+    <!-- No slots available -->
+    <div class="no-slots-card" *ngIf="fechasLibres?.length == 0">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <p class="no-slots-title">Sin huecos disponibles</p>
+      <p class="no-slots-desc">
+        Para cambiar la clase manualmente contacta con
+        <a [href]="email">{{ emailFormat }}</a>
+      </p>
+    </div>
+
+    <!-- Available slots -->
+    <div *ngIf="fechasLibres?.length > 0">
+      <p class="sl-section-title" style="margin-bottom: 12px;">Huecos disponibles</p>
+
+      <div class="date-group" *ngFor="let fecha of fechasLibres; let i = index">
+        <div class="date-group-header">{{ fechasLibresFormato[i] }}</div>
+        <div class="slots-list">
+          <button
+            class="slot-pill"
+            *ngFor="let hueco of huecos[fecha]"
+            (click)="confirmarCambiar(hueco.id, fecha, hueco.start_time, fechasLibresFormato[i])">
+            {{ hueco.start_time }}
+          </button>
         </div>
-    </ion-toolbar>
-</ion-header>
+      </div>
+    </div>
 
-<!-------------------------------------------------------------------FORMULARIO--------------------------------------------------------------->
-<ion-content style="--background: #363636;" id="contenidoComprar">
-    <!-- <ion-content color="light" id="contenidoComprar"> -->
-    <ion-card class="bg-white border-top col-12">
-        <ion-card-header class="border-bottom">
-            <ion-card-title>
-                ¿Prefieres anularla completamente?
-            </ion-card-title>
-
-            <ion-card-content>
-                <!-- <ion-card class="bg-white border-top col-12">
-                    <ion-card-header class="border-bottom"> -->
-                <button (click)="confirmarCancelar()" type="button" class="btn mb-3" id="comprar">Anular</button>
-                <!-- </ion-card-header>
-                </ion-card> -->
-            </ion-card-content>
-
-            <!-- <button type="button" class="btn" id="comprar">Cambiar</button>
-            <h1>{{huecos[fecha][0].start_time}}</h1> -->
-        </ion-card-header>
-    </ion-card>
-    <ion-card *ngIf="fechasLibres?.length == 0" class="bg-white border-top col-12">
-        <ion-card-header class="border-bottom">
-            <ion-card-title>
-                Ahora mismo no hay huecos disponibles para cambiar la clase seleccionada
-            </ion-card-title>
-
-            <ion-card-content>
-                Para más información, o pedir un cambio de clase manual, contacte con
-                <a [href]="email">{{emailFormat}}</a>
-            </ion-card-content>
-
-            <!-- <button type="button" class="btn" id="comprar">Cambiar</button>
-            <h1>{{huecos[fecha][0].start_time}}</h1> -->
-        </ion-card-header>
-    </ion-card>
-    <ion-card class="bg-white border-top col-12" *ngFor="let fecha of fechasLibres; let i = index">
-        <ion-card-header class="border-bottom">
-            <ion-card-title>
-                {{fechasLibresFormato[i]}}
-            </ion-card-title>
-
-            <ion-card-content>
-                <ion-card class="bg-white border-top col-12" *ngFor="let hueco of huecos[fecha]; let j = index">
-                    <ion-card-header class="border-bottom">
-                        <button type="button" class="btn" id="comprar" (click)="confirmarCambiar(hueco.id, fecha, hueco.start_time, fechasLibresFormato[i])">Cambiar</button>
-                        <!-- <button type="button" class="btn" id="comprar" (click)="cambiar(hueco.id, fecha, hueco.start_time)">Cambiar</button> -->
-                        <h1>{{hueco.start_time}}</h1>
-                    </ion-card-header>
-                </ion-card>
-            </ion-card-content>
-
-            <!-- <button type="button" class="btn" id="comprar">Cambiar</button>
-            <h1>{{huecos[fecha][0].start_time}}</h1> -->
-        </ion-card-header>
-    </ion-card>
-
+  </div>
 </ion-content>
-<!-------------------------------------------------------------------FOOTER-------------------------------------------------------------------->
-<!-- <ion-footer class="p-4" id="contenidoFooter">
-    <button type="button" class="btn" id="comprar">Comprar</button>
-</ion-footer> -->

@@ -1,0 +1,46 @@
+ion-content.update-screen {
+  --background: var(--sl-bg);
+}
+
+.update-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 40px 32px calc(env(safe-area-inset-bottom) + 40px);
+  text-align: center;
+}
+
+.update-icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 28px;
+  background: var(--sl-primary-light, #f0edf8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+  color: var(--sl-primary);
+}
+
+.update-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--sl-text-1);
+  margin: 0 0 16px;
+  line-height: 1.2;
+}
+
+.update-body {
+  font-size: 15px;
+  color: var(--sl-text-2);
+  line-height: 1.6;
+  margin: 0 0 40px;
+  max-width: 300px;
+}
+
+.update-btn {
+  width: 100%;
+  max-width: 320px;
+}

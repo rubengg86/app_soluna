@@ -1,83 +1,56 @@
-// @font-face {
-//     font-family: HelveticaNeue;
-//     src: url(../../../assets/font/HelveticaNeue-Medium.ttf);
-// }
-// ion-input {
-//     font-family: HelveticaNeue;
-// }
-// #guardar {
-//     background-color: #59137D;
-//     color: white;
-//     border: 0;
-//     float: right;
-// }
-// // * {
-// //     background-color: #F1F1F1
-// // }
-// // #header {
-// //     background-color: #F1F1F1;
-// // }
-// #contenido {
-//     margin-top: 30px;
-// }
-// ion-input {
-//     color: black;
-//     // background-color: white;
-// }
-// form {
-//     background-color: white;
-//     margin: 6%;
-//     box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px, rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
-// }
-* {
-    background-color: #363636;
-    --background: #363636;
-    color: white;
+ion-header {
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
 }
 
-@font-face {
-    font-family: HelveticaNeue;
-    src: url(../../../assets/font/HelveticaNeue-Medium.ttf);
+ion-content {
+  --background: var(--sl-surface);
+}
+
+h5 {
+  font-family: var(--sl-font-display);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--sl-text);
+  text-align: center;
+  padding: 24px 20px 8px;
+  line-height: 1.4;
+}
+
+form {
+  padding: 16px 20px;
 }
 
 ion-input {
-    font-family: HelveticaNeue;
+  background: var(--sl-bg) !important;
+  --background: var(--sl-bg);
+  border: 1.5px solid var(--sl-border);
+  border-radius: var(--sl-radius-sm);
+  --padding-start: 14px;
+  --padding-end: 14px;
+  margin-bottom: 12px;
+  height: 52px;
+  color: var(--sl-text) !important;
 }
 
-.color {
-    color: #59137D;
+ion-footer {
+  padding: 0 20px calc(env(safe-area-inset-bottom) + 12px);
+  background: var(--sl-surface);
+  border-top: 1px solid var(--sl-border-soft);
 }
 
 button {
-    background-color: #59137D;
-    color: white;
-    border: 0;
-    width: 100%;
-}
-
-a {
-    text-decoration: none;
-}
-
-.check {
-    margin: 0;
-    padding: 0;
-    width: 20px;
-}
-
-footer {
-    font-size: small;
-    text-align: center;
-    color: gray;
-}
-
-ion-checkbox {
-    width: 20px;
-    height: 20px;
-}
-
-ion-header{
-    // padding-top: 100px !important;
-    padding-top: constant(safe-area-inset-top) !important;
-    padding-top: env(safe-area-inset-top) !important; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 52px;
+  background: var(--sl-primary) !important;
+  color: white !important;
+  border: none;
+  border-radius: var(--sl-radius-pill);
+  font-family: var(--sl-font-body);
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 12px;
 }

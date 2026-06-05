@@ -1,65 +1,156 @@
-@font-face {
-    font-family: HelveticaNeue;
-    src: url(../../../../../../assets/font/HelveticaNeue-Medium.ttf);
+/* ── Custom modal header ────────────────────────── */
+.modal-header {
+  background: var(--sl-primary);
+  padding: calc(env(safe-area-inset-top) + 10px) 16px 14px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-ion-input {
-    font-family: HelveticaNeue;
+.modal-drag-handle {
+  width: 36px;
+  height: 4px;
+  background: rgba(255,255,255,.35);
+  border-radius: 2px;
+  margin: 0 auto 10px;
 }
 
-#previsualizar {
-    border: #59137D solid;
-    border-radius: 50%;
-    width: 85px;
-    height: 85px;
+.modal-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-span {
-    color: #59137D;
-    font-weight: bold;
-    font-size: xx-large;
-    position: absolute;
-    margin-left: 51%;
+.modal-header-title {
+  font-family: var(--sl-font-display);
+  font-size: 22px;
+  font-weight: 500;
+  color: white;
+  letter-spacing: -0.2px;
 }
 
-img {
-    border-radius: 50%;
+.modal-close-btn {
+  width: 32px;
+  height: 32px;
+  background: rgba(255,255,255,.15);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  svg { color: white; }
+  &:active { background: rgba(255,255,255,.25); }
+}
+
+/* ── Form ───────────────────────────────────────── */
+.modal-form {
+  padding: 20px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── Avatar ─────────────────────────────────────── */
+.avatar-row {
+  display: flex;
+  justify-content: center;
+}
+
+.avatar-wrap {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+
+  img {
     width: 80px;
     height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    border: 3px solid var(--sl-primary-light);
+  }
+}
+
+.avatar-edit-badge {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 26px;
+  height: 26px;
+  background: var(--sl-accent);
+  border-radius: 50%;
+  border: 2px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg { color: white; }
 }
 
 #files {
-    font-size: 0px;
-    width: 0px;
-    height: 0px;
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
 }
 
-#guardar {
-    background-color: #59137D;
-    color: white;
-    border: 0;
-    float: right;
+/* ── Fields card ────────────────────────────────── */
+.fields-card {
+  background: var(--sl-surface);
+  border-radius: var(--sl-radius-md);
+  padding: 8px 16px 16px;
+  box-shadow: var(--sl-shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
-#footer {
-    background-color: #F1F1F1
+.modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-#formUpdate {
-    background-color: white;
-    margin: 15px;
-    box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px, rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
-    border-radius: 4px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+.modal-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 50px;
+  background: var(--sl-bg);
+  border: 1.5px solid transparent;
+  border-radius: var(--sl-radius-sm);
+  padding: 0 14px;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+
+  svg { color: var(--sl-text-3); flex-shrink: 0; }
+
+  ion-input {
+    flex: 1;
+    --background: transparent;
+    --padding-start: 0;
+    --padding-end: 0;
+    font-size: 15px;
+    color: var(--sl-text) !important;
+  }
+
+  &:focus-within {
+    background: white;
+    border-color: var(--sl-primary);
+    box-shadow: 0 0 0 3px var(--sl-primary-light);
+  }
 }
 
-ion-input {
-    color: black;
+/* ── Footer ─────────────────────────────────────── */
+.modal-footer-actions {
+  padding: 12px 16px calc(env(safe-area-inset-bottom) + 12px);
 }
 
-ion-header{
-    // padding-top: 100px !important;
-    padding-top: constant(safe-area-inset-top) !important;
-    padding-top: env(safe-area-inset-top) !important; 
+ion-footer ion-toolbar {
+  --background: var(--sl-surface);
+  --border-color: var(--sl-border-soft);
+  --padding-start: 0;
+  --padding-end: 0;
 }

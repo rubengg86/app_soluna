@@ -45,6 +45,7 @@ export class ServicioService {
 
   getUsers(login, password): Observable<any>{
     // return this.http.get(this.url+`/ca_login/${login}/${password}`);
+    console.log(this.http.get(this.url+`/ca_login/${login}/${password}`, {headers: this.headers}));
     return this.http.get(this.url+`/ca_login/${login}/${password}`, {headers: this.headers});
   }
 
@@ -206,6 +207,10 @@ export class ServicioService {
   getMonthlyPaymentUpdate( tpv_order, status) {
     return this.http.get(this.url+`/ca_update_tpv_order/${tpv_order}/${status}`, {headers: this.headers});
     // return this.http.get(this.url+`/tickets_update_tpv_order/${tpv_order}/${status}/${hash}`);
+  }
+
+  getMinVersion(): Observable<string> {
+    return this.http.get(this.url + '/ca_min_version', { headers: this.headers, responseType: 'text' });
   }
 
   getBondActivities(center_id): Observable<any>{

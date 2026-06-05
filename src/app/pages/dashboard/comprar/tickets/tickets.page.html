@@ -1,130 +1,81 @@
-<ion-content style="--background: #363636;">
-    <!-- <ion-content color="light"> -->
-    <!---------------------------------------------------CARD DONDE BUSCAMOS TICKETS---------------------------------------------------->
-    <ion-card class="pb-0  px-0 border-top">
-        <ion-card-header>
-            <ion-card-title class="border-bottom">COMPRAR TICKET</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-            <!---------------------------------------------ESCOGER CENTRO------------------------------------>
-            <select class="form-select mb-2" (change)="buscarTicketsAComprar()" [(ngModel)]="idCentro">
-                <!-- <option value=null selected>Centro</option> -->
-                <option [value]="centro.id" *ngFor="let centro of centros">{{centro.center_name}}</option>
-                <!-- <option value="1">La Florida</option>
-                <option value="2">Aviles</option> -->
-            </select>
-            <!--------------------------------------CALENDARIO PARA ESCOGER DIA---------------------------------->
-            <input (change)="buscarTicketsAComprar()" [(ngModel)]="fechaElegida" class="form-control" type="text" mwlFlatpickr [altInput]="true" [convertModelValue]="true" dateFormat="Y-m-d" altFormat="F j, Y" placeholder="Fecha" [options]="datePickerOptions" />
-        </ion-card-content>
-    </ion-card>
+<ion-content style="--background: var(--sl-bg)">
 
-    <!---------------------------------------------------SI NO HAY TICKETS---------------------------------------------------->
-    <!--
-<ion-card *ngIf="!ticket" class=" my-2 py-2 px-0">
-    <ion-card-header>
-        <ion-card-title class="border-bottom">¡Ups!</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-        <p class="text-left">No hay ninguna clase disponible para el d&iacute;a y centro seleccionados</p>
-    </ion-card-content>
-</ion-card> 
--->
+  <div class="tickets-header">
+    <h1 class="tickets-title">Comprar Ticket</h1>
+    <p class="tickets-subtitle">Selecciona centro y fecha</p>
+  </div>
 
-    <!-----------------------------------------------------SI HAY TICKETS------------------------------------------------------>
+  <div class="tickets-content">
 
-    <div class="row text-center animated fadeIn mb-5 mt-5" *ngIf="loading">
-        <!-- <i class="fas fa-sync fa-spin fa-5x"></i> -->
-        Cargando...
+    <!-- Filters -->
+    <div class="filter-card">
+      <div class="filter-row">
+        <label class="sl-label">Centro</label>
+        <div class="sl-select-wrap">
+          <select class="sl-select" (change)="buscarTicketsAComprar()" [(ngModel)]="idCentro">
+            <option [value]="centro.id" *ngFor="let centro of centros">{{ centro.center_name }}</option>
+          </select>
+          <svg class="sl-select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="filter-divider"></div>
+
+      <div class="filter-row">
+        <label class="sl-label">Fecha</label>
+        <input
+          class="sl-date-input"
+          (change)="buscarTicketsAComprar()"
+          [(ngModel)]="fechaElegida"
+          type="text"
+          mwlFlatpickr
+          [altInput]="true"
+          [convertModelValue]="true"
+          dateFormat="Y-m-d"
+          altFormat="j F, Y"
+          placeholder="Seleccionar fecha"
+          [options]="datePickerOptions"
+        />
+      </div>
     </div>
 
-    <ion-card *ngIf="tickets" class=" px-0 border-top" style="--background: #363636;">
-        <!-- <ion-card *ngIf="tickets" class=" px-0 border-top" color="light"> -->
+    <!-- Loading -->
+    <div class="tickets-loading" *ngIf="loading">
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+    </div>
 
-        <!------------------------------------------------BOTONES: AYER - HOY - MAÑANA-->
-        <!-- <div class="text-center">
-            <ion-chip id="botonDia">
-                <ion-icon name="chevron-back-outline"></ion-icon>
-                <ion-label color="dark" class="page-link"><span style="padding-right:3px">Ayer</span> {{dia - 1}}/{{mes+1}}</ion-label>
-            </ion-chip>
+    <!-- Ticket cards -->
+    <div *ngIf="tickets">
+      <div class="ticket-purchase-card" *ngFor="let ticket of tickets">
+        <div class="ticket-purchase-body">
+          <div class="ticket-purchase-activity">{{ ticket.activity_name }}</div>
+          <div class="ticket-purchase-meta">
+            {{ diaSemana }}, {{ fechaString }}
+            <span class="meta-dot"></span>
+            {{ ticket.start_time }}
+          </div>
+          <div class="ticket-purchase-price">{{ ticket.price }}€</div>
+        </div>
+        <button class="sl-btn-accent"
+          (click)="comprarModal(ticket.activity_id, ticket.center_id, ticket.id, ticket.price, ticket.ticket_type, ticket, diaSemana, fechaString)">
+          Comprar
+        </button>
+      </div>
+    </div>
 
-            <ion-chip id="botonDia">
-                <ion-label color="dark" class="page-link"><span style="padding-right:3px">Hoy</span> {{dia}}/{{mes+1}}</ion-label>
-            </ion-chip>
+    <!-- No results -->
+    <div class="tickets-empty" *ngIf="tickets == null && !loading">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3">
+        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>
+      </svg>
+      <span>Sin clases disponibles</span>
+      <small>Prueba con otra fecha u otro centro</small>
+    </div>
 
-            <ion-chip id="botonDia">
-                <ion-label color="dark" class="page-link"><span style="padding-right:3px">Mañana</span> {{dia + 1}}/{{mes+1}}</ion-label>
-                <ion-icon name="chevron-forward-outline"></ion-icon>
-            </ion-chip>
-        </div> -->
-
-        <!-------------------------------------------------TARJETA 1------------------------------------------------>
-        <ion-card class="mx-0 mt-0 border-top border-radius" *ngFor="let ticket of tickets">
-            <ion-card-header>
-                <ion-card-subtitle>{{diaSemana}}, {{fechaString}}, {{ticket.start_time}}</ion-card-subtitle>
-                <ion-card-title>{{ticket.activity_name}}</ion-card-title>
-                <ion-card-subtitle>{{ticket.price}}&euro;</ion-card-subtitle>
-            </ion-card-header>
-            <ion-card-content>
-                <!-- <button class="btn" id="comprar">PROXIMAMENTE</button> -->
-                <button class="btn" id="comprar" (click)="comprarModal(ticket.activity_id, ticket.center_id, ticket.id, ticket.price, ticket.ticket_type, ticket, diaSemana, fechaString)">COMPRAR</button>
-            </ion-card-content>
-        </ion-card>
-        <!-------------------------------------------------TARJETA 2------------------------------------------------>
-        <!-- <ion-card class="mx-0 mt-0 border-top border-radius">
-            <ion-card-header>
-                <ion-card-subtitle>Martes, 01/06, 9:30</ion-card-subtitle>
-                <ion-card-title>La Florida, Pilates</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-                <button class="btn" id="comprar" (click)="comprarModal()">COMPRAR</button>
-            </ion-card-content>
-        </ion-card> -->
-        <!--------------------------------------------------------------------PAGINADOR------------------------------------------------------------------>
-        <!-- <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center" id="listadoPie">
-                <li class="page-item disabled">
-                    <a class="page-link" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link">1</a></li>
-                <li class="page-item"><a class="page-link">2</a></li>
-                <li class="page-item"><a class="page-link">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                </li>
-            </ul>
-        </nav> -->
-    </ion-card>
-    <ion-card *ngIf="tickets == null && !loading" class=" px-0 border-top" style="--background: #363636;">
-        <!-- <ion-card *ngIf="tickets == null && !loading" class=" px-0 border-top" color="light"> -->
-        <ion-card class="mx-0 mt-0 border-top border-radius">
-            <ion-card-header>
-                <ion-card-title>No hay clases disponibles</ion-card-title>
-                <ion-card-subtitle>Seleccione otra fecha u otro centro</ion-card-subtitle>
-            </ion-card-header>
-        </ion-card>
-    </ion-card>
-
-
-
-
-    <!-- <form action="https://sis-t.redsys.es:25443/sis/realizarPago" method="POST" id="id_formulario" name="nombre_formulario">
-        <input type="hidden" name="Ds_MerchantParameters" value="eyJEU19NRVJDSEFOVF9BTU9VTlQiOiIxNDUiLCJEU19NRVJDSEFOVF9DVVJSRU5DWSI6Ijk3OCIsIkRTX01FUkNIQU5UX01FUkNIQU5UQ09ERSI6IjM1NTc4MDg2NyIsIkRTX01FUkNIQU5UX09SREVSIjoiMTQ0NjA2ODU4MyIsIkRTX01FUkNIQU5UX1RFUk1JTkFMIjoiMSIsIkRTX01FUkNIQU5UX1RSQU5TQUNUSU9OVFlQRSI6IjAifQ=="
-        />
-        <input type="hidden" name="Ds_Signature" value="8rP39yIj8sKHPcSDI417WQgV6Z2+2TL8+AW0YWLPzCg=" />
-        <input type="hidden" name="Ds_SignatureVersion" value="HMAC_SHA256_V1" />
-    </form>
-
-    <ion-button (click)="pruebaPago()" expand="block" fill="clear" shape="round">
-        Prueba Pago
-    </ion-button>
-    <ion-button (click)="generatemerchantparams()" expand="block" fill="clear" shape="round">
-        Generar parámetros
-    </ion-button> -->
+  </div>
 
 </ion-content>

@@ -1,64 +1,76 @@
-<!----------------------------------------------BONOS REGALO--------------------------- -------->
+<ion-content style="--background: var(--sl-bg)">
 
-<div style=" background-color: #ECECEC;height: 100%; display: flex; align-items: center; justify-content: center;">
-    <ion-card class="my-2 py-0">
-        <ion-card-content id="columnas">
-            <ion-card id="pilates" class="mx-0 mt-0 col-12">
-                <button class="bg-transparent" [routerLink]="['/dashboard/pilates']">
-                <ion-card-title class="bg-transparent py-5">PILATES</ion-card-title>
-            </button>
-            </ion-card>
-            <ion-card id="aerosoluna" class="mx-0 mt-0 col-12">
-                <button class="bg-transparent" [routerLink]="['/dashboard/aerosoluna']">
-                <ion-card-title class="bg-transparent py-5">AEROSOLUNA</ion-card-title>
-            </button>
-            </ion-card>
-            <ion-card id="readapt" class="mx-0 mt-0 col-12">
-                <button class="bg-transparent" [routerLink]="['/dashboard/readaptacion-fisica']">
-                <ion-card-title class="bg-transparent py-5">REHABILITACIÓN</ion-card-title>
-            </button>
-            </ion-card>
-            <!-- <ion-card id="readapt" class="mx-0 mt-0 col-12">
-            <button class="bg-transparent" [routerLink]="['/dashboard/readaptacion-fisica']">
-                <ion-card-title class="bg-transparent py-5">READAPT. FÍSICA</ion-card-title>
-            </button>
-        </ion-card> -->
-            <ion-card id="entrenamiento" class="mx-0 mt-0 col-12">
-                <button class="bg-transparent" [routerLink]="['/dashboard/entrenam-personal']">
-                <ion-card-title class="bg-transparent py-5">ENTRENAM. PERSONAL</ion-card-title>
-            </button>
-            </ion-card>
-            <ion-card id="yoga" class="mx-0 mt-0 col-12">
-                <button class="bg-transparent" [routerLink]="['/dashboard/yoga']">
-                <ion-card-title class="bg-transparent py-5">YOGA</ion-card-title>
-            </button>
-            </ion-card>
-            <!-- <ion-card id="infantil" class="mx-0 mt-0 col-12">
-            <button class="bg-transparent" [routerLink]="['/dashboard/yoga-infantil']">
-                <ion-card-title class="bg-transparent py-5">YOGA INFANTIL</ion-card-title>
-            </button>
-        </ion-card> -->
-            <!-- <ion-card id="hipopresivo" class="mx-0 mt-0 col-12">
-            <button class="bg-transparent" [routerLink]="['/dashboard/hipopresivo']">
-                <ion-card-title class="bg-transparent py-5">HIPOPRESIVO</ion-card-title>
-            </button>
-        </ion-card> -->
-            <ion-card id="embarazada" class="mx-0 mt-0 col-12">
-                <button class="bg-transparent" [routerLink]="['/dashboard/pilates-embarazadas']">
-                <ion-card-title class="bg-transparent py-5">PILATES EMBARAZADAS</ion-card-title>
-            </button>
-            </ion-card>
-            <ion-card id="taichi" class="mx-0 mt-0 col-12">
-                <button class="bg-transparent" [routerLink]="['/dashboard/taichi']">
-                <ion-card-title class="bg-transparent py-5">TAICHI</ion-card-title>
-            </button>
-            </ion-card>
-            <ion-card id="aerosolunaYoga" class="mx-0 mt-0 col-12">
-                <button class="bg-transparent" [routerLink]="['/dashboard/aerosoluna-yoga']">
-                <ion-card-title class="bg-transparent py-5">AEROSOLUNA YOGA</ion-card-title>
-            </button>
-            </ion-card>
+  <div class="buy-header">
+    <h1 class="buy-title">Comprar</h1>
+    <p class="buy-subtitle">Elige tu actividad</p>
+  </div>
 
-        </ion-card-content>
-    </ion-card>
-</div>
+  <div class="activities-grid">
+
+    <div class="activity-card" [routerLink]="['/dashboard/pilates']">
+      <div class="activity-card-img" id="bg-pilates"></div>
+      <div class="activity-card-overlay"></div>
+      <div class="activity-card-body">
+        <div class="activity-card-name">Pilates</div>
+      </div>
+    </div>
+
+    <div class="activity-card" [routerLink]="['/dashboard/aerosoluna']">
+      <div class="activity-card-img" id="bg-aerosoluna"></div>
+      <div class="activity-card-overlay"></div>
+      <div class="activity-card-body">
+        <div class="activity-card-name">Aerosoluna</div>
+      </div>
+    </div>
+
+    <div class="activity-card" [routerLink]="['/dashboard/readaptacion-fisica']">
+      <div class="activity-card-img" id="bg-readapt"></div>
+      <div class="activity-card-overlay"></div>
+      <div class="activity-card-body">
+        <div class="activity-card-name">Rehabilitación</div>
+      </div>
+    </div>
+
+    <div class="activity-card" [routerLink]="['/dashboard/entrenam-personal']">
+      <div class="activity-card-img" id="bg-entrenamiento"></div>
+      <div class="activity-card-overlay"></div>
+      <div class="activity-card-body">
+        <div class="activity-card-name">Entren. Personal</div>
+      </div>
+    </div>
+
+    <div class="activity-card" [routerLink]="['/dashboard/yoga']">
+      <div class="activity-card-img" id="bg-yoga"></div>
+      <div class="activity-card-overlay"></div>
+      <div class="activity-card-body">
+        <div class="activity-card-name">Yoga</div>
+      </div>
+    </div>
+
+    <div class="activity-card" [routerLink]="['/dashboard/pilates-embarazadas']">
+      <div class="activity-card-img" id="bg-embarazadas"></div>
+      <div class="activity-card-overlay"></div>
+      <div class="activity-card-body">
+        <div class="activity-card-name">Pilates Embarazadas</div>
+      </div>
+    </div>
+
+    <div class="activity-card" [routerLink]="['/dashboard/taichi']">
+      <div class="activity-card-img" id="bg-taichi"></div>
+      <div class="activity-card-overlay"></div>
+      <div class="activity-card-body">
+        <div class="activity-card-name">Tai Chi</div>
+      </div>
+    </div>
+
+    <div class="activity-card" [routerLink]="['/dashboard/aerosoluna-yoga']">
+      <div class="activity-card-img" id="bg-aerosolunayoga"></div>
+      <div class="activity-card-overlay"></div>
+      <div class="activity-card-body">
+        <div class="activity-card-name">Aerosoluna Yoga</div>
+      </div>
+    </div>
+
+  </div>
+
+</ion-content>

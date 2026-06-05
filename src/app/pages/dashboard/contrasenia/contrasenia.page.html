@@ -1,32 +1,80 @@
-<!---------------------------------------------------------------- MODAL (cambiar contraseña)------------------------------------------------------------->
-<!-------------------------------------------------------------------CABECERA ---------------------------------------------------------------->
-<ion-header id="header" style="--background: #363636;">
-    <!-- <ion-header id="header" color="light"> -->
-    <ion-toolbar class="p-3" style="--background: #363636;">
-        <!-- <ion-toolbar class="p-3" color="light"> -->
-        <div class="d-flex justify-content-between">
-            <ion-title class="text-white">
-                CONTRASEÑA NUEVA
-            </ion-title>
-            <!-- <i class="fas fa-times fa-2x text-white" (click)="dismiss()"></i> -->
-            <ion-icon style="color:white !important" (click)="dismiss()" slot="start" name="close"></ion-icon>
-        </div>
-    </ion-toolbar>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Nueva contraseña</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
+<ion-content style="--background: var(--sl-surface)">
+  <form [formGroup]="data" class="modal-form">
 
-<ion-content id="contenido" style="--background: #363636;">
-    <!-- <ion-content id="contenido" color="light"> -->
-    <br>
-    <!-------------------------------------------------------------------FORMULARIO ---------------------------------------------------------------->
-    <form action="" [formGroup]="data" class="p-4">
-        <ion-input formControlName="old_password" placeholder="Contraseña antigua" class="border-bottom mb-3"></ion-input>
-        <ion-input formControlName="new_password" placeholder="Contraseña nueva" class="border-bottom mb-3"></ion-input>
-        <ion-input formControlName="confirm_new_password" placeholder="Confirma la nueva contraseña" class="border-bottom mb-3"></ion-input>
-    </form>
-    <!-------------------------------------------------------------------FOOTER-------------------------------------------------------------------->
+    <div class="modal-field">
+      <label class="sl-label">Contraseña actual</label>
+      <div class="modal-input">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+        </svg>
+        <ion-input formControlName="old_password" [type]="showOldPassword ? 'text' : 'password'" placeholder="Contraseña actual"></ion-input>
+        <button type="button" class="eye-toggle" (click)="showOldPassword = !showOldPassword">
+          <svg *ngIf="!showOldPassword" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+          <svg *ngIf="showOldPassword" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>
+          </svg>
+        </button>
+      </div>
+    </div>
 
+    <div class="modal-field">
+      <label class="sl-label">Nueva contraseña</label>
+      <div class="modal-input">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+        </svg>
+        <ion-input formControlName="new_password" [type]="showNewPassword ? 'text' : 'password'" placeholder="Nueva contraseña"></ion-input>
+        <button type="button" class="eye-toggle" (click)="showNewPassword = !showNewPassword">
+          <svg *ngIf="!showNewPassword" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+          <svg *ngIf="showNewPassword" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="modal-field">
+      <label class="sl-label">Confirmar contraseña</label>
+      <div class="modal-input">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+        </svg>
+        <ion-input formControlName="confirm_new_password" [type]="showConfirmPassword ? 'text' : 'password'" placeholder="Confirmar contraseña"></ion-input>
+        <button type="button" class="eye-toggle" (click)="showConfirmPassword = !showConfirmPassword">
+          <svg *ngIf="!showConfirmPassword" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+          <svg *ngIf="showConfirmPassword" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+  </form>
 </ion-content>
-<ion-footer class="p-4" id="footer">
-    <button (click)="cambiarContrasenia()" type="button" class="btn" id="guardar">Guardar</button>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="modal-footer-actions">
+      <button class="sl-btn-primary" (click)="cambiarContrasenia()">Guardar cambios</button>
+    </div>
+  </ion-toolbar>
 </ion-footer>

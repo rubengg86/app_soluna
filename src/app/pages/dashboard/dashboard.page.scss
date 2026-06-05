@@ -1,44 +1,75 @@
-img {
-    width: 30px;
-    height: 30px;
-    border-radius: 20%;
-    clear: left;
-    vertical-align: middle;
-    margin-right: 10px;
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  contain: layout;
 }
 
-i {
-    color:black;
-    padding: 5px;
+ion-router-outlet {
+  flex: 1;
+  min-height: 0;
 }
 
-.usuario {
-    margin-left: 10px;
+/* ── Bottom tab bar ─────────────────────────────── */
+.sl-tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--sl-tab-height) + env(safe-area-inset-bottom));
+  padding: 0 8px env(safe-area-inset-bottom);
+  background: rgba(255,255,255,.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--sl-border-soft);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  z-index: 9000;
 }
 
-.boton {
-    text-align: left;
+.sl-tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding-top: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
-span {
-    color:black;
+.sl-tab-icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: background 0.15s;
+
+  svg {
+    color: var(--sl-text-3);
+    transition: color 0.15s;
+  }
+}
+
+.sl-tab-label {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--sl-text-3);
+  letter-spacing: 0.02em;
+  transition: color 0.15s;
+}
+
+.sl-tab-active {
+  .sl-tab-icon {
+    background: var(--sl-primary-light);
+    svg { color: var(--sl-primary); }
+  }
+  .sl-tab-label {
+    color: var(--sl-primary);
     font-weight: 600;
+  }
 }
-
-img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-bottom: 5px;
-}
-
-#accordionFlushExample{
-    // padding-top: 100px !important;
-    padding-top: constant(safe-area-inset-top) !important;
-    padding-top: env(safe-area-inset-top) !important; 
-}
-
-.accordion-itemmy-4 {
-        text-align: left !important;
-}
-

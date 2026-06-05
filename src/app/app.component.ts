@@ -8,6 +8,15 @@ import * as cryptojs from 'crypto-js';
 import padZeroPadding from 'crypto-js/pad-zeropadding'
 import { GLOBAL } from './services/global';
 
+function isVersionLower(current: string, minimum: string): boolean {
+  const c = current.trim().split('.').map(Number);
+  const m = minimum.trim().split('.').map(Number);
+  for (let i = 0; i < 3; i++) {
+    if ((c[i] || 0) < (m[i] || 0)) { return true; }
+    if ((c[i] || 0) > (m[i] || 0)) { return false; }
+  }
+  return false;
+}
 
 @Component({
   selector: 'app-root',
@@ -25,7 +34,7 @@ export class AppComponent implements OnInit{
               private zone: NgZone,
               private alertController: AlertController,
               private service: ServicioService) {
-                
+
     this.initializeApp();
 
     // let arg = '2201041057242'
@@ -55,23 +64,23 @@ export class AppComponent implements OnInit{
 
       //   // let order = arg.slice(0,12);
       //   // let state = arg.slice(-1);
-    
+
       //   let hash1 = cryptojs.SHA1(order+GLOBAL.PASSWD_SEED+GLOBAL.PASSWD_SEED+order+'1').toString();
       //   let hash2 = cryptojs.SHA1(order+GLOBAL.PASSWD_SEED+GLOBAL.PASSWD_SEED+order+'2').toString();
 
-  
+
       //   if(hash==hash1){
       //     path = 'tus-clases'
       //     if(type=='T') {
       //       this.service.getTicketPaymentUpdate(order, '1', hash).subscribe(res => {
       //         console.log(res);
       //         this.presentAlert('¡Tu compra se ha confirmado con éxito!');
-      //       });      
+      //       });
       //     } else if (type=='M') {
       //       this.service.getMonthlyPaymentUpdate(order, '1').subscribe(res => {
       //         console.log(res);
       //         this.presentAlert('¡Tu compra se ha confirmado con éxito!');
-      //       });      
+      //       });
       //     } else {
       //       let path = 'tu-panel'
       //       this.presentAlert('Ha ocurrido un error al validar el pago, por favor, uelva a intentarlo dentro de unos minutos o póngase en contacto con nosotros');
@@ -82,16 +91,16 @@ export class AppComponent implements OnInit{
       //       this.service.getTicketPaymentUpdate(order, '2', hash).subscribe(res => {
       //         console.log(res);
       //         this.presentAlert('Ha ocurrido un error al completar el pago, por favor, vuelva a intentarlo dentro de unos minutos');
-      //       });      
+      //       });
       //     } else if (type=='M') {
       //       this.service.getMonthlyPaymentUpdate(order, '2').subscribe(res => {
       //         console.log(res);
       //         this.presentAlert('Ha ocurrido un error al completar el pago, por favor, vuelva a intentarlo dentro de unos minutos');
-      //       });      
+      //       });
       //     } else {
       //       let path = 'tu-panel'
       //       this.presentAlert('Ha ocurrido un error al validar el pago, por favor, uelva a intentarlo dentro de unos minutos o póngase en contacto con nosotros');
-      //     }   
+      //     }
       //   } else {
       //     this.presentAlert('Ha ocurrido un error al validar el pago, por favor, uelva a intentarlo dentro de unos minutos o póngase en contacto con nosotros');
       //   }
@@ -146,23 +155,23 @@ export class AppComponent implements OnInit{
 
         // let order = arg.slice(0,12);
         // let state = arg.slice(-1);
-    
-        let hash1 = cryptojs.SHA1(order+GLOBAL.PASSWD_SEED+GLOBAL.PASSWD_SEED+order+'1').toString();
-        let hash2 = cryptojs.SHA1(order+GLOBAL.PASSWD_SEED+GLOBAL.PASSWD_SEED+order+'2').toString();
 
-  
+        let hash1 = cryptojs.SHA1(order+GLOBAL.passwordSeed+GLOBAL.passwordSeed+order+'1').toString();
+        let hash2 = cryptojs.SHA1(order+GLOBAL.passwordSeed+GLOBAL.passwordSeed+order+'2').toString();
+
+
         if(hash==hash1){
           path = 'tus-clases'
           if(type=='T') {
             this.service.getTicketPaymentUpdate(order, '1', hash).subscribe(res => {
               console.log(res);
               this.presentAlert('¡Tu compra se ha confirmado con éxito!');
-            });      
+            });
           } else if (type=='M') {
             this.service.getMonthlyPaymentUpdate(order, '1').subscribe(res => {
               console.log(res);
               this.presentAlert('¡Tu compra se ha confirmado con éxito!');
-            });      
+            });
           } else {
             path = 'tu-panel'
             this.presentAlert('Ha ocurrido un error al validar el pago, por favor, uelva a intentarlo dentro de unos minutos o póngase en contacto con nosotros');
@@ -173,16 +182,16 @@ export class AppComponent implements OnInit{
             this.service.getTicketPaymentUpdate(order, '2', hash).subscribe(res => {
               console.log(res);
               this.presentAlert('Ha ocurrido un error al completar el pago, por favor, vuelva a intentarlo dentro de unos minutos');
-            });      
+            });
           } else if (type=='M') {
             this.service.getMonthlyPaymentUpdate(order, '2').subscribe(res => {
               console.log(res);
               this.presentAlert('Ha ocurrido un error al completar el pago, por favor, vuelva a intentarlo dentro de unos minutos');
-            });      
+            });
           } else {
             path = 'tu-panel'
             this.presentAlert('Ha ocurrido un error al validar el pago, por favor, uelva a intentarlo dentro de unos minutos o póngase en contacto con nosotros');
-          }   
+          }
         } else {
           this.presentAlert('Ha ocurrido un error al validar el pago, por favor, uelva a intentarlo dentro de unos minutos o póngase en contacto con nosotros');
         }
@@ -195,23 +204,23 @@ export class AppComponent implements OnInit{
 
       //   let order = match.$args['order'].slice(0,12);
       //   let state = match.$args['order'].slice(-1);
-    
+
       //   // let order = match.$args['order'];
       //   let hash = cryptojs.SHA1(order+GLOBAL.PASSWD_SEED+GLOBAL.PASSWD_SEED+order+state).toString();
 
-  
+
       //   if(state=='1'){
       //     path = 'tus-clases'
       //     this.service.getTicketPaymentUpdate(order, state, hash).subscribe(res => {
       //       console.log(res);
       //       this.presentAlert('¡Tu compra se ha confirmado con éxito!');
-      //     });    
+      //     });
       //   } else if (state=='2') {
       //     path = 'tickets'
       //     this.service.getTicketPaymentUpdate(order, state, hash).subscribe(res => {
       //       console.log(res);
       //       this.presentAlert('Ha ocurrido un error al realizar el pago, por favor, vuelva a intentarlo dentro de unos minutos');
-      //     });    
+      //     });
       //   }
       // }
 
@@ -262,6 +271,13 @@ export class AppComponent implements OnInit{
   // }
 
   ngOnInit() {
-    // this.getMantenimiento();
+    this.service.getMinVersion().subscribe({
+      next: (minVersion) => {
+        if (isVersionLower(GLOBAL.appVersion, minVersion)) {
+          this.router.navigate(['/actualizar'], { replaceUrl: true });
+        }
+      },
+      error: () => { /* network error — let the app continue */ }
+    });
   }
 }
