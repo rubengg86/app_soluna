@@ -17,8 +17,10 @@ export class ServicioService {
     .set('http_managerurl', 'soluna');
 
 
-  constructor(public http: HttpClient,
-    private loadingController: LoadingController) {
+  constructor(
+    public http: HttpClient,
+    private loadingController: LoadingController
+  ) {
     this.url=GLOBAL.url;
   }
 
@@ -45,6 +47,7 @@ export class ServicioService {
 
   getUsers(login, password): Observable<any>{
     // return this.http.get(this.url+`/ca_login/${login}/${password}`);
+    console.log(this.url);
     console.log(this.http.get(this.url+`/ca_login/${login}/${password}`, {headers: this.headers}));
     return this.http.get(this.url+`/ca_login/${login}/${password}`, {headers: this.headers});
   }

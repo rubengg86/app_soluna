@@ -5,6 +5,7 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 import { IonicModule } from '@ionic/angular';
 
 import { MiCuentaPageRoutingModule } from './mi-cuenta-routing.module';
+import { EditarBancariosPageModule } from '../inicio/tu-panel/editar-bancarios/editar-bancarios.module';
 
 import { MiCuentaPage } from './mi-cuenta.page';
 
@@ -15,7 +16,8 @@ import { MiCuentaPage } from './mi-cuenta.page';
     FormsModule,
     IonicModule,
     MiCuentaPageRoutingModule,
-    FlatpickrModule.forRoot()
+    FlatpickrModule.forRoot(),
+    EditarBancariosPageModule
   ],
   declarations: [MiCuentaPage]
 })

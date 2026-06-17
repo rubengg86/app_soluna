@@ -6,7 +6,7 @@ import { ServicioService } from 'src/app/services/servicio.service';
 import { ModalController } from '@ionic/angular';
 import { RecuperarContraseniaPage } from '../recuperar-contrasenia/recuperar-contrasenia.page';
 import { RegistroPage } from '../registro/registro.page';
-
+import { GLOBAL } from '../../services/global';
 
 @Component({
   selector: 'app-login',
@@ -16,11 +16,13 @@ import { RegistroPage } from '../registro/registro.page';
 export class LoginPage{
 
   public incorrect = false;
+  public error = false;
   public users: Array<Usuario>=[];
   public signature: any;
   public querystring: any;
   public category: any;
   public id: any;
+  public environment: any;
 
   // user local: hola@solunapilates.es
   // pass local: 987654321
@@ -59,6 +61,7 @@ export class LoginPage{
       }
 
     }, error =>{
+      this.environment = error;
       console.log(error);
     });
   }

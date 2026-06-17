@@ -37,7 +37,7 @@ export class TuPanelPage implements OnInit, OnDestroy {
   public asistencia;
   public cliente;
   public fechaFiltro;
-  public pagosFiltrados: any = [];
+  public pagosFiltrados: any[] = [];
   public cuota;
   public pagar = false;
   public pagado = false;

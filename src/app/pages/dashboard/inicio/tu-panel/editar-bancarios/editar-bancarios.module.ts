@@ -4,9 +4,10 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { EditarTusDatosPageRoutingModule } from './editar-bancarios-routing.module';
+import { EditarBancariosPageRoutingModule } from './editar-bancarios-routing.module';
 
 import { EditarBancariosPage } from './editar-bancarios.page';
+import { CodigoComponent2 } from './codigo/codigo.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { EditarBancariosPage } from './editar-bancarios.page';
     IonicModule,
     EditarBancariosPageRoutingModule
   ],
-  declarations: [EditarBancariosPage]
+  declarations: [EditarBancariosPage, CodigoComponent2]
 })
 export class EditarBancariosPageModule {}

@@ -11,10 +11,13 @@
   <!-- ── Form sheet ── -->
   <div class="login-sheet">
     <h2 class="login-sheet-title">Bienvenida</h2>
-
+    <pre *ngIf="environment" style="background:#1e1e1e;color:#d4d4d4;font-size:11px;padding:8px;border-radius:6px;white-space:pre-wrap;word-break:break-all;max-height:200px;overflow-y:auto;margin-bottom:12px;">{{ environment | json }}</pre>
     <form [formGroup]="form" (ngSubmit)="onLogin()">
       <div *ngIf="incorrect" class="login-error">
         Usuario o contraseña incorrectos
+      </div>
+      <div *ngIf="error" class="login-error">
+        Ha ocurrido un error, intentalo de nuevo más tarde.
       </div>
 
       <div class="sl-input-group">

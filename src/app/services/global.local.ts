@@ -1,7 +1,8 @@
 export const GLOBAL = {
-    appVersion: '2.0.0',
-    url: 'http://192.168.1.19:8080/api',
-    solunaUrl: 'http://192.168.1.19:8081',
+    appVersion: '2.0.1',
+    environment: 'local',
+    url: 'http://localhost:8080/api',
+    solunaUrl: 'http://localhost:8081',
     passwordSeed: 's0lun4rul3sb1tch',
     tpvUrl: 'https://sis-t.redsys.es:25443/sis/realizarPago',
     merchants : {

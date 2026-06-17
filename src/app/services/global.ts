@@ -1,5 +1,6 @@
 export const GLOBAL = {
-    appVersion: '2.0.0',
+    appVersion: '2.0.1',
+    environment: 'production',
     url: 'https://api.belife.io',
     solunaUrl: 'https://solunapilates.es',
     tpvUrl: 'https://sis.redsys.es/sis/realizarPago',

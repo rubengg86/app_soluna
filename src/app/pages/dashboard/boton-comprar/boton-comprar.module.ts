@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { BotonComprarPageRoutingModule } from './boton-comprar-routing.module';
 
 import { BotonComprarPage } from './boton-comprar.page';
+import { CodigoComponent } from './codigo/codigo.component';
 import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 @NgModule({
@@ -16,7 +17,7 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
     IonicModule,
     BotonComprarPageRoutingModule
   ],
-  declarations: [BotonComprarPage],
+  declarations: [BotonComprarPage, CodigoComponent],
   providers: [InAppBrowser]
 })
 export class BotonComprarPageModule {}

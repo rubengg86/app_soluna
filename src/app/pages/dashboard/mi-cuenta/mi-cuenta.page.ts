@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import packageJson from '../../../../../package.json';
 import { Subscription } from 'rxjs';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -72,6 +73,7 @@ longhand: ['Enero', 'Febreo', 'Мarzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agos
   };
 */
   
+  public appVersion = packageJson.version;
   public customer_id = localStorage.getItem('currentUserSoluna');
   public cliente;
 

@@ -110,12 +110,6 @@
               "progress": false
             },
             "development": {
-              "fileReplacements": [
-                {
-                  "replace": "src/app/services/global.ts",
-                  "with": "src/app/services/global.local.ts"
-                }
-              ]
             }
           },
           "defaultConfiguration": "development"

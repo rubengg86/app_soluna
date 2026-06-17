@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { VersionInterceptor } from './interceptors/version.interceptor';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
@@ -20,7 +21,12 @@ import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, Deeplinks, InAppBrowser],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: VersionInterceptor, multi: true },
+    Deeplinks,
+    InAppBrowser
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
