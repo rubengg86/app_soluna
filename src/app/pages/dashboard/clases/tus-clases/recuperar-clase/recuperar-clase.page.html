@@ -1,68 +1,69 @@
-<!---------------------------------------------------------------- MODAL (editar)------------------------------------------------------------->
-<!-------------------------------------------------------------------CABECERA ---------------------------------------------------------------->
-<ion-header>
-    <ion-toolbar class="p-3" style="--background: #363636;">
-        <!-- <ion-toolbar class="p-3" color="light"> -->
-        <div class="d-flex justify-content-between border-bottom">
-            <ion-title class="text-white">
-                RECUPERAR {{activity_name}} <br> {{fechaAntiguaFormato}}
-            </ion-title>
-            <!-- <i class="fas fa-times fa-2x text-white" (click)="dismiss()"></i> -->
-            <ion-icon style="color:white !important" (click)="dismiss()" slot="start" name="close"></ion-icon>
-            <br>
+<div class="modal-header">
+  <div class="modal-header-row">
+    <span class="modal-header-title">Recuperar clase</span>
+    <button class="modal-close-btn" (click)="dismiss()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<ion-content style="--background: var(--sl-bg)">
+  <div class="modal-content" *ngIf="fechasLibres">
+
+    <!-- Current class info -->
+    <div class="current-class-banner">
+      <div class="current-class-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M1 4v6h6M23 20v-6h-6"/>
+          <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+        </svg>
+      </div>
+      <div>
+        <div class="current-class-label">{{ activity_name }}</div>
+        <div class="current-class-date">{{ fechaAntiguaFormato }}</div>
+      </div>
+    </div>
+
+    <!-- Recoverable count info -->
+    <div class="recover-info-card" *ngIf="recoverable_number">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <span>Puedes recuperar <strong>{{ recoverable_number }}</strong> {{ recoverable_number == 1 ? 'clase' : 'clases' }} de esta actividad</span>
+    </div>
+
+    <!-- No slots available -->
+    <div class="no-slots-card" *ngIf="fechasLibres.length == 0">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <p class="no-slots-title">Sin huecos disponibles</p>
+      <p class="no-slots-desc">
+        Para recuperar la clase manualmente contacta con
+        <a [href]="email">{{ emailFormat }}</a>
+      </p>
+    </div>
+
+    <!-- Available slots -->
+    <div *ngIf="fechasLibres.length > 0">
+      <p class="sl-section-title" style="margin-bottom: 12px;">Huecos disponibles</p>
+
+      <div class="date-group" *ngFor="let fecha of fechasLibres; let i = index">
+        <div class="date-group-header">{{ fechasLibresFormato[i] }}</div>
+        <div class="slots-list">
+          <button
+            class="slot-pill"
+            *ngFor="let hueco of huecos[fecha]"
+            (click)="confirmarCambiar(hueco.id, fecha, hueco.start_time, fechasLibresFormato[i])">
+            {{ hueco.start_time }}
+          </button>
         </div>
-    </ion-toolbar>
-</ion-header>
+      </div>
+    </div>
 
-<!-------------------------------------------------------------------FORMULARIO--------------------------------------------------------------->
-<ion-content *ngIf="fechasLibres" style="--background: #363636;" id="contenidoComprar">
-    <!-- <ion-content color="light" id="contenidoComprar"> -->
-    <ion-card class="bg-white border-top col-12">
-        <ion-card-header class="border-bottom">
-            <ion-card-title>
-                Puedes recuperar {{recoverable_number}} clases de esta actividad
-            </ion-card-title>
-
-        </ion-card-header>
-    </ion-card>
-    <ion-card *ngIf="fechasLibres.length == 0" class="bg-white border-top col-12">
-        <ion-card-header class="border-bottom">
-            <ion-card-title>
-                Ahora mismo no hay huecos disponibles para recuperar una clase en esta fecha
-            </ion-card-title>
-
-            <ion-card-content>
-                Para más información, o pedir una recuperación de clase manual, contacte con
-                <a [href]="email">{{emailFormat}}</a>
-            </ion-card-content>
-
-            <!-- <button type="button" class="btn" id="comprar">Cambiar</button>
-          <h1>{{huecos[fecha][0].start_time}}</h1> -->
-        </ion-card-header>
-    </ion-card>
-    <ion-card class="bg-white border-top col-12" *ngFor="let fecha of fechasLibres; let i = index">
-        <ion-card-header class="border-bottom">
-            <ion-card-title>
-                {{fechasLibresFormato[i]}}
-            </ion-card-title>
-
-            <ion-card-content>
-                <ion-card class="bg-white border-top col-12" *ngFor="let hueco of huecos[fecha]; let j = index">
-                    <ion-card-header class="border-bottom">
-                        <button type="button" class="btn" id="comprar" (click)="confirmarCambiar(hueco.id, fecha, hueco.start_time, fechasLibresFormato[i])">Recuperar</button>
-                        <!-- <button type="button" class="btn" id="comprar" (click)="cambiar(hueco.id, fecha, hueco.start_time)">Cambiar</button> -->
-                        <h1>{{hueco.start_time}}</h1>
-                    </ion-card-header>
-                </ion-card>
-            </ion-card-content>
-
-            <!-- <button type="button" class="btn" id="comprar">Cambiar</button>
-          <h1>{{huecos[fecha][0].start_time}}</h1> -->
-        </ion-card-header>
-    </ion-card>
-
+  </div>
 </ion-content>
-<!-------------------------------------------------------------------FOOTER-------------------------------------------------------------------->
-<!-- <ion-footer class="p-4" id="contenidoFooter">
-  <button type="button" class="btn" id="comprar">Comprar</button>
-</ion-footer> -->

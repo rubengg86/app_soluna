@@ -19,9 +19,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 }
 
 .modal-header-title {
+  flex: 1;
   font-family: var(--sl-font-display);
   font-size: 22px;
   font-weight: 500;
@@ -181,19 +183,19 @@
 }
 
 .slots-list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
   padding: 14px 16px;
 }
 
 /* ── Slot pill ──────────────────────────────────── */
 .slot-pill {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   height: 40px;
-  padding: 0 18px;
+  padding: 0;
   background: var(--sl-primary-light);
   color: var(--sl-primary) !important;
   border: none;

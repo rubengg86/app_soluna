@@ -101,16 +101,15 @@
           </svg>
           <span>Sin clases hoy, pero puedes recuperar:</span>
         </div>
-        <div class="day-class-card" *ngFor="let actividad of actividades">
-          <div *ngIf="actividad?.recoverable_number">
-            <div class="day-class-body">
-              <div class="day-class-name">{{ actividad.activity_name }}</div>
-            </div>
-            <button class="sl-btn-sm-primary"
-              (click)="getHuecosOnDate(actividad.activity_id, actividad.group_id, actividad.start_time, actividad.center_id, actividad?.recoverable_number, actividad.activity_name)">
-              Recuperar
-            </button>
+        <div class="day-class-card" *ngFor="let actividad of actividades" [style.display]="actividad?.recoverable_number ? 'flex' : 'none'">
+          <div class="day-class-bar"></div>
+          <div class="day-class-body">
+            <div class="day-class-name">{{ actividad.activity_name }}</div>
           </div>
+          <button class="sl-btn-sm-primary"
+            (click)="getHuecosOnDate(actividad.activity_id, actividad.group_id, actividad.start_time, actividad.center_id, actividad?.recoverable_number, actividad.activity_name)">
+            Recuperar
+          </button>
         </div>
       </div>
 

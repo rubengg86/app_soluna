@@ -38,7 +38,7 @@ export class EditarTusDatosPage implements OnInit {
     // this._service.getCustomerById(5211).subscribe( res => {
       this.cliente = res[0];
       // console.log(res[0]);
-      
+
       this.datos.get('name').setValue(this.cliente.name);
       this.datos.get('surname').setValue(this.cliente.surname);
       this.datos.get('email').setValue(this.cliente.email);
@@ -50,7 +50,7 @@ export class EditarTusDatosPage implements OnInit {
       if (this.cliente.photo) {
 
         this.previsualizacion = "https://belife.io/cust_photo/" + this.cliente.photo;
-        
+
       }
 
     }, error =>{
@@ -83,7 +83,7 @@ export class EditarTusDatosPage implements OnInit {
           text: 'OK',
           handler: () => {
             this.dismiss();
-          } 
+          }
         }]
       });
 

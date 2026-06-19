@@ -227,6 +227,7 @@ ion-select {
   border-color: transparent !important;
 }
 
+.flatpickr-months,
 .flatpickr-months .flatpickr-month,
 .flatpickr-weekdays,
 span.flatpickr-weekday {
@@ -235,15 +236,30 @@ span.flatpickr-weekday {
   fill: white !important;
 }
 
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
+  fill: white !important;
+  color: white !important;
+}
+
 .flatpickr-prev-month svg,
 .flatpickr-next-month svg {
   fill: white !important;
+  stroke: white !important;
 }
 
 .flatpickr-current-month {
   color: white !important;
   font-family: var(--sl-font-display) !important;
   font-size: 16px !important;
+}
+
+.flatpickr-current-month .cur-year,
+.flatpickr-current-month .numInputWrapper span.arrowUp:after,
+.flatpickr-current-month .numInputWrapper span.arrowDown:after {
+  color: white !important;
+  border-bottom-color: white !important;
+  border-top-color: white !important;
 }
 
 /* ─── Alert overrides ────────────────────────────── */

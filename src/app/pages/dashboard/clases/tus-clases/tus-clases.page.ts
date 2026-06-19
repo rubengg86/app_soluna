@@ -227,7 +227,7 @@ export class TusClasesPage implements OnInit, OnDestroy {
 
 
             if (element.redeemed == 0) {
-              if (actividad.group_id == element.date_id.split('_')[0] && moment(element.remove_date).valueOf() > moment().add(-2, 'months').valueOf()) {
+              if (actividad.group_id == element.date_id.split('_')[0] && moment(element.remove_date).valueOf() > moment().add(-15, 'days').valueOf()) {
                 // console.log(element)
                 // console.log(moment(element.remove_date).format("DD/MM/YYYY"))
 
@@ -240,7 +240,7 @@ export class TusClasesPage implements OnInit, OnDestroy {
             }
           });
         }
-        
+
       });
 
 
@@ -284,7 +284,7 @@ export class TusClasesPage implements OnInit, OnDestroy {
       }
 
       this.clasesMes = [];
-      this.clasesMesSiguiente = [];  
+      this.clasesMesSiguiente = [];
 
       for (let j = 0; j < dias.length; j++) {
         switch (this.actividades[i].days[dias[j]].toLowerCase()) {
@@ -358,7 +358,7 @@ export class TusClasesPage implements OnInit, OnDestroy {
             }
 
           }
-          
+
         }
 
         // Siguiente mes
@@ -398,7 +398,7 @@ export class TusClasesPage implements OnInit, OnDestroy {
                     id_centro: this.actividades[i].center_id,
                     id_actividad: this.actividades[i].activity_id,
                     cambiada: false
-                  })  
+                  })
                 }
 
               }
@@ -406,7 +406,7 @@ export class TusClasesPage implements OnInit, OnDestroy {
             }
 
           }
-          
+
         }
 
       }
@@ -415,12 +415,12 @@ export class TusClasesPage implements OnInit, OnDestroy {
       this.clasesMes = this.clasesMes.sort((a,b) => a.tiempo-b.tiempo);
       // console.log(this.clasesMes);
       // console.log(this.clasesMesSiguiente);
-      
+
       this.clasesTotales = this.clasesTotales.concat(this.clasesMes.concat(this.clasesMesSiguiente));
       // console.log(this.clasesTotales);
 
     } // Fin de bucle de actividades
-      
+
 
     if (this.asistencias) {
       for (let k = 0; k < this.asistencias.length; k++) {
@@ -433,7 +433,7 @@ export class TusClasesPage implements OnInit, OnDestroy {
         } else if ((+tiempo.getMonth()+1).toString().length == 1){
           mes = '0'+(+tiempo.getMonth()+1)
         }
-  
+
         let d;
         if ((+tiempo.getDate()).toString().length >= 2){
           d = (+tiempo.getDate())
@@ -453,7 +453,7 @@ export class TusClasesPage implements OnInit, OnDestroy {
           id_actividad: null,
           cambiada: true
         })
-      }  
+      }
     }
 
     this.clasesTotales = this.clasesTotales.sort((a,b) => a.tiempo-b.tiempo);
@@ -531,7 +531,7 @@ export class TusClasesPage implements OnInit, OnDestroy {
         }
       }
 
-      
+
     })
   }
 
@@ -605,7 +605,7 @@ export class TusClasesPage implements OnInit, OnDestroy {
 
       // console.log(this.dia1InglesTicket);
       // console.log(this.dia2InglesTicket);
-      
+
     }
   }
 
@@ -670,7 +670,7 @@ export class TusClasesPage implements OnInit, OnDestroy {
 
     const modal = await this.modalController.create({
       component: CambiarClasePage,
-      componentProps: { 
+      componentProps: {
         huecos: this.huecos,
         fecha_antigua: this.fechaAntigua,
         grupo_antiguo: this.grupoAntiguo,
@@ -692,7 +692,7 @@ export class TusClasesPage implements OnInit, OnDestroy {
 
     const modal = await this.modalController.create({
       component: RecuperarClasePage,
-      componentProps: { 
+      componentProps: {
         huecos: this.huecos,
         fecha_antigua: this.fechaAntigua,
         grupo_antiguo: this.grupoAntiguo,
@@ -721,7 +721,7 @@ export class TusClasesPage implements OnInit, OnDestroy {
 
     const modal = await this.modalController.create({
       component: AnularClasePage,
-      componentProps: { 
+      componentProps: {
         fecha_antigua: this.fechaAntigua,
         grupo_antiguo: this.grupoAntiguo,
         inicio_antiguo: this.inicioAntiguo
@@ -757,7 +757,7 @@ export class TusClasesPage implements OnInit, OnDestroy {
     // console.log(prueba);
 
     // console.log(this.fechaElegida.toString() == prueba.toString());
-    
+
 
     // console.log(this.tickets[0].group_name.slice(0,3));
     // console.log(this.tickets[0].group_name.slice(9,12));
